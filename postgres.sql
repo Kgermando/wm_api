@@ -111,12 +111,6 @@ CREATE TABLE "public"."agents" (
     "salaire" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
-    "approbation_dd" character varying NOT NULL,
-    "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL,
     CONSTRAINT "agents_matricule_key" UNIQUE ("matricule")
 ) WITH (oids = false);
 
@@ -1306,7 +1300,7 @@ CREATE SEQUENCE trans_rest_agents_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483
 
 CREATE TABLE "public"."trans_rest_agents" (
     "id" integer DEFAULT nextval('trans_rest_agents_id_seq') NOT NULL,
-    "reference" timestamp NOT NULL,
+    "reference" integer NOT NULL,
     "nom" character varying NOT NULL,
     "prenom" character varying NOT NULL,
     "matricule" character varying NOT NULL,
