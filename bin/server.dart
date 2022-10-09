@@ -843,7 +843,7 @@ void main(List<String> args) async {
 
   await connection.open();
   Repository repos = Repository(connection);
-  Service service = Service(repos, "astridKey");
+  Service service = Service(repos, "work_management_Key");
 
   final server = await shelf_io.serve(service.handlers, ip, port);
 
