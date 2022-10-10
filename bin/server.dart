@@ -417,6 +417,8 @@ class Service {
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(TransRestAgentsHandlers(repos).router));
 
+
+
     // FINANCE
     router.mount(
         '/api/finances/transactions/banques/',
