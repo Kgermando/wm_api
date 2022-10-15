@@ -38,10 +38,7 @@ class BalanceComptesHandlers {
         statut: input['statut'],
         signature: input['signature'],
         created: DateTime.parse(input['created']),
-        isSubmit: input['isSubmit'],
-        approbationDG: input['approbationDG'],
-        motifDG: input['motifDG'],
-        signatureDG: input['signatureDG'],
+        isSubmit: input['isSubmit'], 
         approbationDD: input['approbationDD'],
         motifDD: input['motifDD'],
         signatureDD: input['signatureDD']
@@ -75,16 +72,7 @@ class BalanceComptesHandlers {
       }
       if (input['isSubmit'] != null) {
         data.isSubmit = input['isSubmit'];
-      }
-      if (input['approbationDG'] != null) {
-        data.approbationDG = input['approbationDG'];
-      }
-      if (input['motifDG'] != null) {
-        data.motifDG = input['motifDG'];
-      }
-      if (input['signatureDG'] != null) {
-        data.signatureDG = input['signatureDG'];
-      }
+      } 
       if (input['approbationDD'] != null) {
         data.approbationDD = input['approbationDD'];
       }

@@ -23,21 +23,18 @@ class JournalLivreRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, intitule, debut, fin, signature, created," 
-        "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
+        "approbation_dd, motif_dd, signature_dd)"
         "VALUES (nextval('journal_livres_id_seq'), @1, @2, @3, @4, @5, @6,"
-        "@7, @8, @9, @10, @11)",
+        "@7, @8)",
         substitutionValues: {
           '1': data.intitule,
           '2': data.debut,
           '3': data.fin,
           '4': data.signature,
           '5': data.created,
-          '6': data.approbationDG,
-          '7': data.motifDG,
-          '8': data.signatureDG,
-          '9': data.approbationDD,
-          '10': data.motifDD,
-          '11': data.signatureDD
+          '6': data.approbationDD,
+          '7': data.motifDD,
+          '8': data.signatureDD 
         });
     });
   }
@@ -45,22 +42,18 @@ class JournalLivreRepository {
   Future<void> update(JournalLivreModel data) async {
     await executor.query("""UPDATE $tableName
       SET intitule = @1, debut = @2, fin = @3,
-      signature = @4, created = @5, approbation_dg = @6, motif_dg = @7, 
-      signature_dg = @8, approbation_dd = @9, motif_dd = @10, 
-      signature_dd = @11 WHERE id = @12""",
+      signature = @4, created = @5, approbation_dd = @6, motif_dd = @7, 
+      signature_dd = @8 WHERE id = @9""",
         substitutionValues: {
           '1': data.intitule,
           '2': data.debut,
           '3': data.fin, 
           '4': data.signature,
           '5': data.created,
-          '6': data.approbationDG,
-          '7': data.motifDG,
-          '8': data.signatureDG,
-          '9': data.approbationDD,
-          '10': data.motifDD,
-          '11': data.signatureDD,
-          '12': data.id
+          '6': data.motifDD,
+          '7': data.motifDD,
+          '8': data.signatureDD,
+          '9': data.id 
         });
   }
 
@@ -85,12 +78,9 @@ class JournalLivreRepository {
       fin: data[0][3],
       signature: data[0][4],
       created: data[0][5],
-      approbationDG: data[0][6],
-      motifDG: data[0][7],
-      signatureDG: data[0][8],
-      approbationDD: data[0][9],
-      motifDD: data[0][10],
-      signatureDD: data[0][11] 
+      approbationDD: data[0][6],
+      motifDD: data[0][7],
+      signatureDD: data[0][8] 
     );
   }
 }
