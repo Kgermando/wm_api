@@ -39,13 +39,16 @@ import 'exploitations/projet_repository.dart';
 import 'exploitations/rapport_repository.dart';
 import 'exploitations/tache_repository.dart';
 import 'exploitations/versement_projet_repository.dart';
+import 'finances/banque_name_repository.dart';
 import 'finances/banque_repository.dart';
+import 'finances/caisse_name_repository.dart';
 import 'finances/caissses_repository.dart';
 import 'finances/coupure_billet_repository.dart';
 import 'finances/creance_dette_repository.dart';
 import 'finances/creances_repository.dart';
 import 'finances/depenses_repository.dart';
 import 'finances/dettes_repository.dart';
+import 'finances/fin_exterieur_name_repository.dart';
 import 'finances/fin_exterieur_repository.dart';
 import 'logistiques/anguin_repository.dart';
 import 'logistiques/carburant_repository.dart';
@@ -124,8 +127,11 @@ class Repository {
   // Devis
   late DevisRepository devis;
   late DevisListObjetRepository devisListObjets;
-
+ 
   // FINANCES
+  late BanqueNameRepository banqueNames;
+  late CaisseNameRepository caisseNames;
+  late FinExterieurNameRepository finExterieurNames;
   late BanqueRepository banques;
   late CaissesRepository caisses;
   late CreancesRepository creances;
@@ -304,6 +310,10 @@ class Repository {
     devisListObjets = DevisListObjetRepository(executor, 'devis_list_objets');
 
     // FINANCES
+    banqueNames = BanqueNameRepository(executor, 'banque_names');
+    caisseNames = CaisseNameRepository(executor, 'caisse_names');
+    finExterieurNames = FinExterieurNameRepository(executor, 'fin_exterieur_names');
+
     banques = BanqueRepository(executor, 'banques');
     caisses = CaissesRepository(executor, 'caisses');
     creances = CreancesRepository(executor, 'creances');

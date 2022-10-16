@@ -44,7 +44,9 @@ import 'handlers/exploitations/projet_handlers.dart';
 import 'handlers/exploitations/rapport_hanlders.dart';
 import 'handlers/exploitations/tache_handlers.dart';
 import 'handlers/exploitations/versement_projet_handlers.dart';
+import 'handlers/finances/banque_names_handlers.dart';
 import 'handlers/finances/banques_handlers.dart';
+import 'handlers/finances/caisse_names_handlers.dart';
 import 'handlers/finances/caisses_handlers.dart';
 import 'handlers/finances/coupure_billet_handlers.dart';
 import 'handlers/finances/creance_dette_handlers.dart';
@@ -52,6 +54,7 @@ import 'handlers/finances/creance_handlers.dart';
 import 'handlers/finances/dette_handlers.dart';
 import 'handlers/finances/depense_handlers.dart';
 import 'handlers/finances/fin_exterieur_handlers.dart';
+import 'handlers/finances/fin_exterieur_names_handlers.dart';
 import 'handlers/logistiques/anguin_handlers.dart';
 import 'handlers/logistiques/carburant_handlers.dart';
 import 'handlers/logistiques/entretien_handlers.dart';
@@ -416,10 +419,32 @@ class Service {
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(TransRestAgentsHandlers(repos).router));
-
+  
 
 
     // FINANCE
+    router.mount(
+        '/api/finances/transactions/banques-name/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(BanqueNameHandlers(repos).router));
+    router.mount(
+        '/api/finances/transactions/caisses-name/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(CaisseNameHandlers(repos).router));
+    router.mount(
+        '/api/finances/transactions/fin-exterieur-name/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(FinExterieurNameHandlers(repos).router));
+
     router.mount(
         '/api/finances/transactions/banques/',
         Pipeline()
@@ -427,7 +452,6 @@ class Service {
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(BanqueHandlers(repos).router));
-
     router.mount(
         '/api/finances/transactions/caisses/',
         Pipeline()
