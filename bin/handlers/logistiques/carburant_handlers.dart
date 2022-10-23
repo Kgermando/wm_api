@@ -42,12 +42,11 @@ class CarburantHandlers {
         numeroPlaque: input['numeroPlaque'],
         dateHeureSortieAnguin: DateTime.parse(input['dateHeureSortieAnguin']),
         qtyAchat: input['qtyAchat'],
-        signature: input['signature'],
-        createdRef: DateTime.parse(input['createdRef']),
+        signature: input['signature'], 
         created: DateTime.parse(input['created']), 
-          approbationDD: input['approbationDD'],
-          motifDD: input['motifDD'],
-          signatureDD: input['signatureDD']
+        approbationDD: input['approbationDD'],
+        motifDD: input['motifDD'],
+        signatureDD: input['signatureDD']
       );
       try {
         await repos.carburants.insertData(carburantModel);
@@ -93,10 +92,7 @@ class CarburantHandlers {
       } 
       if (input['signature'] != null) {
         data.signature = input['signature'];
-      }
-      if (input['createdRef'] != null) {
-        data.createdRef = DateTime.parse(input['createdRef']);
-      }
+      } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
       } 

@@ -42,50 +42,10 @@ class AnguinRepository {
         "INSERT INTO $tableName (id, nom, modele, marque, numero_chassie,"
         "couleur, genre, qty_max_reservoir, date_fabrication, nomero_plaque,"
         "nomero_entreprise, kilometrage_initiale, provenance, type_caburant,"
-        "type_moteur, signature, created_ref, created,"
+        "type_moteur, signature, created,"
         "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
         "VALUES (nextval('anguins_id_seq'), @1, @2, @3, @4, @5, @6,"
-        "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22, @23)",
-        substitutionValues: {
-          '1': data.nom,
-          '2': data.modele,
-          '3': data.marque,
-          '4': data.numeroChassie,
-          '5': data.couleur,
-          '6': data.genre,
-          '7': data.qtyMaxReservoir,
-          '8': data.dateFabrication,
-          '9': data.nomeroPLaque,
-          '10': data.nomeroEntreprise,
-          '11': data.kilometrageInitiale,
-          '12': data.provenance,
-          '13': data.typeCaburant,
-          '14': data.typeMoteur,
-          '15': data.signature,
-          '16': data.createdRef,
-          '17': data.created,
-          '18': data.approbationDG,
-          '19': data.motifDG,
-          '20': data.signatureDG,
-          '21': data.approbationDD,
-          '22': data.motifDD,
-          '23': data.signatureDD
-        });
-    });
-  }
-
-
-  
-  Future<void> update(AnguinModel data) async {
-    await executor.execute("""UPDATE $tableName
-        SET nom = @1, modele = @2, marque = @3, numero_chassie = @4, couleur = @5,
-        genre = @6, qty_max_reservoir = @7, date_fabrication = @8, nomero_plaque = @9,
-        nomero_entreprise = @10, kilometrage_initiale = @11, provenance = @12,
-        type_caburant = @13, type_moteur = @14, signature = @15,
-        created_ref = @16, created = @17, approbation_dg = @18, motif_dg = @19,
-        signature_dg = @20, approbation_dd = @21,
-        motif_dd = @22, signature_dd = @23 WHERE id = @24""",
-
+        "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22)",
         substitutionValues: {
           '1': data.nom,
           '2': data.modele,
@@ -103,15 +63,52 @@ class AnguinRepository {
           '14': data.typeMoteur,
           '15': data.signature,
           '16': data.created,
-          '17': data.created,
-          '18': data.approbationDG,
-          '19': data.motifDG,
-          '20': data.signatureDG,
-          '21': data.approbationDD,
-          '22': data.motifDD,
-          '23': data.signatureDD,
-          '24': data.id
+          '17': data.approbationDG,
+          '18': data.motifDG,
+          '19': data.signatureDG,
+          '20': data.approbationDD,
+          '21': data.motifDD,
+          '22': data.signatureDD 
         });
+    });
+  }
+
+
+  
+  Future<void> update(AnguinModel data) async {
+    await executor.execute("""UPDATE $tableName
+      SET nom = @1, modele = @2, marque = @3, numero_chassie = @4, couleur = @5,
+      genre = @6, qty_max_reservoir = @7, date_fabrication = @8, nomero_plaque = @9,
+      nomero_entreprise = @10, kilometrage_initiale = @11, provenance = @12,
+      type_caburant = @13, type_moteur = @14, signature = @15,
+      created = @16, approbation_dg = @17, motif_dg = @18, motif_dd = @19,
+      signature_dg = @20, approbation_dd = @21,
+      signature_dd = @22 WHERE id = @23""",
+      substitutionValues: {
+        '1': data.nom,
+        '2': data.modele,
+        '3': data.marque,
+        '4': data.numeroChassie,
+        '5': data.couleur,
+        '6': data.genre,
+        '7': data.qtyMaxReservoir,
+        '8': data.dateFabrication,
+        '9': data.nomeroPLaque,
+        '10': data.nomeroEntreprise,
+        '11': data.kilometrageInitiale,
+        '12': data.provenance,
+        '13': data.typeCaburant,
+        '14': data.typeMoteur,
+        '15': data.signature,
+        '16': data.created,
+        '17': data.approbationDG,
+        '18': data.motifDG,
+        '19': data.signatureDG,
+        '20': data.approbationDD,
+        '21': data.motifDD,
+        '22': data.signatureDD,
+        '23': data.id
+      });
   }
 
   deleteData(int id) async {
@@ -145,14 +142,13 @@ class AnguinRepository {
       typeCaburant: data[0][13],
       typeMoteur: data[0][14],
       signature: data[0][15],
-      createdRef: data[0][16],
-      created: data[0][17],
-      approbationDG: data[0][18],
-      motifDG: data[0][19],
-      signatureDG: data[0][20],
-      approbationDD: data[0][21],
-      motifDD: data[0][22],
-      signatureDD: data[0][23]
+      created: data[0][16],
+      approbationDG: data[0][17],
+      motifDG: data[0][18],
+      signatureDG: data[0][19],
+      approbationDD: data[0][20],
+      motifDD: data[0][21],
+      signatureDD: data[0][22] 
     );
   }
 }

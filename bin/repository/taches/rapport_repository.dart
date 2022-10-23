@@ -1,6 +1,7 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/exploitations/rapport_model.dart';
+import '../../models/taches/rapport_model.dart';
+ 
 
 class RapportRepository {
   final PostgreSQLConnection executor;
@@ -22,29 +23,31 @@ class RapportRepository {
   Future<void> insertData(RapportModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, nom_projet, numero_tache,"
-          "rapport,  signature, created)"
-          "VALUES (nextval('rapports_id_seq'), @1, @2, @3, @4, @5)",
+          "INSERT INTO $tableName (id, nom, numero_tache,"
+          "rapport, signature, created, reference)"
+          "VALUES (nextval('rapports_id_seq'), @1, @2, @3, @4, @5, @6)",
           substitutionValues: {
-            '1': data.nomProjet,
+            '1': data.nom,
             '2': data.numeroTache,
             '3': data.rapport,
             '4': data.signature,
-            '5': data.created
+            '5': data.created,
+            '6': data.reference
           });
     });
   }
 
   Future<void> update(RapportModel data) async {
     await executor.query("""UPDATE $tableName
-        SET nom_projet = @1, numero_tache = @2, rapport = @3,
-        signature = @4, created = @5 WHERE id = @6""", substitutionValues: {
-      '1': data.nomProjet,
+        SET nom = @1, numero_tache = @2, rapport = @3,
+        signature = @4, created = @5, reference = @6 WHERE id = @7""", substitutionValues: {
+      '1': data.nom,
       '2': data.numeroTache,
       '3': data.rapport,
       '4': data.signature,
       '5': data.created,
-      '6': data.id
+      '6': data.reference,
+      '7': data.id
     });
   }
 
@@ -64,11 +67,12 @@ class RapportRepository {
         await executor.query("SELECT * FROM  $tableName WHERE \"id\" = '$id'");
     return RapportModel(
       id: data[0][0],
-      nomProjet: data[0][1],
+      nom: data[0][1],
       numeroTache: data[0][2],
       rapport: data[0][3],
       signature: data[0][4],
-      created: data[0][5]
+      created: data[0][5],
+      reference: data[0][6]
     );
   }
 }

@@ -32,12 +32,14 @@ import 'comptabilites/journal_livre_repository.dart';
 import 'comptabilites/journal_repository.dart';
 import 'devis/devis_ist_objet_repository.dart';
 import 'devis/devis_repository.dart';
-import 'exploitations/agent_role_repository.dart';
+import 'logistiques/approvisionnement_repository.dart';
+import 'logistiques/approvison_reception_repository.dart';
+import 'personnel_role/agent_role_repository.dart'; 
 import 'exploitations/fournisseur_repository.dart';
 import 'exploitations/production_repository.dart';
 import 'exploitations/projet_repository.dart';
-import 'exploitations/rapport_repository.dart';
-import 'exploitations/tache_repository.dart';
+import 'taches/rapport_repository.dart';
+import 'taches/tache_repository.dart';
 import 'exploitations/versement_projet_repository.dart';
 import 'finances/banque_name_repository.dart';
 import 'finances/banque_repository.dart';
@@ -172,6 +174,8 @@ class Repository {
   late MobilierRepository mobiliers;
   late TrajetRepository trajets;
   late ObjetRemplaceRepository objetsRemplace;
+  late ApprovisionnementRepository approvisionnementRepository;
+  late ApprovisionReceptionRepository approvisionReceptionRepository;
 
   // COMMERCIAL & MARKETING
   late ProduitModelRepository produitModel;
@@ -357,6 +361,8 @@ class Repository {
     mobiliers = MobilierRepository(executor, 'mobiliers');
     trajets = TrajetRepository(executor, 'trajets');
     objetsRemplace = ObjetRemplaceRepository(executor, 'objets_remplace');
+    approvisionnementRepository = ApprovisionnementRepository(executor, 'approvisionnements');
+    approvisionReceptionRepository = ApprovisionReceptionRepository(executor, 'approvision_receptions');
 
     // COMMERCIAL & MARKETING
     produitModel = ProduitModelRepository(executor, 'produits_model');

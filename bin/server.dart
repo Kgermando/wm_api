@@ -37,12 +37,14 @@ import 'handlers/comptabilites/journal__livre_handlers.dart';
 import 'handlers/comptabilites/journal_handlers.dart';
 import 'handlers/devis/devis_handlers.dart';
 import 'handlers/devis/devis_list_objets_handlers.dart';
-import 'handlers/exploitations/agent_role_hanlders.dart';
+import 'handlers/logistiques/approvision_reception_handlers.dart';
+import 'handlers/logistiques/approvisionnenement_handlers.dart';
+import 'handlers/personnels_roles/agent_role_hanlders.dart';
 import 'handlers/exploitations/fournisseur_handlers.dart';
 import 'handlers/exploitations/production_handlers.dart';
 import 'handlers/exploitations/projet_handlers.dart';
-import 'handlers/exploitations/rapport_hanlders.dart';
-import 'handlers/exploitations/tache_handlers.dart';
+import 'handlers/taches/rapport_hanlders.dart';
+import 'handlers/taches/tache_handlers.dart';
 import 'handlers/exploitations/versement_projet_handlers.dart';
 import 'handlers/finances/banque_names_handlers.dart';
 import 'handlers/finances/banques_handlers.dart';
@@ -699,6 +701,22 @@ class Service {
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(ObjetsRemplaceHandlers(repos).router));
+    router.mount(
+        '/api/approvisionnements/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(ApprovisionnementHandlers(repos).router));
+    router.mount(
+        '/api/approvision-receptions/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(ApprovisionReceptionHandlers(repos).router));
+
+
 
 // COMMERCIAL ET MARKETING
     router.mount(

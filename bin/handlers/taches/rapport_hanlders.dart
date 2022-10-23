@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-
-import '../../models/exploitations/rapport_model.dart';
+ 
+import '../../models/taches/rapport_model.dart';
 import '../../repository/repository.dart';
 
 class RapportHandlers {
@@ -34,11 +34,12 @@ class RapportHandlers {
       var input = jsonDecode(await request.readAsString());
 
       RapportModel data = RapportModel(
-        nomProjet: input['nomProjet'],
+        nom: input['nom'],
         numeroTache: input['numeroTache'],
         rapport: input['rapport'],
         signature: input['signature'],
         created: DateTime.parse(input['created']),
+        reference: input['reference'],
       );
       try {
         await repos.rapports.insertData(data);
@@ -55,8 +56,8 @@ class RapportHandlers {
       RapportModel? data =
           await repos.rapports.getFromId(editH.id!); 
 
-      if (input['nomProjet'] != null) {
-        data.nomProjet = input['nomProjet'];
+      if (input['nom'] != null) {
+        data.nom = input['nom'];
       }
       if (input['numeroTache'] != null) {
         data.numeroTache = input['numeroTache'];
@@ -66,12 +67,12 @@ class RapportHandlers {
       }
       if (input['signature'] != null) {
         data.signature = input['signature'];
-      }
-      if (input['created'] != null) {
-        data.created = input['created'];
-      }
+      } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['reference'] != null) {
+        data.reference = input['reference'];
       }
 
       repos.rapports.update(data);

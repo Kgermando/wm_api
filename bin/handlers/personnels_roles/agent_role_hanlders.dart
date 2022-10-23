@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/exploitations/agent_role_model.dart';
+import '../../models/personnel_role/agent_role_model.dart';
 import '../../repository/repository.dart';
 
 class AgentRoleHandlers {
@@ -20,22 +20,24 @@ class AgentRoleHandlers {
     });
 
     router.get('/<id>', (Request request, String id) async {
-      late AgentRoleModel data;
+      late AgentRoleModel dataId;
       try {
-        data = await repos.agentsRoles.getFromId(int.parse(id));
+        dataId = await repos.agentsRoles.getFromId(int.parse(id));
       } catch (e) {
         print(e);
         return Response(404);
       }
-      return Response.ok(jsonEncode(data.toJson()));
+      return Response.ok(jsonEncode(dataId.toJson()));
     });
 
     router.post('/insert-new-agent-role', (Request request) async {
       var input = jsonDecode(await request.readAsString());
       AgentRoleModel data = AgentRoleModel(
-          reference: DateTime.parse(input['reference']),
+          reference: input['reference'],
+          departement: input['departement'],
           agent: input['agent'],
-          role: input['role']);
+          role: input['role']
+        );
       try {
         await repos.agentsRoles.insertData(data);
       } catch (e) {
@@ -52,7 +54,10 @@ class AgentRoleHandlers {
           await repos.agentsRoles.getFromId(editH.id!); 
 
       if (input['reference'] != null) {
-        data.reference = DateTime.parse(input['reference']);
+        data.reference = input['reference'];
+      }
+      if (input['departement'] != null) {
+        data.departement = input['departement'];
       }
       if (input['agent'] != null) {
         data.agent = input['agent'];

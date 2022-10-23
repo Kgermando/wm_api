@@ -24,7 +24,7 @@ class FinExteRepository {
       await ctx.execute(
         "INSERT INTO $tableName (id, nom_complet, piece_justificative,"
         "libelle, montant, type_operation, numero_operation, signature,"
-        "created_ref, finance_exterieur_name, created)"
+        "reference, finance_exterieur_name, created)"
         "VALUES (nextval('fin_exterieurs_id_seq'), @1, @2, @3, @4, @5, @6,"
         "@7, @8, @9, @10)",
         substitutionValues: {

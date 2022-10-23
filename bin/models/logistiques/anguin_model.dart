@@ -10,17 +10,16 @@ class AnguinModel {
   late DateTime dateFabrication;
   late String nomeroPLaque;
   // numero que l'entreprise donne donne a ses anguins
-  late String nomeroEntreprise; 
+  late String nomeroEntreprise;
   late String kilometrageInitiale;
   late String provenance;
   late String typeCaburant;
   late String typeMoteur;
 
   late String signature; // celui qui fait le document
-  late DateTime createdRef;
   late DateTime created;
 
-   // Approbations DG
+  // Approbations DG
   late String approbationDG;
   late String motifDG;
   late String signatureDG;
@@ -28,7 +27,6 @@ class AnguinModel {
   late String approbationDD;
   late String motifDD;
   late String signatureDD;
-
 
   AnguinModel(
       {this.id,
@@ -47,15 +45,13 @@ class AnguinModel {
       required this.typeCaburant,
       required this.typeMoteur,
       required this.signature,
-      required this.createdRef,
       required this.created,
       required this.approbationDG,
       required this.motifDG,
       required this.signatureDG,
       required this.approbationDD,
       required this.motifDD,
-      required this.signatureDD
-    });
+      required this.signatureDD});
 
   factory AnguinModel.fromSQL(List<dynamic> row) {
     return AnguinModel(
@@ -75,15 +71,13 @@ class AnguinModel {
         typeCaburant: row[13],
         typeMoteur: row[14],
         signature: row[15],
-        createdRef: row[16],
-        created: row[17],
-        approbationDG: row[18],
-        motifDG: row[19],
-        signatureDG: row[20],
-        approbationDD: row[21],
-        motifDD: row[22],
-        signatureDD: row[23]
-    );
+        created: row[16],
+        approbationDG: row[17],
+        motifDG: row[18],
+        signatureDG: row[19],
+        approbationDD: row[20],
+        motifDD: row[21],
+        signatureDD: row[22]);
   }
 
   factory AnguinModel.fromJson(Map<String, dynamic> json) {
@@ -104,15 +98,13 @@ class AnguinModel {
         typeCaburant: json['typeCaburant'],
         typeMoteur: json['typeMoteur'],
         signature: json['signature'],
-        createdRef: DateTime.parse(json['createdRef']),
         created: DateTime.parse(json['created']),
         approbationDG: json['approbationDG'],
         motifDG: json['motifDG'],
         signatureDG: json['signatureDG'],
         approbationDD: json['approbationDD'],
         motifDD: json['motifDD'],
-        signatureDD: json['signatureDD']
-    );
+        signatureDD: json['signatureDD']);
   }
 
   Map<String, dynamic> toJson() {
@@ -133,7 +125,6 @@ class AnguinModel {
       'typeCaburant': typeCaburant,
       'typeMoteur': typeMoteur,
       'signature': signature,
-      'createdRef': createdRef.toIso8601String(),
       'created': created.toIso8601String(),
       'approbationDG': approbationDG,
       'motifDG': motifDG,

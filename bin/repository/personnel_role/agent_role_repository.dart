@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/exploitations/agent_role_model.dart';
+import '../../models/personnel_role/agent_role_model.dart';
 
 
 class AgentRoleRepository {
@@ -23,24 +23,26 @@ class AgentRoleRepository {
   Future<void> insertData(AgentRoleModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, reference, agent, role)"
-          "VALUES (nextval('agents_roles_id_seq'), @1, @2, @3)",
+          "INSERT INTO $tableName (id, reference, departement, agent, role)"
+          "VALUES (nextval('agents_roles_id_seq'), @1, @2, @3, @4)",
           substitutionValues: {
             '1': data.reference,
-            '2': data.agent,
-            '3': data.role
+            '2': data.departement,
+            '3': data.agent,
+            '4': data.role
           });
     });
   }
 
   Future<void> update(AgentRoleModel data) async {
      await executor.query("""UPDATE $tableName
-          SET reference = @1, agent = @2, role = @3 WHERE id = @4""",
+          SET reference = @1, departement = @2, agent = @3, role = @4 WHERE id = @5""",
         substitutionValues: {
           '1': data.reference,
-          '2': data.agent,
-          '3': data.role,
-          '4': data.id
+          '2': data.departement,
+          '3': data.agent,
+          '4': data.role,
+          '5': data.id
         });
   }
 
@@ -61,8 +63,9 @@ class AgentRoleRepository {
     return AgentRoleModel(
       id: data[0][0],
       reference: data[0][1],
-      agent: data[0][2],
-      role: data[0][3]
+      departement: data[0][2],
+      agent: data[0][3],
+      role: data[0][4]
     );
   }
 }

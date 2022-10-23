@@ -26,7 +26,7 @@ class CaisseNameRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, nom_complet, rccm,"
-        "idNat, addresse, created)"
+        "id_nat, addresse, created)"
         "VALUES (nextval('caisse_names_id_seq'), @1, @2, @3, @4, @5, @6,"
         "@7, @8, @9, @10)",
         substitutionValues: {
@@ -42,7 +42,7 @@ class CaisseNameRepository {
 
   Future<void> update(CaisseNameModel data) async {
     await executor.query("""UPDATE $tableName
-        SET nom_complet = @1, rccm = @2, idNat = @3,
+        SET nom_complet = @1, rccm = @2, id_nat = @3,
         addresse = @4, created = @5 WHERE id = @11""", substitutionValues: {
       '1': data.nomComplet,
       '2': data.rccm,
