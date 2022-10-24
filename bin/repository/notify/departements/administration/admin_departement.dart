@@ -77,22 +77,19 @@ class AdminDepartementRepository {
       var querySQL = """SELECT SUM  
       (
           (SELECT COUNT(*) FROM $tableNameComptBalance where 
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-' AND 
+        "approbation_dd" = 'Approved' AND 
         "is_submit" = 'true') 
         +
           (SELECT COUNT(*) FROM $tableNameComptBilans where  
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-' AND 
+        "approbation_dd" = 'Approved' AND 
         "is_submit" = 'true')
         +
           (SELECT COUNT(*) FROM $tableNameComptComptesResultat where  
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-')
+        "approbation_dd" = 'Approved'
+          )
         +
           (SELECT COUNT(*) FROM $tableNameComptJournals where  
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-') 
+        "approbation_dd" = 'Approved' ) 
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
