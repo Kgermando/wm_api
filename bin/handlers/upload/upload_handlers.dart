@@ -31,6 +31,7 @@ class UploadHandlers {
           File file = await File('${uploadDirectory.path}/$fileName').create();
           var res = await file.writeAsBytes(content);
           resPath = res.path;
+          print("path: ${res.path}");
           // return res.path;
           // File file = await File('static/image.png').create();
           // file.writeAsBytesSync(content);
