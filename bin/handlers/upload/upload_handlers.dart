@@ -1,43 +1,91 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:shelf/shelf.dart';
+
+import 'package:shelf_multipart/form_data.dart';
+import 'package:shelf_multipart/multipart.dart';
+ 
 import 'package:shelf_router/shelf_router.dart';
 
 class UploadHandlers {
   
   Router get router {
-    final router = Router();
+    final router = Router(); 
 
-    router.post('/<fileName>', (Request request, String fileName) async {
-      try { 
-        var input = jsonDecode(await request.readAsString());
-        final uploadDirectory = Directory('storage');
-        if (await uploadDirectory.exists() == false) {
-          await uploadDirectory.create();
+    router.get('/<imageId>', (Request request, String imageId) async {
+        try {
+          File file = File('storage/$imageId');
+          return Response.ok(file.readAsBytesSync(),
+              headers: {'Content-type': 'application/octet-stream'});
+        } catch (e) {
+          print(e);
+          return Response.internalServerError(
+              body: jsonEncode({'message': "$e"}));
         }
-        File file = await File('${uploadDirectory.path}/$fileName').create();
-        print(await file.exists());
-        var res = await file.writeAsBytes(input as Uint8List);
-        return res.path;
-      } catch (e) {
-        return {"message": "$e"};
+      }
+    );
+
+    router.get('/', (Request request) async {
+      if (!request.isMultipart) {
+        return Response.ok('Not a multipart request');
+      } else if (request.isMultipartForm) {
+        final description = StringBuffer('Parsed form multipart request\n');
+
+        await for (final formData in request.multipartFormData) {
+          description
+              .writeln('${formData.name}: ${await formData.part.readString()}');
+        }
+
+        return Response.ok(description.toString());
+      } else {
+        final description = StringBuffer('Regular multipart request\n');
+
+        await for (final part in request.parts) {
+          description.writeln('new part');
+
+          part.headers.forEach(
+              (key, value) => description.writeln('Header $key=$value'));
+          final content = await part.readString();
+          description.writeln('content: $content');
+
+          description.writeln('end of part');
+        }
+
+        return Response.ok(description.toString());
       }
     });
 
-    // router.get('/<imageId>', (Request request, String imageId) async {
-    //     try {
-    //       File file = File('storage/$imageId');
-    //       return Response.ok(file.readAsBytesSync(),
-    //           headers: {'Content-type': 'application/octet-stream'});
-    //     } catch (e) {
-    //       print(e);
-    //       return Response.internalServerError(
-    //           body: jsonEncode({'message': "$e"}));
+
+    // Future<Response> _handler(Request request) async {
+    //   if (!request.isMultipart) {
+    //     return Response.ok('Not a multipart request');
+    //   } else if (request.isMultipartForm) {
+    //     final description = StringBuffer('Parsed form multipart request\n');
+
+    //     await for (final formData in request.multipartFormData) {
+    //       description
+    //           .writeln('${formData.name}: ${await formData.part.readString()}');
     //     }
+
+    //     return Response.ok(description.toString());
+    //   } else {
+    //     final description = StringBuffer('Regular multipart request\n');
+
+    //     await for (final part in request.parts) {
+    //       description.writeln('new part');
+
+    //       part.headers.forEach(
+    //           (key, value) => description.writeln('Header $key=$value'));
+    //       final content = await part.readString();
+    //       description.writeln('content: $content');
+
+    //       description.writeln('end of part');
+    //     }
+
+    //     return Response.ok(description.toString());
     //   }
-    // );
+    // }
  
 
 
