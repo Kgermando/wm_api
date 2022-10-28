@@ -30,13 +30,12 @@ class UploadHandlers {
           File file = await File('${uploadDirectory.path}/$fileName').create();
           var res = await file.writeAsBytes(content);
 
-          return res.path;
+ 
           // File file = await File('static/image.png').create();
           // file.writeAsBytesSync(content);
+          return Response.ok(res.path);
         }
-      }
-
-      return Response.ok('ok\n');
+      } 
     });
 
     router.get('/<imageId>', (Request request, String imageId) async {
