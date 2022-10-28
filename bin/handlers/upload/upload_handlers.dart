@@ -13,6 +13,7 @@ class UploadHandlers {
     final router = Router();
 
     router.post('/file', (Request request) async {
+      var resPath = '';
       if (!request.isMultipart) {
         return Response.badRequest(body: 'bad request');
       }
@@ -29,13 +30,14 @@ class UploadHandlers {
           String fileName = DateTime.now().microsecondsSinceEpoch.toString();
           File file = await File('${uploadDirectory.path}/$fileName').create();
           var res = await file.writeAsBytes(content);
-
- 
+          resPath = res.path;
+          // return res.path;
           // File file = await File('static/image.png').create();
           // file.writeAsBytesSync(content);
-          return Response.ok(res.path);
         }
-      } 
+      }
+
+      return Response.ok(resPath);
     });
 
     router.get('/<imageId>', (Request request, String imageId) async {
