@@ -9,7 +9,7 @@ class UploadHandlers {
   Router get router {
     final router = Router();
 
-    router.post('/', (Request request, String imageId) async {
+    router.get('/', (Request request, String imageId) async {
         try {
           File file = File('storage/$imageId');
           return Response.ok(file.readAsBytesSync(),
