@@ -21,16 +21,23 @@ class UploadHandlers {
         final headers = part.headers['content-disposition'] ?? '';
         if (headers.contains('name="file"')) {
           final content = await part.readBytes();
-          File file = await File('static/image.png').create();
-          file.writeAsBytesSync(content);
+
+          final uploadDirectory = Directory('storage');
+          if (await uploadDirectory.exists() == false) {
+            await uploadDirectory.create();
+          }
+          String fileName = DateTime.now().microsecondsSinceEpoch.toString();
+          File file = await File('${uploadDirectory.path}/$fileName').create();
+          var res = await file.writeAsBytes(content);
+
+          return res.path;
+          // File file = await File('static/image.png').create();
+          // file.writeAsBytesSync(content);
         }
       }
 
       return Response.ok('ok\n');
     });
-
-
- 
 
     router.get('/<imageId>', (Request request, String imageId) async {
       try {
