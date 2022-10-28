@@ -26,7 +26,7 @@ class UploadHandlers {
       }
     );
 
-    router.post('/', (Request request) async {
+    router.post('/file', (Request request) async {
       if (!request.isMultipart) {
         return Response.ok('Not a multipart request');
       } else if (request.isMultipartForm) {
