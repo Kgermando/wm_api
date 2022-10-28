@@ -38,7 +38,8 @@ class UploadHandlers {
           // file.writeAsBytesSync(content);
         }
       }
-      return Response.ok(resPath);
+      return Response.ok(resPath,
+          headers: {'Content-type': 'application/octet-stream'});
     });
 
     router.get('/<imageId>', (Request request, String imageId) async {
