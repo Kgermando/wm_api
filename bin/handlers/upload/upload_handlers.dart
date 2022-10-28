@@ -15,6 +15,7 @@ class UploadHandlers {
           return Response.ok(file.readAsBytesSync(),
               headers: {'Content-type': 'application/octet-stream'});
         } catch (e) {
+          print(e);
           return Response.internalServerError(
               body: jsonEncode({'message': "$e"}));
         }
