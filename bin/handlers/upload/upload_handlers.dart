@@ -5,26 +5,44 @@ import 'package:shelf/shelf.dart';
 
 import 'package:shelf_multipart/form_data.dart';
 import 'package:shelf_multipart/multipart.dart';
- 
+
 import 'package:shelf_router/shelf_router.dart';
 
 class UploadHandlers {
-  
   Router get router {
-    final router = Router(); 
+    final router = Router();
 
-    router.get('/<imageId>', (Request request, String imageId) async {
-        try {
-          File file = File('storage/$imageId');
-          return Response.ok(file.readAsBytesSync(),
-              headers: {'Content-type': 'application/octet-stream'});
-        } catch (e) {
-          print(e);
-          return Response.internalServerError(
-              body: jsonEncode({'message': "$e"}));
+    router.post('/file', (Request request) async {
+      if (!request.isMultipart) {
+        return Response.badRequest(body: 'bad request');
+      }
+
+      await for (final part in request.parts) {
+        final headers = part.headers['content-disposition'] ?? '';
+        if (headers.contains('name="file"')) {
+          final content = await part.readBytes();
+          File file = await File('static/image.png').create();
+          file.writeAsBytesSync(content);
         }
       }
-    );
+
+      return Response.ok('ok\n');
+    });
+
+
+ 
+
+    router.get('/<imageId>', (Request request, String imageId) async {
+      try {
+        File file = File('storage/$imageId');
+        return Response.ok(file.readAsBytesSync(),
+            headers: {'Content-type': 'application/octet-stream'});
+      } catch (e) {
+        print(e);
+        return Response.internalServerError(
+            body: jsonEncode({'message': "$e"}));
+      }
+    });
 
     router.post('/file', (Request request) async {
       if (!request.isMultipart) {
@@ -56,7 +74,6 @@ class UploadHandlers {
       }
     });
 
-
     // Future<Response> _handler(Request request) async {
     //   if (!request.isMultipart) {
     //     return Response.ok('Not a multipart request');
@@ -86,8 +103,6 @@ class UploadHandlers {
     //     return Response.ok(description.toString());
     //   }
     // }
- 
-
 
     router.all(
       '/<ignored|.*>',
@@ -96,5 +111,5 @@ class UploadHandlers {
     );
 
     return router;
-   }
+  }
 }
