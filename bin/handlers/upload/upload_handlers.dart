@@ -10,7 +10,7 @@ class UploadHandlers {
   Router get router {
     final router = Router();
 
-    router.post('/', (Request request, String fileName) async {
+    router.post('/<fileName>', (Request request, String fileName) async {
       try { 
         var input = jsonDecode(await request.readAsString());
         final uploadDirectory = Directory('storage');
