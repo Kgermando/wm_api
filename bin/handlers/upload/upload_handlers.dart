@@ -13,7 +13,7 @@ class UploadHandlers {
     final router = Router();
 
     router.post('/file', (Request request) async {
-      var resPath = '';
+      var resPath = 'resPath';
       if (!request.isMultipart) {
         return Response.badRequest(body: 'bad request');
       }
