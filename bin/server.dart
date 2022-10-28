@@ -875,8 +875,8 @@ class Service {
     router.mount(
         '/api/uploads/',
         Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
+            // .addMiddleware(setJsonHeader())
+            // .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(UploadHandlers().router)); 
 
