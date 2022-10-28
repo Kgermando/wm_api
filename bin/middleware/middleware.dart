@@ -36,10 +36,12 @@ Middleware handleErrors() {
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, patch, OPTIONS',
-  'Access-Control-Allow-Headers': 'Origin, Content-Type',
-};
-
+  'Access-Control-Expose-Headers': 'Authorization, Content-Type',
+  'Access-Control-Allow-Headers':
+      'Authorization, Origin, X-Requested-With, Content-Type, Accept',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE'
+}; 
+ 
 Middleware setJsonHeader() {
   return (Handler innerHandler) {
     return (Request request) async {

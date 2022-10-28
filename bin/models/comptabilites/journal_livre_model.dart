@@ -3,6 +3,7 @@ class JournalLivreModel {
   late String intitule;
   late DateTime debut;
   late DateTime fin;
+  late String isSubmit; 
 
   late String signature;
   late DateTime created; 
@@ -16,6 +17,7 @@ class JournalLivreModel {
       required this.intitule,
       required this.debut,
       required this.fin,
+      required this.isSubmit, 
       required this.signature,
       required this.created, 
       required this.approbationDD,
@@ -28,11 +30,12 @@ class JournalLivreModel {
         intitule: row[1],
         debut: row[2],
         fin: row[3],
-        signature: row[4],
-        created: row[5],
-        approbationDD: row[6],
-        motifDD: row[7],
-        signatureDD: row[8]
+        isSubmit: row[4],
+        signature: row[5],
+        created: row[6],
+        approbationDD: row[7],
+        motifDD: row[8],
+        signatureDD: row[9]
         
     );
   }
@@ -43,6 +46,7 @@ class JournalLivreModel {
         intitule: json['intitule'],
         debut: DateTime.parse(json['debut']),
         fin: DateTime.parse(json['fin']),
+        isSubmit: json['isSubmit'], 
         signature: json['signature'],
         created: DateTime.parse(json['created']), 
         approbationDD: json['approbationDD'],
@@ -56,6 +60,7 @@ class JournalLivreModel {
       'intitule': intitule,
       'debut': debut.toIso8601String(),
       'fin': fin.toIso8601String(),
+      'isSubmit': isSubmit, 
       'signature': signature,
       'created': created.toIso8601String(), 
       'approbationDD': approbationDD,

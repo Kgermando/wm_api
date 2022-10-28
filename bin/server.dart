@@ -109,6 +109,7 @@ import 'handlers/rh/presence_handlers.dart';
 import 'handlers/rh/trans_rest_agents_handlers.dart';
 import 'handlers/rh/transport_restauration_handlers.dart';
 import 'handlers/update/upate_handlers.dart';
+import 'handlers/upload/upload_handlers.dart';
 import 'middleware/middleware.dart';
 import 'repository/repository.dart';
 
@@ -867,7 +868,17 @@ class Service {
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(UpdateHandlers(repos).router)); 
+            .addHandler(UpdateHandlers(repos).router));
+
+
+
+    router.mount(
+        '/api/uploads/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(UploadHandlers().router)); 
 
     router.all(
       '/<ignored|.*>',

@@ -37,6 +37,7 @@ class JournalLivreHandlers {
           intitule: input['intitule'],
           debut: DateTime.parse(input['debut']),
           fin: DateTime.parse(input['fin']),
+          isSubmit: input['isSubmit'],
           signature: input['signature'],
           created: DateTime.parse(input['created']), 
           approbationDD: input['approbationDD'],
@@ -64,10 +65,13 @@ class JournalLivreHandlers {
       }
       if (input['fin'] != null) {
         data.fin = DateTime.parse(input['fin']);
-      } 
+      }
+      if (input['isSubmit'] != null) {
+        data.isSubmit = input['isSubmit'];
+      }
       if (input['signature'] != null) {
         data.signature = input['signature'];
-      }
+      } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
       } 
