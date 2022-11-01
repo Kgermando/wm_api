@@ -43,6 +43,9 @@ import 'handlers/personnels_roles/agent_role_hanlders.dart';
 import 'handlers/exploitations/fournisseur_handlers.dart';
 import 'handlers/exploitations/production_handlers.dart';
 import 'handlers/exploitations/projet_handlers.dart';
+import 'handlers/suivis_controles/abonnement_client_handlers.dart';
+import 'handlers/suivis_controles/entreprise_info_handlers.dart';
+import 'handlers/suivis_controles/suivi_handlers.dart';
 import 'handlers/taches/rapport_hanlders.dart';
 import 'handlers/taches/tache_handlers.dart';
 import 'handlers/exploitations/versement_projet_handlers.dart';
@@ -108,8 +111,7 @@ import 'handlers/rh/presence_personnel_handlers.dart';
 import 'handlers/rh/presence_handlers.dart'; 
 import 'handlers/rh/trans_rest_agents_handlers.dart';
 import 'handlers/rh/transport_restauration_handlers.dart';
-import 'handlers/update/upate_handlers.dart';
-import 'handlers/upload/upload_handlers.dart';
+import 'handlers/update/upate_handlers.dart'; 
 import 'middleware/middleware.dart';
 import 'repository/repository.dart';
 
@@ -607,7 +609,7 @@ class Service {
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(TacheHanlers(repos).router));
+            .addHandler(TacheHandlers(repos).router));
     router.mount(
         '/api/versements-projets/',
         Pipeline()
@@ -869,17 +871,31 @@ class Service {
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(UpdateHandlers(repos).router));
-
-
-
+          
+    // Suivis & Controlle
     router.mount(
-        '/api/uploads/',
+        '/api/abonnement-clients/',
         Pipeline()
-            // .addMiddleware(setJsonHeader())
-            // .addMiddleware(handleErrors())
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(UploadHandlers().router)); 
+            .addHandler(AbonnementClientHandlers(repos).router));
+    router.mount(
+        '/api/entreprise-infos/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(EntrepriseInfoHandlers(repos).router));
+    router.mount(
+        '/api/suivis/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            // .addMiddleware(handleAuth(serverSecretKey))
+            .addHandler(SuiviHandlers(repos).router));
 
+ 
     router.all(
       '/<ignored|.*>',
       (Request request) => Response.notFound(null),

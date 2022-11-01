@@ -6,10 +6,10 @@ import 'package:shelf_router/shelf_router.dart';
 import '../../models/taches/tache_model.dart';
 import '../../repository/repository.dart';
 
-class TacheHanlers {
+class TacheHandlers {
   final Repository repos;
 
-  TacheHanlers(this.repos);
+  TacheHandlers(this.repos);
 
   Router get router {
     final router = Router();

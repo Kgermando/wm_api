@@ -34,10 +34,13 @@ import 'devis/devis_ist_objet_repository.dart';
 import 'devis/devis_repository.dart';
 import 'logistiques/approvisionnement_repository.dart';
 import 'logistiques/approvison_reception_repository.dart';
-import 'personnel_role/agent_role_repository.dart'; 
+import 'personnel_role/agent_role_repository.dart';
 import 'exploitations/fournisseur_repository.dart';
 import 'exploitations/production_repository.dart';
 import 'exploitations/projet_repository.dart';
+import 'suivi_controle/abonnement_client_repository.dart';
+import 'suivi_controle/entreprise_info_repository.dart';
+import 'suivi_controle/suivi_repository.dart';
 import 'taches/rapport_repository.dart';
 import 'taches/tache_repository.dart';
 import 'exploitations/versement_projet_repository.dart';
@@ -129,7 +132,7 @@ class Repository {
   // Devis
   late DevisRepository devis;
   late DevisListObjetRepository devisListObjets;
- 
+
   // FINANCES
   late BanqueNameRepository banqueNames;
   late CaisseNameRepository caisseNames;
@@ -243,6 +246,11 @@ class Repository {
   late LogistiqueDepartementRepository logistiqueDepartementRepository;
   late RhDepartementRepository rhDepartementRepository;
 
+  // Suivi & Controle
+  late AbonnementRepository abonnementRepository;
+  late EntrepriseRepository entrepriseRepository;
+  late SuiviRepository suiviRepository;
+
   Repository(this.executor) {
     // Notification SideBar
     adminDepartementRepository = AdminDepartementRepository(executor);
@@ -316,7 +324,8 @@ class Repository {
     // FINANCES
     banqueNames = BanqueNameRepository(executor, 'banque_names');
     caisseNames = CaisseNameRepository(executor, 'caisse_names');
-    finExterieurNames = FinExterieurNameRepository(executor, 'fin_exterieur_names');
+    finExterieurNames =
+        FinExterieurNameRepository(executor, 'fin_exterieur_names');
 
     banques = BanqueRepository(executor, 'banques');
     caisses = CaissesRepository(executor, 'caisses');
@@ -361,8 +370,10 @@ class Repository {
     mobiliers = MobilierRepository(executor, 'mobiliers');
     trajets = TrajetRepository(executor, 'trajets');
     objetsRemplace = ObjetRemplaceRepository(executor, 'objets_remplace');
-    approvisionnementRepository = ApprovisionnementRepository(executor, 'approvisionnements');
-    approvisionReceptionRepository = ApprovisionReceptionRepository(executor, 'approvision_receptions');
+    approvisionnementRepository =
+        ApprovisionnementRepository(executor, 'approvisionnements');
+    approvisionReceptionRepository =
+        ApprovisionReceptionRepository(executor, 'approvision_receptions');
 
     // COMMERCIAL & MARKETING
     produitModel = ProduitModelRepository(executor, 'produits_model');
@@ -393,5 +404,10 @@ class Repository {
     mails = MailRepository(executor, 'mails');
 
     updateVersion = UpdateVersionRepository(executor, 'update_versions');
+
+    // Suivi & Controlle
+    abonnementRepository = AbonnementRepository(executor, 'abonnement_clients');
+    entrepriseRepository = EntrepriseRepository(executor, 'entreprise_infos');
+    suiviRepository = SuiviRepository(executor, 'suivis');
   }
 }
