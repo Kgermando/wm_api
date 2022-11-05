@@ -8,8 +8,6 @@ class JournalNotifyRepository {
 
   JournalNotifyRepository(this.executor, this.tableName);
 
- 
-
   Future<NotifyModel> getCountDD() async {
     try {
       var data = <NotifyModel>{};
