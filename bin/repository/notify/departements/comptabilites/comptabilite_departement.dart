@@ -30,7 +30,7 @@ class ComptabiliteDepartementRepository {
         +
          (SELECT COUNT(*) FROM $tableNameComptJournals where 
            "approbation_dd" = '-' AND
-           "is_submit" = 'true')
+           "is_submit" = 'true' )
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
