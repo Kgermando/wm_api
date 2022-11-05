@@ -11,23 +11,23 @@ import 'handlers/auth/auth_handlers.dart';
 import 'handlers/auth/user_handlers.dart';
 import 'handlers/budgets/departement_budget_handlers.dart';
 import 'handlers/budgets/ligne_budgetaire_handlers.dart';
-import 'handlers/comm_marketing/commercial/achats_handlers.dart';
-import 'handlers/comm_marketing/commercial/bon_livraison_handlers.dart';
-import 'handlers/comm_marketing/commercial/cart_handlers.dart';
-import 'handlers/comm_marketing/commercial/creance_facture_handlers.dart';
-import 'handlers/comm_marketing/commercial/facture_handlers.dart';
-import 'handlers/comm_marketing/commercial/gains_handlers.dart';
-import 'handlers/comm_marketing/commercial/history_livraison_handlers.dart';
-import 'handlers/comm_marketing/commercial/history_ravitaillement_handlers.dart';
-import 'handlers/comm_marketing/commercial/number_fact_handlers.dart';
-import 'handlers/comm_marketing/commercial/produit_model_handlers.dart';
-import 'handlers/comm_marketing/commercial/restitution_handlers.dart';
-import 'handlers/comm_marketing/commercial/stocks_global_handlers.dart';
-import 'handlers/comm_marketing/commercial/succursale_handlers.dart';
-import 'handlers/comm_marketing/commercial/ventes_handlers.dart';
-import 'handlers/comm_marketing/marketing/agenda_handlers.dart';
-import 'handlers/comm_marketing/marketing/annuaire_handlers.dart';
-import 'handlers/comm_marketing/marketing/campaign_handlers.dart';
+import 'handlers/commercial/achats_handlers.dart';
+import 'handlers/commercial/bon_livraison_handlers.dart';
+import 'handlers/commercial/cart_handlers.dart';
+import 'handlers/commercial/creance_facture_handlers.dart';
+import 'handlers/commercial/facture_handlers.dart';
+import 'handlers/commercial/gains_handlers.dart';
+import 'handlers/commercial/history_livraison_handlers.dart';
+import 'handlers/commercial/history_ravitaillement_handlers.dart';
+import 'handlers/commercial/number_fact_handlers.dart';
+import 'handlers/commercial/produit_model_handlers.dart';
+import 'handlers/commercial/restitution_handlers.dart';
+import 'handlers/commercial/stocks_global_handlers.dart';
+import 'handlers/commercial/succursale_handlers.dart';
+import 'handlers/commercial/ventes_handlers.dart';
+import 'handlers/marketing/agenda_handlers.dart';
+import 'handlers/marketing/annuaire_handlers.dart';
+import 'handlers/marketing/campaign_handlers.dart';
 import 'handlers/comptabilites/balance_comptes_handlers.dart';
 import 'handlers/comptabilites/bilans_handlers.dart';
 import 'handlers/comptabilites/compte_bilan_ref_handlers.dart'; 
@@ -39,6 +39,7 @@ import 'handlers/devis/devis_handlers.dart';
 import 'handlers/devis/devis_list_objets_handlers.dart';
 import 'handlers/logistiques/approvision_reception_handlers.dart';
 import 'handlers/logistiques/approvisionnenement_handlers.dart';
+import 'handlers/notify/departements/marketing_departement.dart';
 import 'handlers/personnels_roles/agent_role_hanlders.dart';
 import 'handlers/exploitations/fournisseur_handlers.dart';
 import 'handlers/exploitations/production_handlers.dart';
@@ -70,18 +71,18 @@ import 'handlers/logistiques/objets_remplace_handlers.dart';
 import 'handlers/logistiques/trajet_handlers.dart';
 import 'handlers/mails/mails_handlers.dart';
 import 'handlers/notify/budgets/budget_notify_handlers.dart';
-import 'handlers/notify/comm_marketing/agenda_notify_handlers.dart';
-import 'handlers/notify/comm_marketing/campaign_notify_handlers.dart';
-import 'handlers/notify/comm_marketing/cart_notify_handlers.dart';
-import 'handlers/notify/comm_marketing/prod_model_notify_handlers.dart';
-import 'handlers/notify/comm_marketing/succursale_notify_handlers.dart';
+import 'handlers/notify/marketing/agenda_notify_handlers.dart';
+import 'handlers/notify/marketing/campaign_notify_handlers.dart';
+import 'handlers/notify/commercial/cart_notify_handlers.dart';
+import 'handlers/notify/commercial/prod_model_notify_handlers.dart';
+import 'handlers/notify/commercial/succursale_notify_handlers.dart';
 import 'handlers/notify/comptabilites/balance_notify_handlers.dart';
 import 'handlers/notify/comptabilites/bilan_notify_handlers.dart';
 import 'handlers/notify/comptabilites/compte_resultat_notify_handlers.dart';
 import 'handlers/notify/comptabilites/journal_notify_handlers.dart';
 import 'handlers/notify/departements/admin_departement.dart';
 import 'handlers/notify/departements/budget_departement.dart';
-import 'handlers/notify/departements/comm_marketing_departement.dart';
+import 'handlers/notify/departements/comm_departement.dart';
 import 'handlers/notify/departements/comptabilites_departement.dart';
 import 'handlers/notify/departements/exploitation_departement.dart';
 import 'handlers/notify/departements/finance_departement.dart';
@@ -137,11 +138,17 @@ class Service {
             .addMiddleware(handleErrors())
             .addHandler(BudgetDepartementHandlers(repos).router));
     router.mount(
-        '/api/counts/departement-comm-marketing/',
+        '/api/counts/departement-marketing/',
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
-            .addHandler(CommMarketingDepartementHandlers(repos).router));
+            .addHandler(MarketingDepartementHandlers(repos).router));
+    router.mount(
+        '/api/counts/departement-commmercials/',
+        Pipeline()
+            .addMiddleware(setJsonHeader())
+            .addMiddleware(handleErrors())
+            .addHandler(CommDepartementHandlers(repos).router));
     router.mount(
         '/api/counts/departement-comptabilite/',
         Pipeline()

@@ -6,23 +6,23 @@ import 'archives/archive_folder_repository.dart';
 import 'archives/archive_repository.dart';
 import 'budgets/departement_budget_repository.dart';
 import 'budgets/ligne_budgetaire_repository.dart';
-import 'comm_marketing/commercial/achats_repository.dart';
-import 'comm_marketing/commercial/bon_livraison_repository.dart';
-import 'comm_marketing/commercial/cart_repository.dart';
-import 'comm_marketing/commercial/creance_cart_repository.dart';
-import 'comm_marketing/commercial/facture_cart_repository.dart';
-import 'comm_marketing/commercial/gain_repository.dart';
-import 'comm_marketing/commercial/history_livraison_repository.dart';
-import 'comm_marketing/commercial/history_ravitraillement_repository.dart';
-import 'comm_marketing/commercial/number_facture_repository.dart';
-import 'comm_marketing/commercial/produit_model_repository.dart';
-import 'comm_marketing/commercial/restitution_repository.dart';
-import 'comm_marketing/commercial/stocks_global_repository.dart';
-import 'comm_marketing/commercial/succursale_repository.dart';
-import 'comm_marketing/commercial/vente_repository.dart';
-import 'comm_marketing/marketing/agenda_repository.dart';
-import 'comm_marketing/marketing/annuaire_repository.dart';
-import 'comm_marketing/marketing/campaign_repository.dart';
+import 'commercial/achats_repository.dart';
+import 'commercial/bon_livraison_repository.dart';
+import 'commercial/cart_repository.dart';
+import 'commercial/creance_cart_repository.dart';
+import 'commercial/facture_cart_repository.dart';
+import 'commercial/gain_repository.dart';
+import 'commercial/history_livraison_repository.dart';
+import 'commercial/history_ravitraillement_repository.dart';
+import 'commercial/number_facture_repository.dart';
+import 'commercial/produit_model_repository.dart';
+import 'commercial/restitution_repository.dart';
+import 'commercial/stocks_global_repository.dart';
+import 'commercial/succursale_repository.dart';
+import 'commercial/vente_repository.dart';
+import 'marketing/agenda_repository.dart';
+import 'marketing/annuaire_repository.dart';
+import 'marketing/campaign_repository.dart';
 import 'comptabilites/balance_compte_repository.dart';
 import 'comptabilites/bilan_repository.dart';
 import 'comptabilites/compte_bilan_ref_repository.dart';
@@ -34,6 +34,7 @@ import 'devis/devis_ist_objet_repository.dart';
 import 'devis/devis_repository.dart';
 import 'logistiques/approvisionnement_repository.dart';
 import 'logistiques/approvison_reception_repository.dart';
+import 'notify/departements/marketing/marketing_departement.dart';
 import 'personnel_role/agent_role_repository.dart';
 import 'exploitations/fournisseur_repository.dart';
 import 'exploitations/production_repository.dart';
@@ -65,8 +66,8 @@ import 'logistiques/objet_remplace_reposiotory.dart';
 import 'logistiques/trajet_repository.dart';
 import 'mails/mail_repository.dart';
 import 'notify/budgets/budget_notify_repository.dart';
-import 'notify/comm_marketing/agenda_notify_repository.dart';
-import 'notify/comm_marketing/campaign_notify_repository.dart';
+import 'notify/marketing/agenda_notify_repository.dart';
+import 'notify/marketing/campaign_notify_repository.dart';
 import 'notify/comm_marketing/cart_notify_repository.dart';
 import 'notify/comm_marketing/prod_model_notify_repository.dart';
 import 'notify/comm_marketing/succursale_notify_repository.dart';
@@ -76,7 +77,7 @@ import 'notify/comptabilites/compte_resultat_notify_repository.dart';
 import 'notify/comptabilites/journal_notify_repository.dart';
 import 'notify/departements/administration/admin_departement.dart';
 import 'notify/departements/budgets/budget_departement_.dart';
-import 'notify/departements/comm_marketing/comm_marketing_departement.dart';
+import 'notify/departements/commercial/comm_departement.dart';
 import 'notify/departements/comptabilites/comptabilite_departement.dart';
 import 'notify/departements/exploitations/exploitations_departement.dart';
 import 'notify/departements/finances/finance_departement.dart';
@@ -239,7 +240,8 @@ class Repository {
   // Notification SideBar
   late AdminDepartementRepository adminDepartementRepository;
   late BudgetDepartementRepository budgetDepartementRepository;
-  late CommMarketingDepartementRepository commMarketingDepartementRepository;
+  late MarketingDepartementRepository marketingDepartementRepository;
+  late CommDepartementRepository commDepartementRepository;
   late ComptabiliteDepartementRepository comptabiliteDepartementRepository;
   late ExploitationDepartementRepository exploitationDepartementRepository;
   late FinanceDepartementRepository financeDepartementRepository;
@@ -255,8 +257,10 @@ class Repository {
     // Notification SideBar
     adminDepartementRepository = AdminDepartementRepository(executor);
     budgetDepartementRepository = BudgetDepartementRepository(executor);
-    commMarketingDepartementRepository =
-        CommMarketingDepartementRepository(executor);
+    marketingDepartementRepository =
+        MarketingDepartementRepository(executor);
+    commDepartementRepository =
+        CommDepartementRepository(executor);
     comptabiliteDepartementRepository =
         ComptabiliteDepartementRepository(executor);
     exploitationDepartementRepository =
