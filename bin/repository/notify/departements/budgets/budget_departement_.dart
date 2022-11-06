@@ -14,14 +14,14 @@ class BudgetDepartementRepository {
   static String tableNameExploitation = 'projets';
 
   Future<NotifySumModel> getCountBudget() async {
-    try {
+    try { 
       var data = <NotifySumModel>{};
       var querySQL = """SELECT SUM  
       (
           (SELECT COUNT(*) FROM $tableNameBudget where
             NOW() <= "periode_fin"  AND
             "approbation_dd" = '-' AND
-            "is_submit" = 'true')
+            "is_submit" = 'false')
         +
           (SELECT COUNT(*) FROM $tableNameRhTransRest where 
             "approbation_dd" = 'Approved' AND 
