@@ -12,10 +12,10 @@ class AgendaNotifyRepository {
     try {
       var data = <NotifyModel>{};
       var querySQL =
-        """SELECT COUNT(*) FROM $tableName where  
+        """SELECT COUNT(*) FROM $tableName where "signature"='$matricule' AND
         EXTRACT(DAY FROM "date_rappel" ::TIMESTAMP) = EXTRACT(DAY FROM NOW() ::TIMESTAMP) AND
         EXTRACT(MONTH FROM "date_rappel" ::TIMESTAMP) = EXTRACT(MONTH FROM NOW() ::TIMESTAMP) AND
-        EXTRACT(YEAR FROM "date_rappel" ::TIMESTAMP) = EXTRACT(YEAR FROM NOW() ::TIMESTAMP) AND "signature"='$matricule';""";
+        EXTRACT(YEAR FROM "date_rappel" ::TIMESTAMP) = EXTRACT(YEAR FROM NOW() ::TIMESTAMP) ;""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
         data.add(NotifyModel.fromSQL(row));

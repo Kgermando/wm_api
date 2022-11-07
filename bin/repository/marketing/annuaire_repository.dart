@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/annuaire_model.dart';
+import '../../models/maketing/annuaire_model.dart';
 
 class AnnuaireReposiotry {
   final PostgreSQLConnection executor;

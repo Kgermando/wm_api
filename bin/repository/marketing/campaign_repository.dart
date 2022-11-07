@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/campaign_model.dart';
+import '../../models/maketing/campaign_model.dart';
 
 class CampaignRepository {
   final PostgreSQLConnection executor;

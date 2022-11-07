@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/agenda_model.dart';
+import '../../models/maketing/agenda_model.dart';
 
 class AgendaRepository {
   final PostgreSQLConnection executor;
