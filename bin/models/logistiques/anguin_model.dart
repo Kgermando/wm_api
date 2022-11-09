@@ -1,6 +1,5 @@
 class AnguinModel {
   late int? id;
-  late String nom; // nom de l'anguin
   late String modele;
   late String marque;
   late String numeroChassie;
@@ -30,7 +29,6 @@ class AnguinModel {
 
   AnguinModel(
       {this.id,
-      required this.nom,
       required this.modele,
       required this.marque,
       required this.numeroChassie,
@@ -56,34 +54,32 @@ class AnguinModel {
   factory AnguinModel.fromSQL(List<dynamic> row) {
     return AnguinModel(
         id: row[0],
-        nom: row[1],
-        modele: row[2],
-        marque: row[3],
-        numeroChassie: row[4],
-        couleur: row[5],
-        genre: row[6],
-        qtyMaxReservoir: row[7],
-        dateFabrication: row[8],
-        nomeroPLaque: row[9],
-        nomeroEntreprise: row[10],
-        kilometrageInitiale: row[11],
-        provenance: row[12],
-        typeCaburant: row[13],
-        typeMoteur: row[14],
-        signature: row[15],
-        created: row[16],
-        approbationDG: row[17],
-        motifDG: row[18],
-        signatureDG: row[19],
-        approbationDD: row[20],
-        motifDD: row[21],
-        signatureDD: row[22]);
+        modele: row[1],
+        marque: row[2],
+        numeroChassie: row[3],
+        couleur: row[4],
+        genre: row[5],
+        qtyMaxReservoir: row[6],
+        dateFabrication: row[7],
+        nomeroPLaque: row[8],
+        nomeroEntreprise: row[9],
+        kilometrageInitiale: row[10],
+        provenance: row[11],
+        typeCaburant: row[12],
+        typeMoteur: row[13],
+        signature: row[14],
+        created: row[15],
+        approbationDG: row[16],
+        motifDG: row[17],
+        signatureDG: row[18],
+        approbationDD: row[19],
+        motifDD: row[20],
+        signatureDD: row[21]);
   }
 
   factory AnguinModel.fromJson(Map<String, dynamic> json) {
     return AnguinModel(
         id: json['id'],
-        nom: json['nom'],
         modele: json['modele'],
         marque: json['marque'],
         numeroChassie: json['numeroChassie'],
@@ -110,7 +106,6 @@ class AnguinModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nom': nom,
       'modele': modele,
       'marque': marque,
       'numeroChassie': numeroChassie,

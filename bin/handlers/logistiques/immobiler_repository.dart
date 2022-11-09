@@ -41,11 +41,11 @@ class ImmobilierHandlers {
         signature: input['signature'], 
         created: DateTime.parse(input['created']),
         approbationDG: input['approbationDG'],
-          motifDG: input['motifDG'],
-          signatureDG: input['signatureDG'],
-          approbationDD: input['approbationDD'],
-          motifDD: input['motifDD'],
-          signatureDD: input['signatureDD']
+        motifDG: input['motifDG'],
+        signatureDG: input['signatureDG'],
+        approbationDD: input['approbationDD'],
+        motifDD: input['motifDD'],
+        signatureDD: input['signatureDD']
       );
 
       try {

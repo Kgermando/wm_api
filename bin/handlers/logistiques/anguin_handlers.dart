@@ -41,7 +41,6 @@ class AnguinHandlers {
     router.post('/insert-new-anguin', (Request request) async {
       var input = jsonDecode(await request.readAsString());
       AnguinModel anguinModel = AnguinModel(
-        nom: input['nom'],
         modele: input['modele'],
         marque: input['marque'],
         numeroChassie: input['numeroChassie'],
@@ -81,9 +80,6 @@ class AnguinHandlers {
       AnguinModel? data =
           await repos.anguins.getFromId(editH.id!); 
 
-      if (input['nom'] != null) {
-        data.nom = input['nom'];
-      }
       if (input['modele'] != null) {
         data.modele = input['modele'];
       }

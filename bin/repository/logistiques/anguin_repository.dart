@@ -39,36 +39,35 @@ class AnguinRepository {
   Future<void> insertData(AnguinModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-        "INSERT INTO $tableName (id, nom, modele, marque, numero_chassie,"
+        "INSERT INTO $tableName (id, modele, marque, numero_chassie,"
         "couleur, genre, qty_max_reservoir, date_fabrication, nomero_plaque,"
         "nomero_entreprise, kilometrage_initiale, provenance, type_caburant,"
         "type_moteur, signature, created,"
         "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
         "VALUES (nextval('anguins_id_seq'), @1, @2, @3, @4, @5, @6,"
-        "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22)",
+        "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21)",
         substitutionValues: {
-          '1': data.nom,
-          '2': data.modele,
-          '3': data.marque,
-          '4': data.numeroChassie,
-          '5': data.couleur,
-          '6': data.genre,
-          '7': data.qtyMaxReservoir,
-          '8': data.dateFabrication,
-          '9': data.nomeroPLaque,
-          '10': data.nomeroEntreprise,
-          '11': data.kilometrageInitiale,
-          '12': data.provenance,
-          '13': data.typeCaburant,
-          '14': data.typeMoteur,
-          '15': data.signature,
-          '16': data.created,
-          '17': data.approbationDG,
-          '18': data.motifDG,
-          '19': data.signatureDG,
-          '20': data.approbationDD,
-          '21': data.motifDD,
-          '22': data.signatureDD 
+          '1': data.modele,
+          '2': data.marque,
+          '3': data.numeroChassie,
+          '4': data.couleur,
+          '5': data.genre,
+          '6': data.qtyMaxReservoir,
+          '7': data.dateFabrication,
+          '8': data.nomeroPLaque,
+          '9': data.nomeroEntreprise,
+          '10': data.kilometrageInitiale,
+          '11': data.provenance,
+          '12': data.typeCaburant,
+          '13': data.typeMoteur,
+          '14': data.signature,
+          '15': data.created,
+          '16': data.approbationDG,
+          '17': data.motifDG,
+          '18': data.signatureDG,
+          '19': data.approbationDD,
+          '20': data.motifDD,
+          '21': data.signatureDD 
         });
     });
   }
@@ -77,37 +76,36 @@ class AnguinRepository {
   
   Future<void> update(AnguinModel data) async {
     await executor.execute("""UPDATE $tableName
-      SET nom = @1, modele = @2, marque = @3, numero_chassie = @4, couleur = @5,
-      genre = @6, qty_max_reservoir = @7, date_fabrication = @8, nomero_plaque = @9,
-      nomero_entreprise = @10, kilometrage_initiale = @11, provenance = @12,
-      type_caburant = @13, type_moteur = @14, signature = @15,
-      created = @16, approbation_dg = @17, motif_dg = @18, motif_dd = @19,
-      signature_dg = @20, approbation_dd = @21,
-      signature_dd = @22 WHERE id = @23""",
+      SET modele = @1, marque = @2, numero_chassie = @3, couleur = @4,
+      genre = @5, qty_max_reservoir = @6, date_fabrication = @7, nomero_plaque = @8,
+      nomero_entreprise = @9, kilometrage_initiale = @10, provenance = @11,
+      type_caburant = @12, type_moteur = @13, signature = @14,
+      created = @15, approbation_dg = @16, motif_dg = @17, motif_dd = @18,
+      signature_dg = @19, approbation_dd = @20,
+      signature_dd = @21 WHERE id = @22""",
       substitutionValues: {
-        '1': data.nom,
-        '2': data.modele,
-        '3': data.marque,
-        '4': data.numeroChassie,
-        '5': data.couleur,
-        '6': data.genre,
-        '7': data.qtyMaxReservoir,
-        '8': data.dateFabrication,
-        '9': data.nomeroPLaque,
-        '10': data.nomeroEntreprise,
-        '11': data.kilometrageInitiale,
-        '12': data.provenance,
-        '13': data.typeCaburant,
-        '14': data.typeMoteur,
-        '15': data.signature,
-        '16': data.created,
-        '17': data.approbationDG,
-        '18': data.motifDG,
-        '19': data.signatureDG,
-        '20': data.approbationDD,
-        '21': data.motifDD,
-        '22': data.signatureDD,
-        '23': data.id
+        '1': data.modele,
+      '2': data.marque,
+      '3': data.numeroChassie,
+      '4': data.couleur,
+      '5': data.genre,
+      '6': data.qtyMaxReservoir,
+      '7': data.dateFabrication,
+      '8': data.nomeroPLaque,
+      '9': data.nomeroEntreprise,
+      '10': data.kilometrageInitiale,
+      '11': data.provenance,
+      '12': data.typeCaburant,
+      '13': data.typeMoteur,
+      '14': data.signature,
+      '15': data.created,
+      '16': data.approbationDG,
+      '17': data.motifDG,
+      '18': data.signatureDG,
+      '19': data.approbationDD,
+      '20': data.motifDD,
+      '21': data.signatureDD,
+        '22': data.id
       });
   }
 
@@ -127,28 +125,27 @@ class AnguinRepository {
         await executor.query("SELECT * FROM  $tableName WHERE \"id\" = '$id'");
     return AnguinModel(
       id: data[0][0],
-      nom: data[0][1],
-      modele: data[0][2],
-      marque: data[0][3],
-      numeroChassie: data[0][4],
-      couleur: data[0][5],
-      genre: data[0][6],
-      qtyMaxReservoir: data[0][7],
-      dateFabrication: data[0][8],
-      nomeroPLaque: data[0][9],
-      nomeroEntreprise: data[0][10],
-      kilometrageInitiale: data[0][11],
-      provenance: data[0][12],
-      typeCaburant: data[0][13],
-      typeMoteur: data[0][14],
-      signature: data[0][15],
-      created: data[0][16],
-      approbationDG: data[0][17],
-      motifDG: data[0][18],
-      signatureDG: data[0][19],
-      approbationDD: data[0][20],
-      motifDD: data[0][21],
-      signatureDD: data[0][22] 
+      modele: data[0][1],
+      marque: data[0][2],
+      numeroChassie: data[0][3],
+      couleur: data[0][4],
+      genre: data[0][5],
+      qtyMaxReservoir: data[0][6],
+      dateFabrication: data[0][7],
+      nomeroPLaque: data[0][8],
+      nomeroEntreprise: data[0][9],
+      kilometrageInitiale: data[0][10],
+      provenance: data[0][11],
+      typeCaburant: data[0][12],
+      typeMoteur: data[0][13],
+      signature: data[0][14],
+      created: data[0][15],
+      approbationDG: data[0][16],
+      motifDG: data[0][17],
+      signatureDG: data[0][18],
+      approbationDD: data[0][19],
+      motifDD: data[0][20],
+      signatureDD: data[0][21] 
     );
   }
 }
