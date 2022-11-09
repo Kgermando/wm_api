@@ -12,7 +12,7 @@ class ApprovisionReceptionRepository {
   Future<List<ApprovisionReceptionModel>> getAllData() async {
     var data = <ApprovisionReceptionModel>{};
 
-    var querySQL = "SELECT * FROM $tableName ORDER BY \"created_reception\" DESC;";
+    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(ApprovisionReceptionModel.fromSQL(row));

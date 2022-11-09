@@ -28,14 +28,14 @@ class ApprovisionReceptionModel {
     return ApprovisionReceptionModel(
       id: row[0],
       provision: row[1],
-      departement: row[1],
-      quantity: row[2],
-      unite: row[3],
-      signatureLivraison: row[4],
-      created: row[5],
-      accuseReception: row[6],
-      signatureReception: row[7],
-      createdReception: row[8] 
+      departement: row[2],
+      quantity: row[3],
+      unite: row[4],
+      signatureLivraison: row[5],
+      created: row[6],
+      accuseReception: row[7],
+      signatureReception: row[8],
+      createdReception: row[9] 
     );
   }
 
