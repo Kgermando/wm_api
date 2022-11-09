@@ -26,7 +26,7 @@ class ImmobilierRepository {
       "superficie, date_acquisition, signature, created,"
       "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
       "VALUES (nextval('immobiliers_id_seq'), @1, @2, @3, @4, @5, @6, @7,"
-      "@8, @9, @10, @11, @12, @13, @14)",
+      "@8, @9, @10, @11, @12, @13)",
           substitutionValues: {
             '1': data.typeAllocation,
             '2': data.adresse,
