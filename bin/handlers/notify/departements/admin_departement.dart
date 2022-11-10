@@ -19,8 +19,15 @@ class AdminDepartementHandlers {
       return Response.ok(jsonEncode(data));
     }); 
 
-    router.get('/get-count-admin-departement-comm-marketing/', (Request request) async {
-      NotifySumModel data = await repos.adminDepartementRepository.getCountCommMarketing();
+    router.get('/get-count-admin-departement-comm/', (Request request) async {
+      NotifySumModel data = await repos.adminDepartementRepository.getCountComm();
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/get-count-admin-departement-marketing/',
+        (Request request) async {
+      NotifySumModel data =
+          await repos.adminDepartementRepository.getCountMarketing();
       return Response.ok(jsonEncode(data));
     }); 
 

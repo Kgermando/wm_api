@@ -19,7 +19,7 @@ class AdminDepartementRepository {
   static String tableNameProduction = 'productions';
   static String tableNameFinanceCreance = 'creances';
   static String tableNameFinanceDette = 'dettes';
-  static String tableNameLogistiqueEngin = 'anguins';
+  static String tableNameLogistiqueMateriel = 'materiels';
   static String tableNameLogistiqueImmobiliers = 'immobiliers';
   static String tableNameRh = 'transport_restaurations';
   static String tableNameDevis = 'devis';
@@ -45,7 +45,28 @@ class AdminDepartementRepository {
     }
   }
 
-  Future<NotifySumModel> getCountCommMarketing() async {
+  Future<NotifySumModel> getCountComm() async {
+    try {
+      var data = <NotifySumModel>{};
+      var querySQL = """SELECT SUM  
+        (
+          (SELECT COUNT(*) FROM $tableNameComptabiliteSuccurasale where 
+        "approbation_dd" = 'Approved' AND
+        "approbation_dg" = '-')
+        
+      );""";
+      List<List<dynamic>> results = await executor.query(querySQL);
+      for (var row in results) {
+        data.add(NotifySumModel.fromSQL(row));
+      }
+      return data.single;
+    } catch (e) {
+      log('$e');
+      throw Exception('$e');
+    }
+  }
+
+  Future<NotifySumModel> getCountMarketing() async {
     try {
       var data = <NotifySumModel>{};
       var querySQL = """SELECT SUM  
@@ -53,12 +74,7 @@ class AdminDepartementRepository {
           (SELECT COUNT(*) FROM $tableNameCommMarketingCampaign where 
         "approbation_dd" = 'Approved' AND
         "approbation_dg" = '-' AND 
-        "observation" = 'false') 
-        +
-          (SELECT COUNT(*) FROM $tableNameComptabiliteSuccurasale where 
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-')
-        
+        "observation" = 'false')
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
@@ -154,7 +170,7 @@ class AdminDepartementRepository {
       var data = <NotifySumModel>{};
       var querySQL = """SELECT SUM  
       (
-          (SELECT COUNT(*) FROM $tableNameLogistiqueEngin where 
+          (SELECT COUNT(*) FROM $tableNameLogistiqueMateriel where 
         "approbation_dd" = 'Approved' AND
         "approbation_dg" = '-') 
         +
