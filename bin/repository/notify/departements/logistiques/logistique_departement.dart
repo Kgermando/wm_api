@@ -7,9 +7,8 @@ class LogistiqueDepartementRepository {
 
   LogistiqueDepartementRepository(this.executor);
 
-  static String tableNameLogistiqueEngin = 'anguins';
-  static String tableNameLogistiqueImmobiliers = 'immobiliers';
-  static String tableNameLogistiqueCarburants = 'carburants';
+  static String tableNameLogistiqueMateriels = 'materiels'; 
+  static String tableNameLogistiqueImmobiliers = 'immobiliers'; 
   static String tableNameLogistiqueEntretiens = 'entretiens';
   static String tableNameLogistiqueEtatMateriels = 'etat_materiels';
   static String tableNameLogistiqueMobiliers = 'mobiliers';
@@ -20,9 +19,7 @@ class LogistiqueDepartementRepository {
       var data = <NotifySumModel>{};
       var querySQL = """SELECT SUM  
       (
-          (SELECT COUNT(*) FROM $tableNameLogistiqueCarburants where "approbation_dd" = '-')
-        +
-          (SELECT COUNT(*) FROM $tableNameLogistiqueEngin where "approbation_dd" = '-')
+        (SELECT COUNT(*) FROM $tableNameLogistiqueMateriels where "approbation_dd" = '-')
         +
           (SELECT COUNT(*) FROM $tableNameLogistiqueEntretiens where "approbation_dd" = '-')
         +

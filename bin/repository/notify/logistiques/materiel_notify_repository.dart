@@ -2,11 +2,11 @@ import 'package:postgres/postgres.dart';
 
 import '../../../models/notify/notify_model.dart';
 
-class EnginNotifyRepository {
+class MaterielNotifyRepository {
   final PostgreSQLConnection executor;
   final String tableName;
 
-  EnginNotifyRepository(this.executor, this.tableName);
+  MaterielNotifyRepository(this.executor, this.tableName);
 
   Future<NotifyModel> getCountDG() async {
     try {

@@ -50,7 +50,7 @@ class ImmobilierRepository {
         SET type_allocation = @1, adresse = @2, numero_certificat = @3,
         superficie = @4, date_acquisition = @5, signature = @6,
         created = @7, approbation_dg = @8, motif_dg = @9, signature_dg = @10,
-        approbation_dd = @11, motif_dd = @12, signature_dd = @13 WHERE id = @14""", 
+        approbation_dd = @11, motif_dd = @12, signature_dd = @13 WHERE id = @14""",
     substitutionValues: {
       '1': data.typeAllocation,
       '2': data.adresse,

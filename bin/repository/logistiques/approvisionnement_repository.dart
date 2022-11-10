@@ -24,15 +24,16 @@ class ApprovisionnementRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, provision, quantity_total, quantity, unite,"
-        "signature, created)"
-        "VALUES (nextval('approvisionnements_id_seq'), @1, @2, @3, @4, @5, @6)",
+        "signature, created, fournisseur)"
+        "VALUES (nextval('approvisionnements_id_seq'), @1, @2, @3, @4, @5, @6, @7)",
         substitutionValues: {
           '1': data.provision,
           '2': data.quantityTotal,
           '3': data.quantity,
           '4': data.unite,
           '5': data.signature,
-          '6': data.created
+          '6': data.created,
+          '7': data.fournisseur
         });
     });
   }
@@ -42,7 +43,7 @@ class ApprovisionnementRepository {
   Future<void> update(ApprovisionnementModel data) async {
     await executor.execute("""UPDATE $tableName
         SET provision = @1, quantity_total = @2, quantity = @3, unite = @4, signature = @5,
-        created = @6 WHERE id = @7""",
+        created = @6, fournisseur = @7 WHERE id = @8""",
 
         substitutionValues: {
           '1': data.provision,
@@ -51,7 +52,8 @@ class ApprovisionnementRepository {
           '4': data.unite,
           '5': data.signature,
           '6': data.created,
-          '7': data.id
+          '7': data.fournisseur,
+          '8': data.id
         });
   }
 
@@ -76,7 +78,8 @@ class ApprovisionnementRepository {
       quantity: data[0][3],
       unite: data[0][4],
       signature: data[0][5],
-      created: data[0][6] 
+      created: data[0][6],
+      fournisseur: data[0][7],
     );
   }
 }

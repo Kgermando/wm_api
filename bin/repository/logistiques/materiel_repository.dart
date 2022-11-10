@@ -1,21 +1,22 @@
 import 'package:postgres/postgres.dart';
 
 import '../../models/charts/pie_chart_model.dart';
-import '../../models/logistiques/anguin_model.dart';
+import '../../models/logistiques/material_model.dart';
 
-class AnguinRepository {
+
+class MaterielRepository {
   final PostgreSQLConnection executor;
   final String tableName;
 
-  AnguinRepository(this.executor, this.tableName);
+  MaterielRepository(this.executor, this.tableName);
 
-  Future<List<AnguinModel>> getAllData() async {
-    var data = <AnguinModel>{};
+  Future<List<MaterielModel>> getAllData() async {
+    var data = <MaterielModel>{};
 
     var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
-      data.add(AnguinModel.fromSQL(row));
+      data.add(MaterielModel.fromSQL(row));
     }
     return data.toList();
   }
@@ -36,30 +37,29 @@ class AnguinRepository {
     }
   }
 
-  Future<void> insertData(AnguinModel data) async {
+  Future<void> insertData(MaterielModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-        "INSERT INTO $tableName (id, modele, marque, numero_chassie,"
-        "couleur, genre, qty_max_reservoir, date_fabrication, nomero_plaque,"
-        "nomero_entreprise, kilometrage_initiale, provenance, type_caburant,"
-        "type_moteur, signature, created,"
+        "INSERT INTO $tableName (id, type_materiel, marque, modele,"
+        "numero_ref, couleur, genre, qty_maxReservoir, date_fabrication, numero_plaque,"
+        "identifiant, kilometrage_initiale, fournisseur, alimentation, signature, created,"
         "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
-        "VALUES (nextval('anguins_id_seq'), @1, @2, @3, @4, @5, @6,"
+        "VALUES (nextval('materiels_id_seq'), @1, @2, @3, @4, @5, @6,"
         "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21)",
         substitutionValues: {
-          '1': data.modele,
+          '1': data.typeMateriel, 
           '2': data.marque,
-          '3': data.numeroChassie,
-          '4': data.couleur,
-          '5': data.genre,
-          '6': data.qtyMaxReservoir,
-          '7': data.dateFabrication,
-          '8': data.nomeroPLaque,
-          '9': data.nomeroEntreprise,
-          '10': data.kilometrageInitiale,
-          '11': data.provenance,
-          '12': data.typeCaburant,
-          '13': data.typeMoteur,
+          '3': data.modele,
+          '4': data.numeroRef,
+          '5': data.couleur,
+          '6': data.genre,
+          '7': data.qtyMaxReservoir,
+          '8': data.dateFabrication,
+          '9': data.numeroPLaque,
+          '10': data.identifiant,
+          '11': data.kilometrageInitiale,
+          '12': data.fournisseur,
+          '13': data.alimentation,
           '14': data.signature,
           '15': data.created,
           '16': data.approbationDG,
@@ -74,28 +74,28 @@ class AnguinRepository {
 
 
   
-  Future<void> update(AnguinModel data) async {
+  Future<void> update(MaterielModel data) async {
     await executor.execute("""UPDATE $tableName
-      SET modele = @1, marque = @2, numero_chassie = @3, couleur = @4,
-      genre = @5, qty_max_reservoir = @6, date_fabrication = @7, nomero_plaque = @8,
-      nomero_entreprise = @9, kilometrage_initiale = @10, provenance = @11,
-      type_caburant = @12, type_moteur = @13, signature = @14,
+      SET type_materiel = @1, marque = @2, modele = @3, numero_ref = @4,
+      couleur = @5, genre = @6, qty_maxReservoir = @7, date_fabrication = @8,
+      numero_plaque = @9, identifiant = @10, kilometrage_initiale = @11,
+      fournisseur = @12, alimentation = @13, signature = @14,
       created = @15, approbation_dg = @16, motif_dg = @17, signature_dg = @18,
       approbation_dd = @19, motif_dd = @20, signature_dd = @21 WHERE id = @22""",
       substitutionValues: {
-        '1': data.modele,
+        '1': data.typeMateriel,
         '2': data.marque,
-        '3': data.numeroChassie,
-        '4': data.couleur,
-        '5': data.genre,
-        '6': data.qtyMaxReservoir,
-        '7': data.dateFabrication,
-        '8': data.nomeroPLaque,
-        '9': data.nomeroEntreprise,
-        '10': data.kilometrageInitiale,
-        '11': data.provenance,
-        '12': data.typeCaburant,
-        '13': data.typeMoteur,
+        '3': data.modele,
+        '4': data.numeroRef,
+        '5': data.couleur,
+        '6': data.genre,
+        '7': data.qtyMaxReservoir,
+        '8': data.dateFabrication,
+        '9': data.numeroPLaque,
+        '10': data.identifiant,
+        '11': data.kilometrageInitiale,
+        '12': data.fournisseur,
+        '13': data.alimentation,
         '14': data.signature,
         '15': data.created,
         '16': data.approbationDG,
@@ -119,24 +119,24 @@ class AnguinRepository {
     }
   }
 
-  Future<AnguinModel> getFromId(int id) async {
+  Future<MaterielModel> getFromId(int id) async {
     var data =
         await executor.query("SELECT * FROM  $tableName WHERE \"id\" = '$id'");
-    return AnguinModel(
+    return MaterielModel(
       id: data[0][0],
-      modele: data[0][1],
+      typeMateriel: data[0][1],
       marque: data[0][2],
-      numeroChassie: data[0][3],
-      couleur: data[0][4],
-      genre: data[0][5],
-      qtyMaxReservoir: data[0][6],
-      dateFabrication: data[0][7],
-      nomeroPLaque: data[0][8],
-      nomeroEntreprise: data[0][9],
-      kilometrageInitiale: data[0][10],
-      provenance: data[0][11],
-      typeCaburant: data[0][12],
-      typeMoteur: data[0][13],
+      modele: data[0][3],
+      numeroRef: data[0][4],
+      couleur: data[0][5],
+      genre: data[0][6],
+      qtyMaxReservoir: data[0][7],
+      dateFabrication: data[0][8],
+      numeroPLaque: data[0][9],
+      identifiant: data[0][10],
+      kilometrageInitiale: data[0][11],
+      fournisseur: data[0][12],
+      alimentation: data[0][13],
       signature: data[0][14],
       created: data[0][15],
       approbationDG: data[0][16],

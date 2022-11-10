@@ -6,21 +6,21 @@ import 'package:shelf_router/shelf_router.dart';
 import '../../../models/notify/notify_model.dart';
 import '../../../repository/repository.dart';
 
-class EnginNotifyHandlers {
+class MaterielNotifyHandlers {
   final Repository repos;
 
-  EnginNotifyHandlers(this.repos);
+  MaterielNotifyHandlers(this.repos);
 
   Router get router {
     final router = Router();
 
     router.get('/get-count-dg/', (Request request) async {
-      NotifyModel data = await repos.enginNotifyCount.getCountDG();
+      NotifyModel data = await repos.materielNotifyCount.getCountDG();
       return Response.ok(jsonEncode(data));
     });
 
     router.get('/get-count-dd/', (Request request) async {
-      NotifyModel data = await repos.enginNotifyCount.getCountDD();
+      NotifyModel data = await repos.materielNotifyCount.getCountDD();
       return Response.ok(jsonEncode(data));
     });
 

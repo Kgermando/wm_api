@@ -56,8 +56,7 @@ import 'finances/depenses_repository.dart';
 import 'finances/dettes_repository.dart';
 import 'finances/fin_exterieur_name_repository.dart';
 import 'finances/fin_exterieur_repository.dart';
-import 'logistiques/anguin_repository.dart';
-import 'logistiques/carburant_repository.dart';
+import 'logistiques/materiel_repository.dart'; 
 import 'logistiques/entretien_reposiotory.dart';
 import 'logistiques/etat_materiel_repository.dart';
 import 'logistiques/immobilier_repository.dart';
@@ -88,9 +87,8 @@ import 'notify/exploitations/production_notify_repository.dart';
 import 'notify/exploitations/projet_notify_repository.dart';
 import 'notify/exploitations/taches_notify_repository.dart';
 import 'notify/finances/creance_notify_repository.dart';
-import 'notify/finances/dette_notify_repository.dart';
-import 'notify/logistiques/carburant_notify_repository.dart';
-import 'notify/logistiques/engin_notify_repository.dart';
+import 'notify/finances/dette_notify_repository.dart'; 
+import 'notify/logistiques/materiel_notify_repository.dart';
 import 'notify/logistiques/entretien_notify_repository.dart';
 import 'notify/logistiques/etat_materiel_notify_repository.dart';
 import 'notify/logistiques/immobilier_notity_repository.dart';
@@ -170,8 +168,7 @@ class Repository {
   late ProductionRepository productions;
 
   // LOGISTIQUE
-  late AnguinRepository anguins;
-  late CarburantRepository carburants;
+  late MaterielRepository materielRepository; 
   late EntretienRepository entretiens;
   late EtaMaterielRepository etatMateriels;
   late ImmobilierRepository immobiliers;
@@ -225,9 +222,8 @@ class Repository {
   late ProductionNotifyRepository productionNotifyCount;
   late TacheNotifyRepository tacheNotifyCount;
   late CreanceNotifyRepository creanceNotifyCount;
-  late DetteNotifyRepository detteNotifyCount;
-  late CarburantNotifyRepository carburantNotifyCount;
-  late EnginNotifyRepository enginNotifyCount;
+  late DetteNotifyRepository detteNotifyCount; 
+  late MaterielNotifyRepository materielNotifyCount;
   late EntretienNotifyRepository entretienNotifyCount;
   late EtatMaterielNotifyRepository etatMaterielNotifyCount;
   late ImmobilierNotifyRepository immobilierNotifyCount;
@@ -286,9 +282,8 @@ class Repository {
     productionNotifyCount = ProductionNotifyRepository(executor, 'productions');
     tacheNotifyCount = TacheNotifyRepository(executor, 'taches');
     creanceNotifyCount = CreanceNotifyRepository(executor, 'creances');
-    detteNotifyCount = DetteNotifyRepository(executor, 'dettes');
-    carburantNotifyCount = CarburantNotifyRepository(executor, 'carburants');
-    enginNotifyCount = EnginNotifyRepository(executor, 'anguins');
+    detteNotifyCount = DetteNotifyRepository(executor, 'dettes'); 
+    materielNotifyCount = MaterielNotifyRepository(executor, 'materiels');
     entretienNotifyCount = EntretienNotifyRepository(executor, 'entretiens');
     etatMaterielNotifyCount =
         EtatMaterielNotifyRepository(executor, 'etat_materiels');
@@ -366,8 +361,7 @@ class Repository {
     productions = ProductionRepository(executor, 'productions');
 
     // LOGISTIQUE
-    anguins = AnguinRepository(executor, 'anguins');
-    carburants = CarburantRepository(executor, 'carburants');
+    materielRepository = MaterielRepository(executor, 'materiels'); 
     entretiens = EntretienRepository(executor, 'entretiens');
     etatMateriels = EtaMaterielRepository(executor, 'etat_materiels');
     immobiliers = ImmobilierRepository(executor, 'immobiliers');

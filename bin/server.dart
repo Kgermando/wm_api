@@ -61,8 +61,7 @@ import 'handlers/finances/dette_handlers.dart';
 import 'handlers/finances/depense_handlers.dart';
 import 'handlers/finances/fin_exterieur_handlers.dart';
 import 'handlers/finances/fin_exterieur_names_handlers.dart';
-import 'handlers/logistiques/anguin_handlers.dart';
-import 'handlers/logistiques/carburant_handlers.dart';
+import 'handlers/logistiques/materiel_handlers.dart'; 
 import 'handlers/logistiques/entretien_handlers.dart';
 import 'handlers/logistiques/etat_materiel_handlers.dart';
 import 'handlers/logistiques/immobiler_repository.dart';
@@ -93,9 +92,8 @@ import 'handlers/notify/exploitations/production_notify_handlers.dart';
 import 'handlers/notify/exploitations/projet_notify_handlers.dart';
 import 'handlers/notify/exploitations/tache_notify_handlers.dart';
 import 'handlers/notify/finances/creance_notify_handlers.dart';
-import 'handlers/notify/finances/dette_notify_handlers.dart';
-import 'handlers/notify/logistique/carburant_notify_handlers.dart';
-import 'handlers/notify/logistique/engin_notify_handlers.dart';
+import 'handlers/notify/finances/dette_notify_handlers.dart'; 
+import 'handlers/notify/logistique/materiel_notify_handlers.dart';
 import 'handlers/notify/logistique/entretien_notify_handlers.dart';
 import 'handlers/notify/logistique/etat_materiel_notify_handlers.dart';
 import 'handlers/notify/logistique/immobilier_notify_handlers.dart';
@@ -277,19 +275,13 @@ class Service {
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
-            .addHandler(DetteNotifyHandlers(repos).router));
+            .addHandler(DetteNotifyHandlers(repos).router)); 
     router.mount(
-        '/api/counts/carburants/',
+        '/api/counts/materiels/',
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
-            .addHandler(CarburantNotifyHandlers(repos).router));
-    router.mount(
-        '/api/counts/engins/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            .addHandler(EnginNotifyHandlers(repos).router));
+            .addHandler(MaterielNotifyHandlers(repos).router));
     router.mount(
         '/api/counts/entretiens/',
         Pipeline()
@@ -656,19 +648,12 @@ class Service {
 
     // LOGISTIQUES
     router.mount(
-        '/api/anguins/',
+        '/api/materiels/',
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(AnguinHandlers(repos).router));
-    router.mount(
-        '/api/carburants/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(CarburantHandlers(repos).router));
+            .addHandler(MaterielHandlers(repos).router)); 
     router.mount(
         '/api/entretiens/',
         Pipeline()

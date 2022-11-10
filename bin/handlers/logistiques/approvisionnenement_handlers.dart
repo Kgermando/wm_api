@@ -38,7 +38,8 @@ class ApprovisionnementHandlers {
         quantity: input['quantity'],
         unite: input['unite'],
         signature: input['signature'], 
-        created: DateTime.parse(input['created']), 
+        created: DateTime.parse(input['created']),
+        fournisseur: input['fournisseur'], 
       );
 
       try {
@@ -73,6 +74,9 @@ class ApprovisionnementHandlers {
       } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['fournisseur'] != null) {
+        data.fournisseur = input['fournisseur'];
       } 
 
       repos.approvisionnementRepository.update(data);
