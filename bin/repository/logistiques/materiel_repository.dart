@@ -37,7 +37,7 @@ class MaterielRepository {
     }
   }
 
-  Future<void> insertData(MaterielModel data) async {
+  Future<void> insertData(MaterielModel data) async { 
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, type_materiel, marque, modele,"
