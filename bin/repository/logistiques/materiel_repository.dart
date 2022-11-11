@@ -41,7 +41,7 @@ class MaterielRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, type_materiel, marque, modele,"
-        "numero_ref, couleur, genre, qty_maxReservoir, date_fabrication, numero_plaque,"
+        "numero_ref, couleur, genre, qty_max_reservoir, date_fabrication, numero_plaque,"
         "identifiant, kilometrage_initiale, fournisseur, alimentation, signature, created,"
         "approbation_dg, motif_dg, signature_dg, approbation_dd, motif_dd, signature_dd)"
         "VALUES (nextval('materiels_id_seq'), @1, @2, @3, @4, @5, @6,"
@@ -77,7 +77,7 @@ class MaterielRepository {
   Future<void> update(MaterielModel data) async {
     await executor.execute("""UPDATE $tableName
       SET type_materiel = @1, marque = @2, modele = @3, numero_ref = @4,
-      couleur = @5, genre = @6, qty_maxReservoir = @7, date_fabrication = @8,
+      couleur = @5, genre = @6, qty_max_reservoir = @7, date_fabrication = @8,
       numero_plaque = @9, identifiant = @10, kilometrage_initiale = @11,
       fournisseur = @12, alimentation = @13, signature = @14,
       created = @15, approbation_dg = @16, motif_dg = @17, signature_dg = @18,
