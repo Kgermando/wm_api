@@ -46,7 +46,7 @@ class MobilierRepository {
         SET nom = @1, modele = @2, marque = @3,
         description_mobilier = @4, nombre = @5,
         signature = @6, created = @7, approbation_dd = @8, motif_dd = @9, 
-        signature_dd = @10 WHERE id = @12""",
+        signature_dd = @10 WHERE id = @11""",
         substitutionValues: {
           '1': data.nom,
           '2': data.modele,

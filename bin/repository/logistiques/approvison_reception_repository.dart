@@ -46,7 +46,8 @@ class ApprovisionReceptionRepository {
   Future<void> update(ApprovisionReceptionModel data) async {
     await executor.execute("""UPDATE $tableName
       SET provision = @1, departement = @2, quantity = @3, unite = @4, signature_livraison = @5,
-      created = @6, accuse_reception = @7, signature_reception = @8, created_reception = @9 WHERE id = @10""",
+      created = @6, accuse_reception = @7, signature_reception = @8, 
+      created_reception = @9 WHERE id = @10""",
 
         substitutionValues: {
           '1': data.provision,
