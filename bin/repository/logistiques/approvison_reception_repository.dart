@@ -25,8 +25,8 @@ class ApprovisionReceptionRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, provision, departement, quantity, unite,"
-        "signature_livraison, created, accuse_reception, signature_reception, created_reception)"
-        "VALUES (nextval('approvision_receptions_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9)",
+        "signature_livraison, created, accuse_reception, signature_reception, created_reception, livraison_annuler)"
+        "VALUES (nextval('approvision_receptions_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10)",
         substitutionValues: {
           '1': data.provision,
           '2': data.departement,
@@ -36,7 +36,8 @@ class ApprovisionReceptionRepository {
           '6': data.created,
           '7': data.accuseReception,
           '8': data.signatureReception,
-          '9': data.createdReception 
+          '9': data.createdReception,
+          '10': data.livraisonAnnuler
         });
     });
   }
@@ -47,7 +48,7 @@ class ApprovisionReceptionRepository {
     await executor.execute("""UPDATE $tableName
       SET provision = @1, departement = @2, quantity = @3, unite = @4, signature_livraison = @5,
       created = @6, accuse_reception = @7, signature_reception = @8, 
-      created_reception = @9 WHERE id = @10""",
+      created_reception = @9, livraison_annuler = @10 WHERE id = @11""",
 
         substitutionValues: {
           '1': data.provision,
@@ -59,7 +60,8 @@ class ApprovisionReceptionRepository {
           '7': data.accuseReception,
           '8': data.signatureReception,
           '9': data.createdReception, 
-          '10': data.id
+          '10': data.livraisonAnnuler,
+          '11': data.id
         });
   }
 
@@ -87,7 +89,8 @@ class ApprovisionReceptionRepository {
       created: data[0][6],
       accuseReception: data[0][7],
       signatureReception: data[0][8],
-      createdReception: data[0][9] 
+      createdReception: data[0][9],
+      livraisonAnnuler: data[0][10] 
     );
   }
 }

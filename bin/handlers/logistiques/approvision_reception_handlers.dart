@@ -41,7 +41,8 @@ class ApprovisionReceptionHandlers {
         created: DateTime.parse(input['created']),
         accuseReception: input['accuseReception'], 
         signatureReception: input['signatureReception'],  
-        createdReception: DateTime.parse(input['createdReception']), 
+        createdReception: DateTime.parse(input['createdReception']),
+        livraisonAnnuler: input['livraisonAnnuler'], 
       );
 
       try {
@@ -85,6 +86,9 @@ class ApprovisionReceptionHandlers {
       } 
       if (input['createdReception'] != null) {
         data.createdReception = DateTime.parse(input['createdReception']);
+      }
+      if (input['livraisonAnnuler'] != null) {
+        data.livraisonAnnuler = input['livraisonAnnuler'];
       } 
 
       repos.approvisionReceptionRepository.update(data);
