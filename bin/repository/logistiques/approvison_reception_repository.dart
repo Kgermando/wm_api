@@ -49,7 +49,6 @@ class ApprovisionReceptionRepository {
       SET provision = @1, departement = @2, quantity = @3, unite = @4, signature_livraison = @5,
       created = @6, accuse_reception = @7, signature_reception = @8, 
       created_reception = @9, livraison_annuler = @10 WHERE id = @11""",
-
         substitutionValues: {
           '1': data.provision,
           '2': data.departement,
