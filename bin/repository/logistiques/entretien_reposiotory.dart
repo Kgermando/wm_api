@@ -24,8 +24,8 @@ class EntretienRepository {
       await ctx.execute(
         "INSERT INTO $tableName (id, nom, type_objet,"
         "type_maintenance, duree_travaux,"
-        "signature, created, approbation_dd, motif_dd, signature_dd)"
-        "VALUES (nextval('entretiens_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9)",
+        "signature, created, approbation_dd, motif_dd, signature_dd, is_submit)"
+        "VALUES (nextval('entretiens_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10)",
         substitutionValues: {
           '1': data.nom,
           '2': data.typeObjet,
@@ -35,7 +35,8 @@ class EntretienRepository {
           '6': data.created,
           '7': data.approbationDD,
           '8': data.motifDD,
-          '9': data.signatureDD
+          '9': data.signatureDD,
+          '10': data.isSubmit
         });
     });
   }
@@ -44,7 +45,7 @@ class EntretienRepository {
     await executor.execute("""UPDATE $tableName
         SET nom = @1, type_objet = @2, type_maintenance = @3,
         duree_travaux = @4, signature = @5, created = @6,
-        approbation_dd = @7, motif_dd = @8, signature_dd = @9 WHERE id = @10""", substitutionValues: {
+        approbation_dd = @7, motif_dd = @8, signature_dd = @9, is_submit = @10 WHERE id = @11""", substitutionValues: {
       '1': data.nom,
       '2': data.typeObjet,
       '3': data.typeMaintenance,
@@ -54,7 +55,8 @@ class EntretienRepository {
       '7': data.approbationDD,
       '8': data.motifDD,
       '9': data.signatureDD,
-      '10': data.id 
+      '10': data.isSubmit,
+      '11': data.id 
     });
   }
 
@@ -82,7 +84,8 @@ class EntretienRepository {
       created: data[0][6], 
       approbationDD: data[0][7],
       motifDD: data[0][8],
-      signatureDD: data[0][9] 
+      signatureDD: data[0][9],
+      isSubmit: data[0][10]
     );
   }
 }

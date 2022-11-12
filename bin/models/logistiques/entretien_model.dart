@@ -10,6 +10,7 @@ class EntretienModel {
   late String approbationDD;
   late String motifDD;
   late String signatureDD;
+  late String isSubmit;
 
   EntretienModel(
       {this.id,
@@ -21,7 +22,8 @@ class EntretienModel {
       required this.created,
       required this.approbationDD,
       required this.motifDD,
-      required this.signatureDD});
+      required this.signatureDD,
+      required this.isSubmit});
 
   factory EntretienModel.fromSQL(List<dynamic> row) {
     return EntretienModel(
@@ -34,7 +36,8 @@ class EntretienModel {
         created: row[6],
         approbationDD: row[7],
         motifDD: row[8],
-        signatureDD: row[9]);
+        signatureDD: row[9],
+        isSubmit: row[10]);
   }
 
   factory EntretienModel.fromJson(Map<String, dynamic> json) {
@@ -48,7 +51,8 @@ class EntretienModel {
         created: DateTime.parse(json['created']),
         approbationDD: json['approbationDD'],
         motifDD: json['motifDD'],
-        signatureDD: json['signatureDD']);
+        signatureDD: json['signatureDD'],
+        isSubmit: json['isSubmit']);
   }
 
   Map<String, dynamic> toJson() {
@@ -62,7 +66,8 @@ class EntretienModel {
       'created': created.toIso8601String(),
       'approbationDD': approbationDD,
       'motifDD': motifDD,
-      'signatureDD': signatureDD
+      'signatureDD': signatureDD,
+      'isSubmit': isSubmit
     };
   }
 }

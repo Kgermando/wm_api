@@ -41,7 +41,8 @@ class EntretienHandlers {
         created: DateTime.parse(input['created']),
         approbationDD: input['approbationDD'],
         motifDD: input['motifDD'],
-        signatureDD: input['signatureDD']
+        signatureDD: input['signatureDD'],
+        isSubmit: input['isSubmit']
       );
 
       try {
@@ -85,6 +86,9 @@ class EntretienHandlers {
       }
       if (input['signatureDD'] != null) {
         data.signatureDD = input['signatureDD'];
+      }
+      if (input['isSubmit'] != null) {
+        data.isSubmit = input['isSubmit'];
       }
 
       
