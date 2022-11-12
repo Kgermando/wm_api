@@ -25,7 +25,7 @@ class EntretienRepository {
         "INSERT INTO $tableName (id, nom, type_objet,"
         "type_maintenance, duree_travaux,"
         "signature, created, approbation_dd, motif_dd, signature_dd)"
-        "VALUES (nextval('entretiens_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11)",
+        "VALUES (nextval('entretiens_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9)",
         substitutionValues: {
           '1': data.nom,
           '2': data.typeObjet,
@@ -35,7 +35,7 @@ class EntretienRepository {
           '6': data.created,
           '7': data.approbationDD,
           '8': data.motifDD,
-          '9': data.signatureDD 
+          '9': data.signatureDD
         });
     });
   }
