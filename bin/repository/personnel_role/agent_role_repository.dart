@@ -12,7 +12,7 @@ class AgentRoleRepository {
   Future<List<AgentRoleModel>> getAllData() async {
     var data = <AgentRoleModel>{};
 
-    var querySQL = "SELECT * FROM $tableName;";
+    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(AgentRoleModel.fromSQL(row));
@@ -23,26 +23,28 @@ class AgentRoleRepository {
   Future<void> insertData(AgentRoleModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, reference, departement, agent, role)"
+          "INSERT INTO $tableName (id, reference, departement, agent, role, created)"
           "VALUES (nextval('agents_roles_id_seq'), @1, @2, @3, @4)",
           substitutionValues: {
             '1': data.reference,
             '2': data.departement,
             '3': data.agent,
-            '4': data.role
+            '4': data.role,
+            '5': data.created
           });
     });
   }
 
   Future<void> update(AgentRoleModel data) async {
      await executor.query("""UPDATE $tableName
-          SET reference = @1, departement = @2, agent = @3, role = @4 WHERE id = @5""",
+          SET reference = @1, departement = @2, agent = @3, role = @4, created = @5 WHERE id = @6""",
         substitutionValues: {
           '1': data.reference,
           '2': data.departement,
           '3': data.agent,
           '4': data.role,
-          '5': data.id
+          '5': data.created,
+          '6': data.id
         });
   }
 
@@ -65,7 +67,8 @@ class AgentRoleRepository {
       reference: data[0][1],
       departement: data[0][2],
       agent: data[0][3],
-      role: data[0][4]
+      role: data[0][4],
+      created: data[0][5]
     );
   }
 }

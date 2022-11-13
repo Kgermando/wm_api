@@ -36,7 +36,8 @@ class AgentRoleHandlers {
           reference: input['reference'],
           departement: input['departement'],
           agent: input['agent'],
-          role: input['role']
+          role: input['role'],
+          created: DateTime.parse(input['created'])
         );
       try {
         await repos.agentsRoles.insertData(data);
@@ -64,6 +65,9 @@ class AgentRoleHandlers {
       }
       if (input['role'] != null) {
         data.role = input['role'];
+      }
+      if (input['created'] != null) {
+        data.created = DateTime.parse(input['created']);
       }
 
       repos.agentsRoles.update(data);
