@@ -177,6 +177,11 @@ class AdminDepartementRepository {
           (SELECT COUNT(*) FROM $tableNameLogistiqueImmobiliers where 
         "approbation_dd" = 'Approved' AND
         "approbation_dg" = '-') 
+        + 
+        (SELECT COUNT(*) FROM $tableNameDevis where 
+        "approbation_dd" = 'Approved' AND
+        "approbation_dg" = '-' AND 
+        "observation" = 'false')
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
@@ -208,23 +213,23 @@ class AdminDepartementRepository {
     }
   }
 
-  Future<NotifySumModel> getCountDevis() async {
-    try {
-      var data = <NotifySumModel>{};
-      var querySQL = """SELECT SUM  
-      (
-        (SELECT COUNT(*) FROM $tableNameDevis where 
-        "approbation_dd" = 'Approved' AND
-        "approbation_dg" = '-' AND 
-        "observation" = 'false')
-      );""";
-      List<List<dynamic>> results = await executor.query(querySQL);
-      for (var row in results) {
-        data.add(NotifySumModel.fromSQL(row));
-      }
-      return data.single;
-    } catch (e) {
-      throw Exception('$e');
-    }
-  }
+  // Future<NotifySumModel> getCountDevis() async {
+  //   try {
+  //     var data = <NotifySumModel>{};
+  //     var querySQL = """SELECT SUM  
+  //     (
+  //       (SELECT COUNT(*) FROM $tableNameDevis where 
+  //       "approbation_dd" = 'Approved' AND
+  //       "approbation_dg" = '-' AND 
+  //       "observation" = 'false')
+  //     );""";
+  //     List<List<dynamic>> results = await executor.query(querySQL);
+  //     for (var row in results) {
+  //       data.add(NotifySumModel.fromSQL(row));
+  //     }
+  //     return data.single;
+  //   } catch (e) {
+  //     throw Exception('$e');
+  //   }
+  // }
 }

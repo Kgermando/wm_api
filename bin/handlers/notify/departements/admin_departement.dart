@@ -56,11 +56,11 @@ class AdminDepartementHandlers {
       return Response.ok(jsonEncode(data));
     }); 
 
-
-    router.get('/get-count-admin-departement-devis/', (Request request) async {
-      NotifySumModel data = await repos.adminDepartementRepository.getCountDevis();
-      return Response.ok(jsonEncode(data));
-    }); 
+    // Est ajouté à logistique 
+    // router.get('/get-count-admin-departement-devis/', (Request request) async {
+    //   NotifySumModel data = await repos.adminDepartementRepository.getCountDevis();
+    //   return Response.ok(jsonEncode(data));
+    // }); 
 
     router.all(
       '/<ignored|.*>',

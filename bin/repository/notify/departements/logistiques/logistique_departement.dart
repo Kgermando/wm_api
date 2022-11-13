@@ -13,6 +13,7 @@ class LogistiqueDepartementRepository {
   static String tableNameLogistiqueEtatMateriels = 'etat_materiels';
   static String tableNameLogistiqueMobiliers = 'mobiliers';
   static String tableNameLogistiqueTrajets = 'trajets';
+  static String tableNameLogistiqueDevis = 'devis';
 
   Future<NotifySumModel> getCountDD() async {
     try {
@@ -30,6 +31,8 @@ class LogistiqueDepartementRepository {
           (SELECT COUNT(*) FROM $tableNameLogistiqueMobiliers where "approbation_dd" = '-')
         +
           (SELECT COUNT(*) FROM $tableNameLogistiqueTrajets where "approbation_dd" = '-')
+        +
+          (SELECT COUNT(*) FROM $tableNameLogistiqueDevis where "approbation_dd" = '-')
           
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
