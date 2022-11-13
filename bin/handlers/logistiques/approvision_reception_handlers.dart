@@ -42,7 +42,8 @@ class ApprovisionReceptionHandlers {
         accuseReception: input['accuseReception'], 
         signatureReception: input['signatureReception'],  
         createdReception: DateTime.parse(input['createdReception']),
-        livraisonAnnuler: input['livraisonAnnuler'], 
+        livraisonAnnuler: input['livraisonAnnuler'],
+        reference: input['reference'], 
       );
 
       try {
@@ -89,6 +90,9 @@ class ApprovisionReceptionHandlers {
       }
       if (input['livraisonAnnuler'] != null) {
         data.livraisonAnnuler = input['livraisonAnnuler'];
+      }
+      if (input['reference'] != null) {
+        data.reference = input['reference'];
       } 
 
       repos.approvisionReceptionRepository.update(data);

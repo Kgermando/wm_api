@@ -10,6 +10,7 @@ class ApprovisionReceptionModel {
   late String signatureReception;
   late DateTime createdReception;
   late String livraisonAnnuler;
+  late int reference;
 
   ApprovisionReceptionModel(
       {this.id,
@@ -22,7 +23,8 @@ class ApprovisionReceptionModel {
       required this.accuseReception,
       required this.signatureReception,
       required this.createdReception,
-      required this.livraisonAnnuler});
+      required this.livraisonAnnuler,
+      required this.reference});
 
   factory ApprovisionReceptionModel.fromSQL(List<dynamic> row) {
     return ApprovisionReceptionModel(
@@ -36,7 +38,8 @@ class ApprovisionReceptionModel {
         accuseReception: row[7],
         signatureReception: row[8],
         createdReception: row[9],
-        livraisonAnnuler: row[10]);
+        livraisonAnnuler: row[10],
+        reference: row[11]);
   }
 
   factory ApprovisionReceptionModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +55,7 @@ class ApprovisionReceptionModel {
       signatureReception: json["signatureReception"],
       createdReception: DateTime.parse(json['createdReception']),
       livraisonAnnuler: json["livraisonAnnuler"],
+      reference: json["reference"]
     );
   }
 
@@ -68,6 +72,7 @@ class ApprovisionReceptionModel {
       'signatureReception': signatureReception,
       'createdReception': createdReception.toIso8601String(),
       'livraisonAnnuler': livraisonAnnuler,
+      'reference': reference,
     };
   }
 }
