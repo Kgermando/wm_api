@@ -52,7 +52,7 @@ class DettesRepository {
         SET nom_complet = @1, piece_justificative = @2, libelle = @3,
         montant = @4, numero_operation = @5, statut_paie = @6,
         signature = @7, created = @8 , approbation_dg = @9,
-        motif_dg = @10, signature_dg = @11, approbation_dd = @12, approbation_dd = @13,
+        motif_dg = @10, signature_dg = @11, approbation_dd = @12, motif_dd = @13,
         signature_dd = @14 WHERE id = @15""", substitutionValues: {
       '1': data.nomComplet,
       '2': data.pieceJustificative,
