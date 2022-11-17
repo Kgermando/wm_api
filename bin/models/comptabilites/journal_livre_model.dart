@@ -24,7 +24,7 @@ class JournalLivreModel {
       required this.motifDD,
       required this.signatureDD});
 
-  factory JournalLivreModel.fromSQL(List<dynamic> row) {
+  factory JournalLivreModel.fromSQL(List<dynamic> row) { 
     return JournalLivreModel(
         id: row[0],
         intitule: row[1],

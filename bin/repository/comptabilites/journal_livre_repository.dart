@@ -33,7 +33,7 @@ class JournalLivreRepository {
           '4': data.isSubmit,
           '5': data.signature,
           '6': data.created,
-          '7': data.motifDD,
+          '7': data.approbationDD,
           '8': data.motifDD,
           '9': data.signatureDD
         });
@@ -52,11 +52,11 @@ class JournalLivreRepository {
         '4': data.isSubmit,
         '5': data.signature,
         '6': data.created,
-        '7': data.motifDD,
+        '7': data.approbationDD,
         '8': data.motifDD,
         '9': data.signatureDD,
         '10': data.id 
-      });
+      }); 
   }
 
   deleteData(int id) async {

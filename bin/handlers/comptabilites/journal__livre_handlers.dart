@@ -64,7 +64,7 @@ class JournalLivreHandlers {
         data.debut = DateTime.parse(input['debut']);
       }
       if (input['fin'] != null) {
-        data.fin = DateTime.parse(input['fin']);
+        data.fin = DateTime.parse(input['fin']); 
       }
       if (input['isSubmit'] != null) {
         data.isSubmit = input['isSubmit'];
