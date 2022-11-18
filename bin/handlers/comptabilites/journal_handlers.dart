@@ -33,16 +33,16 @@ class JournalHandlers {
     router.post('/insert-new-journal', (Request request) async {
       var input = jsonDecode(await request.readAsString());
 
-      JournalModel data = JournalModel(
-        reference: input['reference'],
+      JournalModel data = JournalModel( 
         numeroOperation: input['numeroOperation'],
         libele: input['libele'],
-        compte: input['compte'],
+        compteDebit: input['compteDebit'],
         montantDebit: input['montantDebit'], 
+        compteCredit: input['compteCredit'],
         montantCredit: input['montantCredit'],
-        tva: input['tva'], 
-        type: input['type'], 
+        signature: input['signature'],  
         created: DateTime.parse(input['created']), 
+        locker: input['locker'],
       );
       try {
         await repos.journals.insertData(data);
@@ -59,32 +59,33 @@ class JournalHandlers {
       JournalModel? data =
           await repos.journals.getFromId(editH.id!); 
 
-      if (input['reference'] != null) {
-        data.reference = input['reference'];
-      }
+      
       if (input['numeroOperation'] != null) {
         data.numeroOperation = input['numeroOperation'];
       }
       if (input['libele'] != null) {
         data.libele = input['libele'];
       }
-      if (input['compte'] != null) {
-        data.compte = input['compte'];
+      if (input['compteDebit'] != null) {
+        data.compteDebit = input['compteDebit'];
       }
       if (input['montantDebit'] != null) {
         data.montantDebit = input['montantDebit'];
       } 
+      if (input['compteCredit'] != null) {
+        data.compteCredit = input['compteCredit'];
+      }
       if (input['montantCredit'] != null) {
         data.montantCredit = input['montantCredit'];
       }
-      if (input['tva'] != null) {
-        data.tva = input['tva'];
-      } 
-      if (input['type'] != null) {
-        data.type = input['type'];
+      if (input['signature'] != null) {
+        data.signature = input['signature'];
       }  
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['locker'] != null) {
+        data.locker = input['locker'];
       } 
       repos.journals.update(data);
       return Response.ok(jsonEncode(data.toJson()));

@@ -32,8 +32,7 @@ import 'handlers/comptabilites/balance_comptes_handlers.dart';
 import 'handlers/comptabilites/bilans_handlers.dart';
 import 'handlers/comptabilites/compte_bilan_ref_handlers.dart'; 
 import 'handlers/comptabilites/compte_resultat_handlers.dart';
-import 'handlers/comptabilites/comptes_balance_ref_handlers.dart';
-import 'handlers/comptabilites/journal__livre_handlers.dart';
+import 'handlers/comptabilites/comptes_balance_ref_handlers.dart'; 
 import 'handlers/comptabilites/journal_handlers.dart';
 import 'handlers/devis/devis_handlers.dart';
 import 'handlers/devis/devis_list_objets_handlers.dart';
@@ -530,14 +529,7 @@ class Service {
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(JournalHandlers(repos).router));
-    router.mount(
-        '/api/comptabilite/journals-livres/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(JournalLivreHandlers(repos).router));  
+            .addHandler(JournalHandlers(repos).router)); 
     router.mount(
         '/api/comptabilite/comptes_resultat/',
         Pipeline()

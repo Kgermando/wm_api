@@ -27,8 +27,7 @@ import 'comptabilites/balance_compte_repository.dart';
 import 'comptabilites/bilan_repository.dart';
 import 'comptabilites/compte_bilan_ref_repository.dart';
 import 'comptabilites/compte_balance_ref_repository.dart';
-import 'comptabilites/compte_resultat_repository.dart';
-import 'comptabilites/journal_livre_repository.dart';
+import 'comptabilites/compte_resultat_repository.dart'; 
 import 'comptabilites/journal_repository.dart';
 import 'devis/devis_ist_objet_repository.dart';
 import 'devis/devis_repository.dart';
@@ -148,8 +147,7 @@ class Repository {
   // COMPTABILITES
   late BilanRepository bilans;
   late CompteBilanRefRepository compteBilanRefRepository;
-  late JournalRepository journals;
-  late JournalLivreRepository journalLivres;
+  late JournalRepository journals; 
   late CompteResultatRepository comptesResultat;
   late BalanceCompteRepository balanceComptes;
   late CompteBalanceRefRepository balanceCompteRef;
@@ -339,8 +337,7 @@ class Repository {
     bilans = BilanRepository(executor, 'bilans');
     compteBilanRefRepository =
         CompteBilanRefRepository(executor, 'compte_bilan_ref');
-    journals = JournalRepository(executor, 'journals');
-    journalLivres = JournalLivreRepository(executor, 'journal_livres');
+    journals = JournalRepository(executor, 'journals'); 
     comptesResultat = CompteResultatRepository(executor, 'comptes_resultat');
     balanceComptes = BalanceCompteRepository(executor, 'balance_comptes');
     balanceCompteRef =
