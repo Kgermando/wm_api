@@ -19,6 +19,7 @@ class BalanceHandlers {
       return Response.ok(jsonEncode(data));
     });
 
+
     router.get('balance-sum/', (Request request) async {
       List<BalanceSumModel> data = await repos.balances.getAllSumData();
       return Response.ok(jsonEncode(data));

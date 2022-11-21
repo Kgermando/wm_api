@@ -8,6 +8,17 @@ class BalanceRepository {
 
   BalanceRepository(this.executor, this.tableName);
 
+  Future<List<BalanceModel>> getAllData() async {
+    var data = <BalanceModel>{};
+
+    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(BalanceModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+
   Future<List<BalanceSumModel>> getAllSumData() async {
     var data = <BalanceSumModel>{};
     var querySQL =
@@ -19,16 +30,6 @@ class BalanceRepository {
     return data.toList();
   }
 
-  Future<List<BalanceModel>> getAllData() async {
-    var data = <BalanceModel>{};
-
-    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
-    List<List<dynamic>> results = await executor.query(querySQL);
-    for (var row in results) {
-      data.add(BalanceModel.fromSQL(row));
-    }
-    return data.toList();
-  }
 
   Future<void> insertData(BalanceModel data) async {
     await executor.transaction((ctx) async {
