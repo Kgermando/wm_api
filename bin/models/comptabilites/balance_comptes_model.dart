@@ -56,8 +56,8 @@ class BalanceModel {
 
 class BalanceSumModel { 
   late String comptes;
-  late String debit;
-  late String credit; 
+  late double debit;
+  late double credit; 
 
   BalanceSumModel({ 
       required this.comptes,
