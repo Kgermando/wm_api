@@ -11,7 +11,7 @@ class BalanceRepository {
   Future<List<BalanceModel>> getAllData() async {
     var data = <BalanceModel>{};
     var querySQL =
-        "SELECT \"comptes\" FROM $tableName GROUP BY \"comptes\";";
+        "SELECT \"comptes\", SUM(debit::FLOAT), SUM(credit::FLOAT) FROM $tableName GROUP BY \"comptes\";";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(BalanceModel.fromSQL(row));
