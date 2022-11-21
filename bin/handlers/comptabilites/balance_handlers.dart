@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/comptabilites/balance_comptes_model.dart';
+import '../../models/comptabilites/balance_model.dart';
+import '../../models/comptabilites/balance_sum_model.dart';
 import '../../repository/repository.dart';
 
 class BalanceHandlers {

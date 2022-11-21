@@ -1,6 +1,7 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comptabilites/balance_comptes_model.dart';
+import '../../models/comptabilites/balance_model.dart';
+import '../../models/comptabilites/balance_sum_model.dart';
 
 class BalanceRepository {
   final PostgreSQLConnection executor;
