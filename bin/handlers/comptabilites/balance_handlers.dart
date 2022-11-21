@@ -6,41 +6,42 @@ import 'package:shelf_router/shelf_router.dart';
 import '../../models/comptabilites/balance_comptes_model.dart';
 import '../../repository/repository.dart';
 
-class ComptesBalanceRefHandlers {
+class BalanceHandlers {
   final Repository repos;
 
-  ComptesBalanceRefHandlers(this.repos);
+  BalanceHandlers(this.repos);
 
   Router get router {
     final router = Router();
 
     router.get('/', (Request request) async {
-      List<CompteBalanceRefModel> data = await repos.balanceCompteRef.getAllData();
+      List<BalanceModel> data = await repos.balances.getAllData();
       return Response.ok(jsonEncode(data));
     });
 
     router.get('/<id>', (Request request, String id) async {
-      late CompteBalanceRefModel data;
+      late BalanceModel dataItem;
       try {
-        data = await repos.balanceCompteRef.getFromId(int.parse(id));
+        dataItem = await repos.balances.getFromId(int.parse(id));
       } catch (e) {
         print(e);
         return Response(404);
       }
-      return Response.ok(jsonEncode(data.toJson()));
+      return Response.ok(jsonEncode(dataItem.toJson()));
     });
 
-    router.post('/insert-new-comptes-balance-ref', (Request request) async {
+    router.post('/insert-new-balance', (Request request) async {
       var input = jsonDecode(await request.readAsString());
-      CompteBalanceRefModel data = CompteBalanceRefModel(
-          reference: input['reference'],
+      BalanceModel data = BalanceModel( 
           comptes: input['comptes'],
           debit: input['debit'],
-           credit: input['credit'],
-            solde: input['solde']
+          credit: input['credit'],
+          solde: input['solde'],
+          signature: input['signature'],
+          created: DateTime.parse(input['created']),
       );
       try {
-        await repos.balanceCompteRef.insertData(data);
+        await repos.balances.insertData(data);
       } catch (e) {
         print(e);
         return Response(422);
@@ -48,15 +49,12 @@ class ComptesBalanceRefHandlers {
       return Response.ok(jsonEncode(data.toJson()));
     });
 
-    router.put('/update-comptes-balance-ref/', (Request request) async {
+    router.put('/update-balance/', (Request request) async {
        dynamic input = jsonDecode(await request.readAsString());
-      final editH = CompteBalanceRefModel.fromJson(input);
-      CompteBalanceRefModel? data =
-          await repos.balanceCompteRef.getFromId(editH.id!); 
-
-      if (input['reference'] != null) {
-        data.reference = input['reference'];
-      }
+      final editH = BalanceModel.fromJson(input);
+      BalanceModel? data =
+          await repos.balances.getFromId(editH.id!); 
+ 
       if (input['comptes'] != null) {
         data.comptes = input['comptes'];
       }
@@ -69,22 +67,28 @@ class ComptesBalanceRefHandlers {
       if (input['solde'] != null) {
         data.solde = input['solde'];
       }
+      if (input['signature'] != null) {
+        data.signature = input['signature'];
+      }
+      if (input['created'] != null) {
+        data.created = DateTime.parse(input['created']);
+      }
 
-      repos.balanceCompteRef.update(data);
+      repos.balances.update(data);
       return Response.ok(jsonEncode(data.toJson()));
     });
 
-    router.delete('/delete-comptes-balance-ref/<id>',
+    router.delete('/delete-balance/<id>',
         (Request request, String id) async {
       var id = request.params['id'];
-      repos.balanceCompteRef.deleteData(int.parse(id!));
+      repos.balances.deleteData(int.parse(id!));
       return Response.ok('Supprimée');
     });
 
     router.all(
       '/<ignored|.*>',
       (Request request) =>
-          Response.notFound('La Page Agent Role n\'est pas trouvé'),
+          Response.notFound('La Page BalanceModel Role n\'est pas trouvé'),
     );
     return router;
   }

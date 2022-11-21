@@ -27,12 +27,11 @@ import 'handlers/commercial/succursale_handlers.dart';
 import 'handlers/commercial/ventes_handlers.dart';
 import 'handlers/marketing/agenda_handlers.dart';
 import 'handlers/marketing/annuaire_handlers.dart';
-import 'handlers/marketing/campaign_handlers.dart';
-import 'handlers/comptabilites/balance_comptes_handlers.dart';
+import 'handlers/marketing/campaign_handlers.dart'; 
 import 'handlers/comptabilites/bilans_handlers.dart';
 import 'handlers/comptabilites/compte_bilan_ref_handlers.dart'; 
 import 'handlers/comptabilites/compte_resultat_handlers.dart';
-import 'handlers/comptabilites/comptes_balance_ref_handlers.dart'; 
+import 'handlers/comptabilites/balance_handlers.dart'; 
 import 'handlers/comptabilites/journal_handlers.dart';
 import 'handlers/devis/devis_handlers.dart';
 import 'handlers/devis/devis_list_objets_handlers.dart';
@@ -536,21 +535,14 @@ class Service {
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(CompteResultatHandlers(repos).router));
+            .addHandler(CompteResultatHandlers(repos).router)); 
     router.mount(
-        '/api/comptabilite/balance_comptes/',
+        '/api/comptabilite/balances/',
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(BalanceComptesHandlers(repos).router));
-    router.mount(
-        '/api/comptabilite/comptes-balance-ref/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(ComptesBalanceRefHandlers(repos).router));
+            .addHandler(BalanceHandlers(repos).router));
 
 
 

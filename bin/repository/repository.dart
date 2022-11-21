@@ -22,11 +22,10 @@ import 'commercial/succursale_repository.dart';
 import 'commercial/vente_repository.dart';
 import 'marketing/agenda_repository.dart';
 import 'marketing/annuaire_repository.dart';
-import 'marketing/campaign_repository.dart';
-import 'comptabilites/balance_compte_repository.dart';
+import 'marketing/campaign_repository.dart'; 
 import 'comptabilites/bilan_repository.dart';
 import 'comptabilites/compte_bilan_ref_repository.dart';
-import 'comptabilites/compte_balance_ref_repository.dart';
+import 'comptabilites/balance_repository.dart';
 import 'comptabilites/compte_resultat_repository.dart'; 
 import 'comptabilites/journal_repository.dart';
 import 'devis/devis_ist_objet_repository.dart';
@@ -149,8 +148,7 @@ class Repository {
   late CompteBilanRefRepository compteBilanRefRepository;
   late JournalRepository journals; 
   late CompteResultatRepository comptesResultat;
-  late BalanceCompteRepository balanceComptes;
-  late CompteBalanceRefRepository balanceCompteRef;
+  late BalanceRepository balances; 
 
   // BUDGETS
   late DepartementBudgetRepository departementBudgets;
@@ -339,9 +337,7 @@ class Repository {
         CompteBilanRefRepository(executor, 'compte_bilan_ref');
     journals = JournalRepository(executor, 'journals'); 
     comptesResultat = CompteResultatRepository(executor, 'comptes_resultat');
-    balanceComptes = BalanceCompteRepository(executor, 'balance_comptes');
-    balanceCompteRef =
-        CompteBalanceRefRepository(executor, 'comptes_balances_ref');
+    balances = BalanceRepository(executor, 'balances'); 
 
     // BUDGETS
     departementBudgets =
