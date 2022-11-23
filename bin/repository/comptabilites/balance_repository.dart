@@ -23,7 +23,7 @@ class BalanceRepository {
   Future<List<BalanceSumModel>> getAllSumData() async {
     var data = <BalanceSumModel>{};
     var querySQL =
-      "SELECT \"comptes\", SUM(debit::FLOAT), SUM(credit::FLOAT) FROM $tableName GROUP BY \"comptes\" ORDER BY \"created\" DESC;";
+      "SELECT \"comptes\", SUM(debit::FLOAT), SUM(credit::FLOAT) FROM $tableName GROUP BY \"comptes\";";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(BalanceSumModel.fromSQL(row));
