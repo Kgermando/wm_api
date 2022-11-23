@@ -1,5 +1,7 @@
 class BalanceModel {
   late int? id;
+  late String numeroOperation;
+  late String libele;
   late String comptes;
   late String debit;
   late String credit;
@@ -8,6 +10,8 @@ class BalanceModel {
 
   BalanceModel(
       {this.id,
+      required this.numeroOperation,
+      required this.libele,
       required this.comptes,
       required this.debit,
       required this.credit,
@@ -17,16 +21,20 @@ class BalanceModel {
   factory BalanceModel.fromSQL(List<dynamic> row) {
     return BalanceModel(
         id: row[0],
-        comptes: row[1],
-        debit: row[2],
-        credit: row[3],
-        signature: row[4],
-        created: row[5]);
+        numeroOperation: row[1],
+        libele: row[2],
+        comptes: row[3],
+        debit: row[4],
+        credit: row[5],
+        signature: row[6],
+        created: row[7]);
   }
 
   factory BalanceModel.fromJson(Map<String, dynamic> json) {
     return BalanceModel(
       id: json['id'],
+      numeroOperation: json['numeroOperation'],
+      libele: json['libele'],
       comptes: json['comptes'],
       debit: json['debit'],
       credit: json['credit'],
@@ -38,6 +46,8 @@ class BalanceModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'numeroOperation': numeroOperation,
+      'libele': libele,
       'comptes': comptes,
       'debit': debit,
       'credit': credit,

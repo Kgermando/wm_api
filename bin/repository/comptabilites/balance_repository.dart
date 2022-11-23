@@ -35,28 +35,34 @@ class BalanceRepository {
   Future<void> insertData(BalanceModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-        "INSERT INTO $tableName (id, comptes, debit, credit, signature, created)"
-        "VALUES (nextval('balances_id_seq'), @1, @2, @3, @4, @5)",
+        "INSERT INTO $tableName (id, numero_operation, libele,"
+        "comptes, debit, credit, signature, created)"
+        "VALUES (nextval('balances_id_seq'), @1, @2, @3, @4, @5, @6, @7)",
         substitutionValues: {
-          '1': data.comptes,
-          '2': data.debit,
-          '3': data.credit,
-          '4': data.signature,
-          '5': data.created 
+          '1': data.numeroOperation,
+          '2': data.libele,
+          '3': data.comptes,
+          '4': data.debit,
+          '5': data.credit,
+          '6': data.signature,
+          '7': data.created 
         });
     });
   }
 
   Future<void> update(BalanceModel data) async {
     await executor.query("""UPDATE $tableName
-        SET comptes = @1, debit = @2, credit = @3,
-        signature = @4, created = @5 WHERE id = @6""", substitutionValues: {
-      '1': data.comptes,
-      '2': data.debit,
-      '3': data.credit,
-      '4': data.signature,
-      '5': data.created,
-      '6': data.id
+        SET numero_operation = @1, libele = @2, comptes = @3, debit = @4, 
+        credit = @5, signature = @6, created = @7 WHERE id = @8""", 
+      substitutionValues: {
+      '1': data.numeroOperation,
+      '2': data.libele,
+      '3': data.comptes,
+      '4': data.debit,
+      '5': data.credit,
+      '6': data.signature,
+      '7': data.created,
+      '8': data.id
     });
   }
 
@@ -77,11 +83,13 @@ class BalanceRepository {
         await executor.query("SELECT * FROM $tableName WHERE \"id\" = '$id'");
     return BalanceModel(
       id: data[0][0],
-      comptes: data[0][1],
-      debit: data[0][2],
-      credit: data[0][3],
-      signature: data[0][4],
-      created: data[0][5] 
+      numeroOperation: data[0][1],
+      libele: data[0][2],
+      comptes: data[0][3],
+      debit: data[0][4],
+      credit: data[0][5],
+      signature: data[0][6],
+      created: data[0][7] 
     );
   }
 }

@@ -41,11 +41,13 @@ class BalanceHandlers {
     router.post('/insert-new-balance', (Request request) async {
       var input = jsonDecode(await request.readAsString());
       BalanceModel data = BalanceModel( 
-          comptes: input['comptes'],
-          debit: input['debit'],
-          credit: input['credit'], 
-          signature: input['signature'],
-          created: DateTime.parse(input['created']),
+        numeroOperation: input['numeroOperation'],
+        libele: input['libele'],
+        comptes: input['comptes'],
+        debit: input['debit'],
+        credit: input['credit'], 
+        signature: input['signature'],
+        created: DateTime.parse(input['created']),
       );
       try {
         await repos.balances.insertData(data);
@@ -59,9 +61,14 @@ class BalanceHandlers {
     router.put('/update-balance/', (Request request) async {
        dynamic input = jsonDecode(await request.readAsString());
       final editH = BalanceModel.fromJson(input);
-      BalanceModel? data =
-          await repos.balances.getFromId(editH.id!); 
- 
+      BalanceModel? data = await repos.balances.getFromId(editH.id!); 
+      
+      if (input['numeroOperation'] != null) {
+        data.numeroOperation = input['numeroOperation'];
+      }
+      if (input['libele'] != null) {
+        data.libele = input['libele'];
+      }
       if (input['comptes'] != null) {
         data.comptes = input['comptes'];
       }
