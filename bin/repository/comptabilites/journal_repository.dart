@@ -50,7 +50,7 @@ class JournalRepository {
         "INSERT INTO $tableName (id, numero_operation, libele,"
         "compte_debit, montant_debit, compte_credit, montant_credit,"
         "signature, created, locker)"
-        "VALUES (nextval('journals_id_seq'), @1, @2, @3, @4, @5, @6, @7)",
+        "VALUES (nextval('journals_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9)",
         substitutionValues: {
           '1': data.numeroOperation,
           '2': data.libele,
