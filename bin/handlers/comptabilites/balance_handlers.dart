@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/comptabilites/balance_model.dart';
+import '../../models/comptabilites/balance_model.dart'; 
 import '../../models/comptabilites/balance_sum_model.dart';
 import '../../repository/repository.dart';
 
@@ -43,8 +43,7 @@ class BalanceHandlers {
       BalanceModel data = BalanceModel( 
           comptes: input['comptes'],
           debit: input['debit'],
-          credit: input['credit'],
-          solde: input['solde'],
+          credit: input['credit'], 
           signature: input['signature'],
           created: DateTime.parse(input['created']),
       );
@@ -71,10 +70,7 @@ class BalanceHandlers {
       }
       if (input['credit'] != null) {
         data.credit = input['credit'];
-      }
-      if (input['solde'] != null) {
-        data.solde = input['solde'];
-      }
+      } 
       if (input['signature'] != null) {
         data.signature = input['signature'];
       }

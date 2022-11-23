@@ -3,7 +3,6 @@ class BalanceModel {
   late String comptes;
   late String debit;
   late String credit;
-  late String solde;
   late String signature;
   late DateTime created;
 
@@ -12,7 +11,6 @@ class BalanceModel {
       required this.comptes,
       required this.debit,
       required this.credit,
-      required this.solde,
       required this.signature,
       required this.created});
 
@@ -22,9 +20,8 @@ class BalanceModel {
         comptes: row[1],
         debit: row[2],
         credit: row[3],
-        solde: row[4],
-        signature: row[5],
-        created: row[6]);
+        signature: row[4],
+        created: row[5]);
   }
 
   factory BalanceModel.fromJson(Map<String, dynamic> json) {
@@ -33,7 +30,6 @@ class BalanceModel {
       comptes: json['comptes'],
       debit: json['debit'],
       credit: json['credit'],
-      solde: json['solde'],
       signature: json['signature'],
       created: DateTime.parse(json['created']),
     );
@@ -45,9 +41,9 @@ class BalanceModel {
       'comptes': comptes,
       'debit': debit,
       'credit': credit,
-      'solde': solde,
       'signature': signature,
       'created': created.toIso8601String()
     };
   }
 }
+ 

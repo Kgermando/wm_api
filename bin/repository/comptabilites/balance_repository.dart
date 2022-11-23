@@ -1,7 +1,7 @@
 import 'package:postgres/postgres.dart';
 
 import '../../models/comptabilites/balance_model.dart';
-import '../../models/comptabilites/balance_sum_model.dart';
+import '../../models/comptabilites/balance_sum_model.dart'; 
 
 class BalanceRepository {
   final PostgreSQLConnection executor;
@@ -35,15 +35,14 @@ class BalanceRepository {
   Future<void> insertData(BalanceModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-        "INSERT INTO $tableName (id, comptes, debit, credit, solde, signature, created)"
-        "VALUES (nextval('balances_id_seq'), @1, @2, @3, @4, @5, @6)",
+        "INSERT INTO $tableName (id, comptes, debit, credit, signature, created)"
+        "VALUES (nextval('balances_id_seq'), @1, @2, @3, @4, @5)",
         substitutionValues: {
           '1': data.comptes,
           '2': data.debit,
           '3': data.credit,
-          '4': data.solde,
-          '5': data.signature,
-          '6': data.created 
+          '4': data.signature,
+          '5': data.created 
         });
     });
   }
@@ -51,14 +50,13 @@ class BalanceRepository {
   Future<void> update(BalanceModel data) async {
     await executor.query("""UPDATE $tableName
         SET comptes = @1, debit = @2, credit = @3,
-        solde = @4, signature = @5, created = @6 WHERE id = @7""", substitutionValues: {
+        signature = @4, created = @5 WHERE id = @6""", substitutionValues: {
       '1': data.comptes,
       '2': data.debit,
       '3': data.credit,
-      '4': data.solde,
-      '5': data.signature,
-      '6': data.created,
-      '7': data.id
+      '4': data.signature,
+      '5': data.created,
+      '6': data.id
     });
   }
 
@@ -82,9 +80,8 @@ class BalanceRepository {
       comptes: data[0][1],
       debit: data[0][2],
       credit: data[0][3],
-      solde: data[0][4],
-      signature: data[0][5],
-      created: data[0][6]
+      signature: data[0][4],
+      created: data[0][5] 
     );
   }
 }
