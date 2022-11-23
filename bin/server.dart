@@ -516,19 +516,20 @@ class Service {
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(BilansHandlers(repos).router));
     router.mount(
-        '/api/comptabilite/comptes-bilans-ref/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(CompteBilanRefHandlers(repos).router)); 
+      '/api/comptabilite/comptes-bilans-ref/',
+      Pipeline()
+        .addMiddleware(setJsonHeader())
+        .addMiddleware(handleErrors())
+        // .addMiddleware(handleAuth(serverSecretKey))
+        .addHandler(CompteBilanRefHandlers(repos).router)
+      ); 
     router.mount(
         '/api/comptabilite/journals/',
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
-            .addHandler(JournalHandlers(repos).router)); 
+            .addHandler(JournalHandlers(repos).router));
     router.mount(
         '/api/comptabilite/comptes_resultat/',
         Pipeline()

@@ -19,7 +19,7 @@ import 'commercial/produit_model_repository.dart';
 import 'commercial/restitution_repository.dart';
 import 'commercial/stocks_global_repository.dart';
 import 'commercial/succursale_repository.dart';
-import 'commercial/vente_repository.dart';
+import 'commercial/vente_repository.dart'; 
 import 'marketing/agenda_repository.dart';
 import 'marketing/annuaire_repository.dart';
 import 'marketing/campaign_repository.dart'; 
@@ -145,8 +145,8 @@ class Repository {
 
   // COMPTABILITES
   late BilanRepository bilans;
-  late CompteBilanRefRepository compteBilanRefRepository;
-  late JournalRepository journals; 
+  late CompteBilanRefRepository compteBilanRefRepository; 
+  late JournalRepository journals;
   late CompteResultatRepository comptesResultat;
   late BalanceRepository balances; 
 
@@ -334,8 +334,8 @@ class Repository {
     // COMPTABILITE
     bilans = BilanRepository(executor, 'bilans');
     compteBilanRefRepository =
-        CompteBilanRefRepository(executor, 'compte_bilan_ref');
-    journals = JournalRepository(executor, 'journals'); 
+        CompteBilanRefRepository(executor, 'compte_bilan_ref'); 
+    journals = JournalRepository(executor, 'journals');
     comptesResultat = CompteResultatRepository(executor, 'comptes_resultat');
     balances = BalanceRepository(executor, 'balances'); 
 
