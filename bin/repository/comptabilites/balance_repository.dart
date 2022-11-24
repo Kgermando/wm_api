@@ -1,8 +1,7 @@
 import 'package:postgres/postgres.dart';
 
 import '../../models/comptabilites/balance_model.dart';
-import '../../models/comptabilites/balance_sum_model.dart';
-import '../../models/rh/agent_count_model.dart'; 
+import '../../models/comptabilites/balance_sum_model.dart'; 
 
 class BalanceRepository {
   final PostgreSQLConnection executor;
@@ -55,7 +54,7 @@ class BalanceRepository {
       }
       return data.toList();
     } catch (e) {
-      throw AgentPieChartModel;
+      throw BalancePieChartModel;
     }
   }
 
