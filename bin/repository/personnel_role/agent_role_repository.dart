@@ -24,7 +24,7 @@ class AgentRoleRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
           "INSERT INTO $tableName (id, reference, departement, agent, role, created)"
-          "VALUES (nextval('agents_roles_id_seq'), @1, @2, @3, @4)",
+          "VALUES (nextval('agents_roles_id_seq'), @1, @2, @3, @4, @5)",
           substitutionValues: {
             '1': data.reference,
             '2': data.departement,
