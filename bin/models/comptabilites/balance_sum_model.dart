@@ -35,3 +35,35 @@ class BalanceSumModel {
     };
   }
 }
+class BalanceChartModel {
+  late String comptes;
+  late DateTime created;
+  late double debit;
+  late double credit;
+
+  BalanceChartModel(
+      {required this.comptes, required this.created, required this.debit, required this.credit});
+
+  factory BalanceChartModel.fromSQL(List<dynamic> row) {
+    return BalanceChartModel(
+      comptes: row[0], created: row[1], debit: row[2], credit: row[3]);
+  }
+
+  factory BalanceChartModel.fromJson(Map<String, dynamic> json) {
+    return BalanceChartModel(
+      comptes: json['comptes'],
+      created: DateTime.parse(json['created']),
+      debit: json['sum'],
+      credit: json['sum'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'comptes': comptes,
+      'created': created.toIso8601String(),
+      'debit': debit, 
+      'credit': credit
+    };
+  }
+}

@@ -27,6 +27,11 @@ class BalanceHandlers {
       return Response.ok(jsonEncode(data));
     });
 
+    router.get('/balance-chart/', (Request request) async {
+      List<BalanceChartModel> data = await repos.balances.getAllChartData();
+      return Response.ok(jsonEncode(data));
+    });
+
     router.get('/<id>', (Request request, String id) async {
       late BalanceModel dataItem;
       try {
