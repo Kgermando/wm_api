@@ -35,6 +35,8 @@ class BalanceSumModel {
     };
   }
 }
+
+
 class BalanceChartModel {
   late String comptes;
   late DateTime created;
