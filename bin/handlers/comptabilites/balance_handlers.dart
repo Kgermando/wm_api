@@ -34,7 +34,7 @@ class BalanceHandlers {
     });
 
     router.get('/balance-chart-pie/', (Request request) async {
-      List<AgentPieChartModel> data = await repos.balances.getBalanceChartPie();
+      List<BalancePieChartModel> data = await repos.balances.getBalanceChartPie();
       return Response.ok(jsonEncode(data));
     });
 
