@@ -34,7 +34,7 @@ class BalanceRepository {
   Future<List<BalanceChartModel>> getAllChartData() async {
     var data = <BalanceChartModel>{};
     var querySQL =
-        "SELECT \"comptes\", created , SUM(debit::FLOAT), SUM(credit::FLOAT) FROM $tableName GROUP BY \"comptes\", created ORDER BY created DESC;";
+        "SELECT \"comptes\", created , SUM(debit::FLOAT), SUM(credit::FLOAT) FROM $tableName GROUP BY \"comptes\", created ORDER BY created ASC;";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(BalanceChartModel.fromSQL(row));
