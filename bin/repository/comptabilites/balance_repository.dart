@@ -1,7 +1,8 @@
 import 'package:postgres/postgres.dart';
 
 import '../../models/comptabilites/balance_model.dart';
-import '../../models/comptabilites/balance_sum_model.dart'; 
+import '../../models/comptabilites/balance_sum_model.dart';
+import '../../models/rh/agent_count_model.dart'; 
 
 class BalanceRepository {
   final PostgreSQLConnection executor;
@@ -40,6 +41,22 @@ class BalanceRepository {
       data.add(BalanceChartModel.fromSQL(row));
     }
     return data.toList();
+  }
+
+  Future<List<AgentPieChartModel>> getBalanceChartPie() async {
+    try {
+      var data = <AgentPieChartModel>{};
+
+      var querySQL =
+          "SELECT comptes, COUNT(comptes) FROM $tableName GROUP BY \"comptes\";";
+      List<List<dynamic>> results = await executor.query(querySQL);
+      for (var row in results) {
+        data.add(AgentPieChartModel.fromSQL(row));
+      }
+      return data.toList();
+    } catch (e) {
+      throw AgentPieChartModel;
+    }
   }
 
 

@@ -5,6 +5,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 import '../../models/comptabilites/balance_model.dart'; 
 import '../../models/comptabilites/balance_sum_model.dart';
+import '../../models/rh/agent_count_model.dart';
 import '../../repository/repository.dart';
 
 class BalanceHandlers {
@@ -29,6 +30,11 @@ class BalanceHandlers {
 
     router.get('/balance-chart/', (Request request) async {
       List<BalanceChartModel> data = await repos.balances.getAllChartData();
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/balance-chart-pie/', (Request request) async {
+      List<AgentPieChartModel> data = await repos.balances.getBalanceChartPie();
       return Response.ok(jsonEncode(data));
     });
 
