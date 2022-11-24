@@ -72,11 +72,9 @@ import 'handlers/notify/marketing/agenda_notify_handlers.dart';
 import 'handlers/notify/marketing/campaign_notify_handlers.dart';
 import 'handlers/notify/commercial/cart_notify_handlers.dart';
 import 'handlers/notify/commercial/prod_model_notify_handlers.dart';
-import 'handlers/notify/commercial/succursale_notify_handlers.dart';
-import 'handlers/notify/comptabilites/balance_notify_handlers.dart';
+import 'handlers/notify/commercial/succursale_notify_handlers.dart'; 
 import 'handlers/notify/comptabilites/bilan_notify_handlers.dart';
-import 'handlers/notify/comptabilites/compte_resultat_notify_handlers.dart';
-import 'handlers/notify/comptabilites/journal_notify_handlers.dart';
+import 'handlers/notify/comptabilites/compte_resultat_notify_handlers.dart'; 
 import 'handlers/notify/departements/admin_departement.dart';
 import 'handlers/notify/departements/budget_departement.dart';
 import 'handlers/notify/departements/comm_departement.dart';
@@ -213,13 +211,7 @@ class Service {
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
-            .addHandler(CartNotifyHandlers(repos).router));
-    router.mount(
-        '/api/counts/balances/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            .addHandler(BalanceNotifyHandlers(repos).router));
+            .addHandler(CartNotifyHandlers(repos).router)); 
     router.mount(
         '/api/counts/bilans/',
         Pipeline()
@@ -231,13 +223,7 @@ class Service {
         Pipeline()
             .addMiddleware(setJsonHeader())
             .addMiddleware(handleErrors())
-            .addHandler(CompteResultatNotifyHandlers(repos).router));
-    router.mount(
-        '/api/counts/journals/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            .addHandler(JournalNotifyHandlers(repos).router));
+            .addHandler(CompteResultatNotifyHandlers(repos).router)); 
     router.mount(
         '/api/counts/devis/',
         Pipeline()
