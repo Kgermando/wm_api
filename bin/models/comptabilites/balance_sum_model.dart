@@ -69,3 +69,27 @@ class BalanceChartModel {
     };
   }
 }
+
+
+
+class BalancePieChartModel {
+  final String comptes;
+  final int count;
+
+  BalancePieChartModel({required this.comptes, required this.count});
+
+  factory BalancePieChartModel.fromSQL(List<dynamic> row) {
+    return BalancePieChartModel(
+      comptes: row[0],
+      count: row[1],
+    );
+  }
+
+  factory BalancePieChartModel.fromJson(Map<String, dynamic> json) {
+    return BalancePieChartModel(comptes: json['comptes'], count: json['count']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'comptes': comptes, 'count': count};
+  }
+}

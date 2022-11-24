@@ -43,15 +43,15 @@ class BalanceRepository {
     return data.toList();
   }
 
-  Future<List<AgentPieChartModel>> getBalanceChartPie() async {
+  Future<List<BalancePieChartModel>> getBalanceChartPie() async {
     try {
-      var data = <AgentPieChartModel>{};
+      var data = <BalancePieChartModel>{};
 
       var querySQL =
           "SELECT comptes, COUNT(comptes) FROM $tableName GROUP BY \"comptes\";";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
-        data.add(AgentPieChartModel.fromSQL(row));
+        data.add(BalancePieChartModel.fromSQL(row));
       }
       return data.toList();
     } catch (e) {
