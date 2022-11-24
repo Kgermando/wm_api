@@ -10,8 +10,7 @@ class AdminDepartementRepository {
 
   static String tableNameBudget = 'departement_budgets';
   static String tableNameCommMarketingCampaign = 'campaigns';
-  static String tableNameComptabiliteSuccurasale = 'succursales';
-  static String tableNameComptBalance = 'balance_comptes';
+  static String tableNameComptabiliteSuccurasale = 'succursales'; 
   static String tableNameComptBilans = 'bilans';
   static String tableNameComptComptesResultat = 'comptes_resultat';
   static String tableNameComptJournals = 'journal_livres';
@@ -92,20 +91,13 @@ class AdminDepartementRepository {
       var data = <NotifySumModel>{};
       var querySQL = """SELECT SUM  
       (
-          (SELECT COUNT(*) FROM $tableNameComptBalance where 
-        "approbation_dd" = 'Approved' AND 
-        "is_submit" = 'true') 
-        +
-          (SELECT COUNT(*) FROM $tableNameComptBilans where  
+        (SELECT COUNT(*) FROM $tableNameComptBilans where  
         "approbation_dd" = 'Approved' AND 
         "is_submit" = 'true')
         +
           (SELECT COUNT(*) FROM $tableNameComptComptesResultat where  
-        "approbation_dd" = 'Approved'
-          )
-        +
-          (SELECT COUNT(*) FROM $tableNameComptJournals where  
-        "approbation_dd" = 'Approved' ) 
+          "approbation_dd" = 'Approved'
+        ) 
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {

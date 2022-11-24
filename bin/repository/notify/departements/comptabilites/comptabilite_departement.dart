@@ -6,11 +6,9 @@ class ComptabiliteDepartementRepository {
   final PostgreSQLConnection executor;
 
   ComptabiliteDepartementRepository(this.executor);
-
-  static String tableNameComptBalance = 'balance_comptes';
+ 
   static String tableNameComptBilans = 'bilans';
-  static String tableNameComptComptesResultat = 'comptes_resultat';
-  static String tableNameComptJournals = 'journal_livres';
+  static String tableNameComptComptesResultat = 'comptes_resultat'; 
 
   Future<NotifySumModel> getCountDD() async {
     try {
