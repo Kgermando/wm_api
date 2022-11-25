@@ -48,6 +48,7 @@ class LigneBudgetaireHanlers {
         finExterieur: input['finExterieur'],
         signature: input['signature'],
         created: DateTime.parse(input['created']),
+        reference: input['reference']
       );
       try {
         await repos.ligneBudgetaires.insertData(data);
@@ -103,6 +104,9 @@ class LigneBudgetaireHanlers {
       }
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['reference'] != null) {
+        data.reference = input['reference'];
       }
       repos.ligneBudgetaires.update(data);
       return Response.ok(jsonEncode(data.toJson()));
