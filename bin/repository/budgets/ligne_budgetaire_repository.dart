@@ -27,7 +27,8 @@ class LigneBudgtaireRepository {
   //       SUM(caisse::FLOAT),
   //       SUM(banque::FLOAT),
   //       SUM(fin_exterieur::FLOAT)
-  //       FROM $tableName GROUP BY "nom_ligne_budgetaire";""";
+  //       FROM $tableName where 
+  //       NOW() <= "periode_fin" GROUP BY "nom_ligne_budgetaire";""";
   //   List<List<dynamic>> results = await executor.query(querySQL);
   //   for (var row in results) {
   //     data.add(BalanceSumModel.fromSQL(row));

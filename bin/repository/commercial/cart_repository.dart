@@ -25,9 +25,9 @@ class CartRepository {
       await ctx.execute(
           "INSERT INTO $tableName (id, id_product_cart, quantity_cart,"
           "price_cart, price_achat_unit, unite, tva,"
-          "remise, qty_remise, succursale, signature, created)"
+          "remise, qty_remise, succursale, signature, created, created_at)"
           "VALUES (nextval('carts_id_seq'), @1, @2, @3, @4, @5, @6,"
-          "@7, @8, @9, @10, @11)",
+          "@7, @8, @9, @10, @11, @12)",
           substitutionValues: {
             '1': data.idProductCart,
             '2': data.quantityCart,
@@ -39,7 +39,8 @@ class CartRepository {
             '8': data.qtyRemise,
             '9': data.succursale,
             '10': data.signature,
-            '11': data.created
+            '11': data.created,
+            '12': data.createdAt
           });
     });
   }
@@ -49,7 +50,7 @@ class CartRepository {
           SET id_product_cart = @1, quantity_cart = @2, price_cart = @3,
           price_achat_unit = @4, unite = @5, tva = @6,
           remise = @7, qty_remise = @8, succursale = @9,
-          signature = @10, created = @11 WHERE id = @12""",
+          signature = @10, created = @11, created_at = @12 WHERE id = @13""",
         substitutionValues: {
           '1': data.idProductCart,
           '2': data.quantityCart,
@@ -62,7 +63,8 @@ class CartRepository {
           '9': data.succursale,
           '10': data.signature,
           '11': data.created,
-          '12': data.id
+          '12': data.createdAt,
+          '13': data.id
         });
   }
 
@@ -103,6 +105,8 @@ class CartRepository {
         qtyRemise: data[0][8],
         succursale: data[0][9],
         signature: data[0][10],
-        created: data[0][11]);
+        created: data[0][11],
+        createdAt: data[0][12]
+    );
   }
 }

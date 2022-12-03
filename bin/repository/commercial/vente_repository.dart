@@ -63,9 +63,9 @@ class VenteRepository {
       await ctx.execute(
           "INSERT INTO $tableName (id, id_product_cart, quantity_cart,"
           "price_total_cart, unite, tva, remise, qty_remise,"
-          "succursale, signature, created)"
+          "succursale, signature, created, created_at)"
           "VALUES (nextval('ventes_id_seq'), @1, @2, @3, @4, @5, @6,"
-          "@7, @8, @9, @10)",
+          "@7, @8, @9, @10, @11)",
           substitutionValues: {
             '1': data.idProductCart,
             '2': data.quantityCart,
@@ -76,7 +76,8 @@ class VenteRepository {
             '7': data.qtyRemise,
             '8': data.succursale,
             '9': data.signature,
-            '10': data.created
+            '10': data.created,
+            '11': data.createdAt
           });
     });
   }
@@ -85,7 +86,7 @@ class VenteRepository {
     await executor.query("""UPDATE $tableName
           SET id_product_cart = @1, quantity_cart = @2, price_total_cart = @3,
           unite = @4, tva = @5, remise = @6, qty_remise = @7,
-          succursale = @8, signature = @9, created = @10 WHERE id = @11""",
+          succursale = @8, signature = @9, created = @10, created_at = @11 WHERE id = @12""",
         substitutionValues: {
           '1': data.idProductCart,
           '2': data.quantityCart,
@@ -97,7 +98,8 @@ class VenteRepository {
           '8': data.succursale,
           '9': data.signature,
           '10': data.created,
-          '11': data.id
+          '11': data.createdAt,
+          '12': data.id
         });
   }
 
@@ -126,7 +128,8 @@ class VenteRepository {
       qtyRemise: data[0][7],
       succursale: data[0][8],
       signature: data[0][9],
-      created: data[0][10]
+      created: data[0][10],
+      createdAt: data[0][11]
     );
   } 
 }

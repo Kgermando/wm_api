@@ -45,7 +45,8 @@ class CartHandlers {
           qtyRemise: input['qtyRemise'],
           succursale: input['succursale'],
           signature: input['signature'],
-          created: DateTime.parse(input['created'])
+          created: DateTime.parse(input['created']),
+          createdAt: DateTime.parse(input['createdAt'])
         );
       try {
         await repos.carts.insertData(data);
@@ -94,6 +95,9 @@ class CartHandlers {
       }
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['createdAt'] != null) {
+        data.createdAt = DateTime.parse(input['createdAt']);
       }
       repos.carts.update(data);
       return Response.ok(jsonEncode(data.toJson()));
