@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/administrations/actionnaire_model.dart';
+import '../../models/actionnaire/actionnaire_model.dart';
 
 
 class ActionnaireRepository {
@@ -24,7 +24,7 @@ class ActionnaireRepository {
     await executor.transaction((ctx) async {
       await ctx.query(
         "INSERT INTO $tableName (id, nom, post_nom, prenom,"
-        "email, telephone, adresse, sexe, matricule, signature, created_ref, created)"
+        "email, telephone, adresse, sexe, matricule, signature, created, cotisations)"
         "VALUES (nextval('actionnaires_id_seq'), @1, @2, @3, @4, @5, @6,"
         "@7, @8, @9, @10, @11)",
         substitutionValues: {
@@ -37,8 +37,8 @@ class ActionnaireRepository {
           '7': data.sexe,
           '8': data.matricule,
           '9': data.signature,
-          '10': data.createdRef,
-          '11': data.created
+          '10': data.created,
+          '11': data.cotisations
         });
     });
   }
@@ -46,21 +46,21 @@ class ActionnaireRepository {
   Future<void> update(ActionnaireModel data) async {
     await executor.query("""UPDATE $tableName
       SET nom = @1, post_nom = @2, prenom = @3, email = @4, telephone = @5, 
-      adresse = @6, sexe = @7, matricule = @8, signature = @9, created_ref = @10, 
-      created = @11 WHERE id = @12""", 
+      adresse = @6, sexe = @7, matricule = @8, signature = @9, created = @10, 
+      cotisations = @11 WHERE id = @12""", 
       substitutionValues: {
-      '1': data.nom,
-      '2': data.postNom,
-      '3': data.prenom,
-      '4': data.email,
-      '5': data.telephone,
-      '6': data.adresse,
-      '7': data.sexe,
-      '8': data.matricule,
-      '9': data.signature,
-      '10': data.createdRef,
-      '11': data.created,
-      '12': data.id
+        '1': data.nom,
+        '2': data.postNom,
+        '3': data.prenom,
+        '4': data.email,
+        '5': data.telephone,
+        '6': data.adresse,
+        '7': data.sexe,
+        '8': data.matricule,
+        '9': data.signature,
+        '10': data.created,
+        '11': data.cotisations,
+        '12': data.id
     });
   }
 
@@ -89,8 +89,8 @@ class ActionnaireRepository {
       sexe: data[0][7],
       matricule: data[0][8],
       signature: data[0][9],
-      createdRef: data[0][10],
-      created: data[0][11]
+      created: data[0][10],
+      cotisations: data[0][11]
     );
   }
 }

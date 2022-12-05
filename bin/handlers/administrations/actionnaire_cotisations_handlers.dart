@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/administrations/actionnaire_cotisation_model.dart';
+import '../../models/actionnaire/actionnaire_cotisation_model.dart';
 import '../../repository/repository.dart';
 
 

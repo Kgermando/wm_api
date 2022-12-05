@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/administrations/actionnaire_cotisation_model.dart'; 
+import '../../models/actionnaire/actionnaire_cotisation_model.dart'; 
 
 class ActionnaireCotisationRepository {
   final PostgreSQLConnection executor;

@@ -1,7 +1,7 @@
 import 'package:postgres/postgres.dart';
 
-import 'administration/actionnaire_cotisation_repository.dart';
-import 'administration/actionnaire_repository.dart';
+import 'actionnaire/actionnaire_cotisation_repository.dart';
+import 'actionnaire/actionnaire_repository.dart';
 import 'archives/archive_folder_repository.dart';
 import 'archives/archive_repository.dart';
 import 'budgets/departement_budget_repository.dart';

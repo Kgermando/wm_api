@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/administrations/actionnaire_model.dart';
+import '../../models/actionnaire/actionnaire_model.dart';
 import '../../repository/repository.dart';
 
 class ActionnaireHandlers {
@@ -42,9 +42,9 @@ class ActionnaireHandlers {
         adresse: input['adresse'],
         sexe: input['sexe'],
         matricule: input['matricule'],
-        signature: input['signature'],
-        createdRef: input['createdRef'],
-        created: DateTime.parse(input['created'])
+        signature: input['signature'], 
+        created: DateTime.parse(input['created']),
+        cotisations: input['cotisations']
       );
       try {
         await repos.actionnaires.insertData(data);
@@ -86,12 +86,12 @@ class ActionnaireHandlers {
       }
       if (input['signature'] != null) {
         data.signature = input['signature'];
-      }
-      if (input['createdRef'] != null) {
-        data.createdRef = input['createdRef'];
-      }
+      } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['cotisations'] != null) {
+        data.cotisations = input['cotisations'];
       }
 
       repos.actionnaires.update(data);

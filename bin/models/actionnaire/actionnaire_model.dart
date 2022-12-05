@@ -7,10 +7,10 @@ class ActionnaireModel {
   late String telephone;
   late String adresse;
   late String sexe;
-  late String matricule; 
+  late String matricule;
   late String signature; // celui qui fait le document
-  late int createdRef; // id de l'agent
   late DateTime created;
+  late double cotisations;
 
   ActionnaireModel(
       {this.id,
@@ -21,10 +21,10 @@ class ActionnaireModel {
       required this.telephone,
       required this.adresse,
       required this.sexe,
-      required this.matricule, 
+      required this.matricule,
       required this.signature,
-      required this.createdRef,
-      required this.created});
+      required this.created,
+      required this.cotisations});
 
   factory ActionnaireModel.fromSQL(List<dynamic> row) {
     return ActionnaireModel(
@@ -38,8 +38,8 @@ class ActionnaireModel {
       sexe: row[7],
       matricule: row[8],
       signature: row[9],
-      createdRef: row[10],
-      created: row[11]
+      created: row[10],
+      cotisations: row[11],
     );
   }
 
@@ -55,8 +55,8 @@ class ActionnaireModel {
       sexe: json["sexe"],
       matricule: json["matricule"],
       signature: json["signature"],
-      createdRef: json["createdRef"],
       created: DateTime.parse(json['created']),
+      cotisations: json["cotisations"],
     );
   }
 
@@ -72,8 +72,8 @@ class ActionnaireModel {
       'sexe': sexe,
       'matricule': matricule,
       'signature': signature,
-      'createdRef': createdRef,
       'created': created.toIso8601String(),
+      'cotisations': cotisations
     };
   }
 }
