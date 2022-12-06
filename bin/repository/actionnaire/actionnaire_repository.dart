@@ -20,6 +20,17 @@ class ActionnaireRepository {
     return data.toList();
   }
 
+  Future<List<ActionnaireModel>> getAllDataLimit() async {
+    var data = <ActionnaireModel>{};
+
+    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC LIMIT 10;";
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(ActionnaireModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+
   Future<void> insertData(ActionnaireModel data) async {
     await executor.transaction((ctx) async {
       await ctx.query(

@@ -19,6 +19,11 @@ class ActionnaireHandlers {
       return Response.ok(jsonEncode(data));
     });
 
+    router.get('/get-data-limit/', (Request request) async {
+      List<ActionnaireModel> data = await repos.actionnaires.getAllDataLimit();
+      return Response.ok(jsonEncode(data));
+    });
+
     router.get('/<id>', (Request request, String id) async {
       late ActionnaireModel data;
       try {
