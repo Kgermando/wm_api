@@ -3,8 +3,9 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'db/config_db.dart'; 
-import 'handlers/administrations/actionnaire_cotisations_handlers.dart';
-import 'handlers/administrations/actionnaire_handlers.dart';
+import 'handlers/actionnaire/actionnaire_cotisations_handlers.dart';
+import 'handlers/actionnaire/actionnaire_handlers.dart';
+import 'handlers/actionnaire/actionnaire_transfert_handlers.dart';
 import 'handlers/archives/archive_folder_handlers.dart';
 import 'handlers/archives/archive_handlers.dart';
 import 'handlers/auth/auth_handlers.dart';
@@ -347,6 +348,13 @@ class Service {
             .addMiddleware(handleErrors())
             // .addMiddleware(handleAuth(serverSecretKey))
             .addHandler(ActionnaireCotisationHandlers(repos).router));
+    router.mount(
+      '/api/admin/actionnaire-transferts/',
+      Pipeline()
+          .addMiddleware(setJsonHeader())
+          .addMiddleware(handleErrors())
+          // .addMiddleware(handleAuth(serverSecretKey))
+          .addHandler(ActionnaireTransfertHandlers(repos).router));
 
 
     router.mount(

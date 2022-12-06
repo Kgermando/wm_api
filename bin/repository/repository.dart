@@ -2,6 +2,7 @@ import 'package:postgres/postgres.dart';
 
 import 'actionnaire/actionnaire_cotisation_repository.dart';
 import 'actionnaire/actionnaire_repository.dart';
+import 'actionnaire/actionnaire_tranfert_repository.dart';
 import 'archives/archive_folder_repository.dart';
 import 'archives/archive_repository.dart';
 import 'budgets/departement_budget_repository.dart';
@@ -19,14 +20,14 @@ import 'commercial/produit_model_repository.dart';
 import 'commercial/restitution_repository.dart';
 import 'commercial/stocks_global_repository.dart';
 import 'commercial/succursale_repository.dart';
-import 'commercial/vente_repository.dart'; 
+import 'commercial/vente_repository.dart';
 import 'marketing/agenda_repository.dart';
 import 'marketing/annuaire_repository.dart';
-import 'marketing/campaign_repository.dart'; 
+import 'marketing/campaign_repository.dart';
 import 'comptabilites/bilan_repository.dart';
 import 'comptabilites/compte_bilan_ref_repository.dart';
 import 'comptabilites/balance_repository.dart';
-import 'comptabilites/compte_resultat_repository.dart'; 
+import 'comptabilites/compte_resultat_repository.dart';
 import 'comptabilites/journal_repository.dart';
 import 'devis/devis_ist_objet_repository.dart';
 import 'devis/devis_repository.dart';
@@ -54,7 +55,7 @@ import 'finances/depenses_repository.dart';
 import 'finances/dettes_repository.dart';
 import 'finances/fin_exterieur_name_repository.dart';
 import 'finances/fin_exterieur_repository.dart';
-import 'logistiques/materiel_repository.dart'; 
+import 'logistiques/materiel_repository.dart';
 import 'logistiques/entretien_reposiotory.dart';
 import 'logistiques/etat_materiel_repository.dart';
 import 'logistiques/immobilier_repository.dart';
@@ -67,9 +68,9 @@ import 'notify/marketing/agenda_notify_repository.dart';
 import 'notify/marketing/campaign_notify_repository.dart';
 import 'notify/comm_marketing/cart_notify_repository.dart';
 import 'notify/comm_marketing/prod_model_notify_repository.dart';
-import 'notify/comm_marketing/succursale_notify_repository.dart'; 
+import 'notify/comm_marketing/succursale_notify_repository.dart';
 import 'notify/comptabilites/bilan_notify_repository.dart';
-import 'notify/comptabilites/compte_resultat_notify_repository.dart'; 
+import 'notify/comptabilites/compte_resultat_notify_repository.dart';
 import 'notify/departements/administration/admin_departement.dart';
 import 'notify/departements/budgets/budget_departement_.dart';
 import 'notify/departements/commercial/comm_departement.dart';
@@ -83,7 +84,7 @@ import 'notify/exploitations/production_notify_repository.dart';
 import 'notify/exploitations/projet_notify_repository.dart';
 import 'notify/exploitations/taches_notify_repository.dart';
 import 'notify/finances/creance_notify_repository.dart';
-import 'notify/finances/dette_notify_repository.dart'; 
+import 'notify/finances/dette_notify_repository.dart';
 import 'notify/logistiques/materiel_notify_repository.dart';
 import 'notify/logistiques/entretien_notify_repository.dart';
 import 'notify/logistiques/etat_materiel_notify_repository.dart';
@@ -110,9 +111,10 @@ class Repository {
   late RefreshTokensRepository refreshTokens;
   late UserRepository users;
 
-  // Administration
+  // Actiionnaire
   late ActionnaireRepository actionnaires;
   late ActionnaireCotisationRepository actionnaireCotisations;
+  late ActionnaireTransfertRepository actionnaireTransfertRepository;
 
   // RH
   late AgentsRepository agents;
@@ -143,16 +145,16 @@ class Repository {
 
   // COMPTABILITES
   late BilanRepository bilans;
-  late CompteBilanRefRepository compteBilanRefRepository; 
+  late CompteBilanRefRepository compteBilanRefRepository;
   late JournalRepository journals;
   late CompteResultatRepository comptesResultat;
-  late BalanceRepository balances; 
+  late BalanceRepository balances;
 
   // BUDGETS
   late DepartementBudgetRepository departementBudgets;
   late LigneBudgtaireRepository ligneBudgetaires;
 
-  // EXPLOITAIONS
+  // EXPLOITATIONS
   late ProjetRepository projets;
   late TacheRepository taches;
   late VersementProjetRepository versementProjets;
@@ -162,7 +164,7 @@ class Repository {
   late ProductionRepository productions;
 
   // LOGISTIQUE
-  late MaterielRepository materielRepository; 
+  late MaterielRepository materielRepository;
   late EntretienRepository entretiens;
   late EtaMaterielRepository etatMateriels;
   late ImmobilierRepository immobiliers;
@@ -206,15 +208,15 @@ class Repository {
   late SuccursaleNotifyRepository succursaleNotifyCount;
   late ProdModelNotifyRepository prodModelCount;
   late AgendaNotifyRepository agendaCount;
-  late CartNotifyRepository cartCount; 
+  late CartNotifyRepository cartCount;
   late BilanNotifyRepository bilanNotifyCount;
-  late CompteResultatNotifyRepository compteResultatsCount; 
+  late CompteResultatNotifyRepository compteResultatsCount;
   late DevisNotifyRepository devisNotifyCount;
   late ProjetNotifyRepository projetNotifyCount;
   late ProductionNotifyRepository productionNotifyCount;
   late TacheNotifyRepository tacheNotifyCount;
   late CreanceNotifyRepository creanceNotifyCount;
-  late DetteNotifyRepository detteNotifyCount; 
+  late DetteNotifyRepository detteNotifyCount;
   late MaterielNotifyRepository materielNotifyCount;
   late EntretienNotifyRepository entretienNotifyCount;
   late EtatMaterielNotifyRepository etatMaterielNotifyCount;
@@ -245,10 +247,8 @@ class Repository {
     // Notification SideBar
     adminDepartementRepository = AdminDepartementRepository(executor);
     budgetDepartementRepository = BudgetDepartementRepository(executor);
-    marketingDepartementRepository =
-        MarketingDepartementRepository(executor);
-    commDepartementRepository =
-        CommDepartementRepository(executor);
+    marketingDepartementRepository = MarketingDepartementRepository(executor);
+    commDepartementRepository = CommDepartementRepository(executor);
     comptabiliteDepartementRepository =
         ComptabiliteDepartementRepository(executor);
     exploitationDepartementRepository =
@@ -263,16 +263,16 @@ class Repository {
     succursaleNotifyCount = SuccursaleNotifyRepository(executor, 'succursales');
     prodModelCount = ProdModelNotifyRepository(executor, 'produits_model');
     agendaCount = AgendaNotifyRepository(executor, 'agendas');
-    cartCount = CartNotifyRepository(executor, 'carts'); 
+    cartCount = CartNotifyRepository(executor, 'carts');
     bilanNotifyCount = BilanNotifyRepository(executor, 'bilans');
     compteResultatsCount =
-        CompteResultatNotifyRepository(executor, 'comptes_resultat'); 
+        CompteResultatNotifyRepository(executor, 'comptes_resultat');
     devisNotifyCount = DevisNotifyRepository(executor, 'devis');
     projetNotifyCount = ProjetNotifyRepository(executor, 'projets');
     productionNotifyCount = ProductionNotifyRepository(executor, 'productions');
     tacheNotifyCount = TacheNotifyRepository(executor, 'taches');
     creanceNotifyCount = CreanceNotifyRepository(executor, 'creances');
-    detteNotifyCount = DetteNotifyRepository(executor, 'dettes'); 
+    detteNotifyCount = DetteNotifyRepository(executor, 'dettes');
     materielNotifyCount = MaterielNotifyRepository(executor, 'materiels');
     entretienNotifyCount = EntretienNotifyRepository(executor, 'entretiens');
     etatMaterielNotifyCount =
@@ -289,10 +289,12 @@ class Repository {
     refreshTokens = RefreshTokensRepository(executor, 'refresh_tokens');
     users = UserRepository(executor, 'users');
 
-    // Administrations
+    // Actionnaire
     actionnaires = ActionnaireRepository(executor, 'actionnaires');
     actionnaireCotisations =
         ActionnaireCotisationRepository(executor, 'actionnaire_cotisations');
+    actionnaireTransfertRepository =
+        ActionnaireTransfertRepository(executor, 'actionnaire_transferts');
 
     // RH
     agents = AgentsRepository(executor, 'agents');
@@ -328,10 +330,10 @@ class Repository {
     // COMPTABILITE
     bilans = BilanRepository(executor, 'bilans');
     compteBilanRefRepository =
-        CompteBilanRefRepository(executor, 'compte_bilan_ref'); 
+        CompteBilanRefRepository(executor, 'compte_bilan_ref');
     journals = JournalRepository(executor, 'journals');
     comptesResultat = CompteResultatRepository(executor, 'comptes_resultat');
-    balances = BalanceRepository(executor, 'balances'); 
+    balances = BalanceRepository(executor, 'balances');
 
     // BUDGETS
     departementBudgets =
@@ -348,7 +350,7 @@ class Repository {
     productions = ProductionRepository(executor, 'productions');
 
     // LOGISTIQUE
-    materielRepository = MaterielRepository(executor, 'materiels'); 
+    materielRepository = MaterielRepository(executor, 'materiels');
     entretiens = EntretienRepository(executor, 'entretiens');
     etatMateriels = EtaMaterielRepository(executor, 'etat_materiels');
     immobiliers = ImmobilierRepository(executor, 'immobiliers');
