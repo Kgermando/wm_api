@@ -91,7 +91,7 @@ class FinExteRepository {
         reference: data[0][8],
         financeExterieurName: data[0][9],
         created: data[0][10],
-      montantRetrait: data[0][11],
+      montantRetrait: data[0][11]
     );
   } 
   
