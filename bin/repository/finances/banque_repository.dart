@@ -12,7 +12,7 @@ class BanqueRepository {
   Future<List<BanqueModel>> getAllData() async {
     var data = <BanqueModel>{};
 
-    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" ASC;";
+    var querySQL = "SELECT * FROM $tableName ORDER BY \"created\" DESC;";
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(BanqueModel.fromSQL(row));
