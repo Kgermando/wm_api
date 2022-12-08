@@ -1,7 +1,7 @@
 name: work_management_api
 description: A server app using the shelf package and Docker.
 version: 1.0.0
-# homepage: https://www.example.com
+homepage: https://eventdrc.com
 
 environment:
   sdk: '>=2.18.2 <3.0.0'

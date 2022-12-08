@@ -127,11 +127,11 @@ class Service {
             .addMiddleware(handleErrors())
             .addHandler(AdminDepartementHandlers(repos).router));
     router.mount(
-        '/api/counts/departement-budgets/',
-        Pipeline()
-            .addMiddleware(setJsonHeader())
-            .addMiddleware(handleErrors())
-            .addHandler(BudgetDepartementHandlers(repos).router));
+      '/api/counts/departement-budgets/',
+      Pipeline()
+          .addMiddleware(setJsonHeader())
+          .addMiddleware(handleErrors())
+          .addHandler(BudgetDepartementHandlers(repos).router));
     router.mount(
         '/api/counts/departement-marketing/',
         Pipeline()
