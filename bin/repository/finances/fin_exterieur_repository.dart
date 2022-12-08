@@ -26,7 +26,7 @@ class FinExteRepository {
         "libelle, montant_depot, type_operation, numero_operation, signature,"
         "reference, finance_exterieur_name, created, montant_retrait)"
         "VALUES (nextval('fin_exterieurs_id_seq'), @1, @2, @3, @4, @5, @6,"
-        "@7, @8, @9, @10)",
+        "@7, @8, @9, @10, @11)",
         substitutionValues: {
           '1': data.nomComplet,
           '2': data.pieceJustificative,

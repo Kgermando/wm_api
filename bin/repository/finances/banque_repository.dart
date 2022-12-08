@@ -80,7 +80,7 @@ class BanqueRepository {
         "departement, type_operation, numero_operation, signature,"
         "reference, banque_name, created, montant_retrait)"
         "VALUES (nextval('banques_id_seq'), @1, @2, @3, @4, @5, @6,"
-        "@7, @8, @9, @10, @11)",
+        "@7, @8, @9, @10, @11, @12)",
         substitutionValues: {
           '1': data.nomComplet,
           '2': data.pieceJustificative,
