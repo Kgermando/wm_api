@@ -24,8 +24,8 @@ class ArchiveRepository {
     await executor.transaction((ctx) async {
       await ctx.query(
         "INSERT INTO $tableName (id, departement, folder_name, nom_document,"
-        "description, fichier, signature, created, reference)"
-        "VALUES (nextval('archives_id_seq'), @1, @2, @3, @4, @5, @6 , @7, @8)",
+        "description, fichier, signature, created, reference, level)"
+        "VALUES (nextval('archives_id_seq'), @1, @2, @3, @4, @5, @6 , @7, @8, @9)",
         substitutionValues: {
           '1': data.departement,
           '2': data.folderName,
@@ -34,7 +34,8 @@ class ArchiveRepository {
           '5': data.fichier,
           '6': data.signature,
           '7': data.created,
-          '8': data.reference
+          '8': data.reference,
+          '9': data.level
         });
     });
   }
@@ -43,7 +44,7 @@ class ArchiveRepository {
     await executor.query("""UPDATE $tableName
         SET departement = @1, folder_name = @2, nom_document = @3,
         description = @4, fichier = @5, signature = @6,
-        created = @7, reference = @8 WHERE id = @9""", substitutionValues: {
+        created = @7, reference = @8, level = @9 WHERE id = @10""", substitutionValues: {
       '1': data.departement,
       '2': data.folderName,
       '3': data.nomDocument,
@@ -52,7 +53,8 @@ class ArchiveRepository {
       '6': data.signature,
       '7': data.created,
       '8': data.reference,
-      '9': data.id
+      '9': data.reference,
+      '10': data.id
     });
   }
 
@@ -79,7 +81,8 @@ class ArchiveRepository {
       fichier: data[0][5],
       signature: data[0][6],
       created: data[0][7],
-      reference: data[0][8]
+      reference: data[0][8],
+      level: data[0][9]
     );
   } 
 }

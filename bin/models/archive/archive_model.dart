@@ -6,28 +6,33 @@ class ArchiveFolderModel {
   late DateTime created;
 
   ArchiveFolderModel(
-      {this.id,
+    { 
+      this.id,
       required this.departement,
       required this.folderName,
       required this.signature,
-      required this.created});
+      required this.created
+    }
+  );
 
   factory ArchiveFolderModel.fromSQL(List<dynamic> row) {
     return ArchiveFolderModel(
-        id: row[0],
-        departement: row[1],
-        folderName: row[2],
-        signature: row[3],
-        created: row[4]);
+      id: row[0],
+      departement: row[1],
+      folderName: row[2],
+      signature: row[3],
+      created: row[4]
+    );
   }
 
   factory ArchiveFolderModel.fromJson(Map<String, dynamic> json) {
     return ArchiveFolderModel(
-        id: json['id'],
-        departement: json['departement'],
-        folderName: json['folderName'],
-        signature: json['signature'],
-        created: DateTime.parse(json['created']));
+      id: json['id'],
+      departement: json['departement'],
+      folderName: json['folderName'],
+      signature: json['signature'],
+      created: DateTime.parse(json['created'])
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -41,7 +46,8 @@ class ArchiveFolderModel {
   }
 }
 
-class ArchiveModel {
+
+class ArchiveModel { 
   late int? id;
   late String departement;
   late String folderName;
@@ -51,29 +57,34 @@ class ArchiveModel {
   late String signature;
   late DateTime created;
   late int reference;
+  late String level;
 
-  ArchiveModel(
-      {this.id,
-      required this.departement,
-      required this.folderName,
-      required this.nomDocument,
-      required this.description,
-      required this.fichier,
-      required this.signature,
-      required this.created,
-      required this.reference});
+  ArchiveModel({
+    this.id,
+    required this.departement,
+    required this.folderName,
+    required this.nomDocument,
+    required this.description,
+    required this.fichier,
+    required this.signature,
+    required this.created,
+    required this.reference,
+      required this.level
+  });
 
   factory ArchiveModel.fromSQL(List<dynamic> row) {
     return ArchiveModel(
-        id: row[0],
-        departement: row[1],
-        folderName: row[2],
-        nomDocument: row[3],
-        description: row[4],
-        fichier: row[5],
-        signature: row[6],
-        created: row[7],
-        reference: row[8]);
+      id: row[0],
+      departement: row[1],
+      folderName: row[2],
+      nomDocument: row[3],
+      description: row[4],
+      fichier: row[5],
+      signature: row[6],
+      created: row[7],
+      reference: row[8],
+      level: row[9]
+    );
   }
 
   factory ArchiveModel.fromJson(Map<String, dynamic> json) {
@@ -87,6 +98,7 @@ class ArchiveModel {
       signature: json['signature'],
       created: DateTime.parse(json['created']),
       reference: json['reference'],
+      level: json['level']
     );
   }
 
@@ -101,6 +113,7 @@ class ArchiveModel {
       'signature': signature,
       'created': created.toIso8601String(),
       'reference': reference,
+      'level': level
     };
   }
 }
