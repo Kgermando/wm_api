@@ -24,7 +24,7 @@ class FinExteRepository {
     var data = <ChartFinanceModel>{};
 
     var querySQL =
-        "SELECT \"caisse_name\", SUM(\"montant_encaissement\"::FLOAT), SUM(\"montant_decaissement\"::FLOAT) FROM $tableName  GROUP BY \"caisse_name\";";
+        "SELECT \"finance_exterieur_name\", SUM(\"montant_depot\"::FLOAT), SUM(\"montant_retrait\"::FLOAT) FROM $tableName  GROUP BY \"finance_exterieur_name\";";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
