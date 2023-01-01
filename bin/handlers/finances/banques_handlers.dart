@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../models/charts/chart_finance.dart';
 import '../../models/charts/courbe_chart_model.dart';
 import '../../models/finances/banque_model.dart';
 import '../../repository/repository.dart';
@@ -20,30 +21,11 @@ class BanqueHandlers {
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/chart-month-retrait/', (Request request) async {
-      List<CourbeChartModel> data =
-          await repos.banques.getAllDataChartMounthRetrait();
+    router.get('/chart/', (Request request) async {
+      List<ChartFinanceModel> data =
+          await repos.banques.getAllDataChart();
       return Response.ok(jsonEncode(data));
-    });
-
-    router.get('/chart-month-depot/', (Request request) async {
-      List<CourbeChartModel> data =
-          await repos.banques.getAllDataChartMounthDepot();
-      return Response.ok(jsonEncode(data));
-    });
-
-    router.get('/chart-year-retrait/', (Request request) async {
-      List<CourbeChartModel> data =
-          await repos.banques.getAllDataChartYearRetrait();
-      return Response.ok(jsonEncode(data));
-    });
-
-    router.get('/chart-year-depot/', (Request request) async {
-      List<CourbeChartModel> data =
-          await repos.banques.getAllDataChartYearDepot();
-      return Response.ok(jsonEncode(data));
-    });
-
+    }); 
 
     router.get('/<id>', (Request request, String id) async {
       late BanqueModel agent;

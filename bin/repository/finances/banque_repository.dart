@@ -1,5 +1,6 @@
 import 'package:postgres/postgres.dart';
 
+import '../../models/charts/chart_finance.dart';
 import '../../models/charts/courbe_chart_model.dart';
 import '../../models/finances/banque_model.dart';
 
@@ -18,59 +19,20 @@ class BanqueRepository {
       data.add(BanqueModel.fromSQL(row));
     }
     return data.toList();
-  }
-
-
-
-  Future<List<CourbeChartModel>> getAllDataChartMounthDepot() async {
-    var data = <CourbeChartModel>{};
+  } 
+  
+  Future<List<ChartFinanceModel>> getAllDataChart() async {
+    var data = <ChartFinanceModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"montant\"::FLOAT) FROM $tableName WHERE \"type_operation\"='Depot' AND \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+        "SELECT \"banque_name\", SUM(\"montant_depot\"::FLOAT), SUM(\"montant_retrait\"::FLOAT) FROM $tableName  GROUP BY \"banque_name\";";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
-      data.add(CourbeChartModel.fromSQL(row));
+      data.add(ChartFinanceModel.fromSQL(row));
     }
     return data.toList();
-  }
-
-  Future<List<CourbeChartModel>> getAllDataChartMounthRetrait() async {
-    var data = <CourbeChartModel>{};
-
-    var querySQL =
-        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"montant\"::FLOAT) FROM $tableName WHERE \"type_operation\"='Retrait' AND \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
-
-    List<List<dynamic>> results = await executor.query(querySQL);
-    for (var row in results) {
-      data.add(CourbeChartModel.fromSQL(row));
-    }
-    return data.toList();
-  }
-
-  Future<List<CourbeChartModel>> getAllDataChartYearDepot() async {
-    var data = <CourbeChartModel>{};
-    var querySQL =
-        "SELECT EXTRACT(YEAR FROM \"created\" ::TIMESTAMP), SUM(\"montant\"::FLOAT) FROM $tableName WHERE \"type_operation\"='Depot' AND  \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ASC ;";
-
-    List<List<dynamic>> results = await executor.query(querySQL);
-    for (var row in results) {
-      data.add(CourbeChartModel.fromSQL(row));
-    }
-    return data.toList();
-  }
-
-  Future<List<CourbeChartModel>> getAllDataChartYearRetrait() async {
-    var data = <CourbeChartModel>{};
-    var querySQL =
-        "SELECT EXTRACT(YEAR FROM \"created\" ::TIMESTAMP), SUM(\"montant\"::FLOAT) FROM $tableName WHERE \"type_operation\"='Retrait' AND  \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ASC ;";
-
-    List<List<dynamic>> results = await executor.query(querySQL);
-    for (var row in results) {
-      data.add(CourbeChartModel.fromSQL(row));
-    }
-    return data.toList();
-  }
+  } 
 
   Future<void> insertData(BanqueModel data) async {
     await executor.transaction((ctx) async {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../models/charts/chart_finance.dart';
 import '../../models/finances/fin_exterieur_model.dart';
 import '../../repository/repository.dart';
 
@@ -18,6 +19,11 @@ class FinExterieurHandlers {
       List<FinanceExterieurModel> data = await repos.finExterieurs.getAllData();
       return Response.ok(jsonEncode(data));
     });
+
+    router.get('/chart/', (Request request) async {
+      List<ChartFinanceModel> data = await repos.caisses.getAllDataChart();
+      return Response.ok(jsonEncode(data));
+    }); 
 
     router.get('/<id>', (Request request, String id) async {
       late FinanceExterieurModel agent;

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/charts/courbe_chart_model.dart';
+import '../../models/charts/chart_finance.dart'; 
 import '../../models/finances/caisse_model.dart';
 import '../../repository/repository.dart';
 
@@ -20,27 +20,12 @@ class CaissesHandlers {
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/chart-month-encaissement/', (Request request) async {
-      List<CourbeChartModel> data = await repos.caisses.getAllDataChartMounthEncaissement();
+    router.get('/chart/', (Request request) async {
+      List<ChartFinanceModel> data = await repos.caisses.getAllDataChart();
       return Response.ok(jsonEncode(data));
-    });
+    }); 
 
-    router.get('/chart-month-decaissement/', (Request request) async {
-      List<CourbeChartModel> data =
-          await repos.caisses.getAllDataChartMounthDecaissement();
-      return Response.ok(jsonEncode(data));
-    });
-
-    router.get('/chart-year-encaissement/', (Request request) async {
-      List<CourbeChartModel> data = await repos.caisses.getAllDataChartYearEncaissement();
-      return Response.ok(jsonEncode(data));
-    });
-
-    router.get('/chart-year-decaissement/', (Request request) async {
-      List<CourbeChartModel> data = await repos.caisses.getAllDataChartYearDecaissement();
-      return Response.ok(jsonEncode(data));
-    });
-
+ 
     router.get('/<id>', (Request request, String id) async {
       late CaisseModel agent;
       try {
