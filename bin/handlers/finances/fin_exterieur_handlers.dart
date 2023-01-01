@@ -21,7 +21,7 @@ class FinExterieurHandlers {
     });
 
     router.get('/chart/', (Request request) async {
-      List<ChartFinanceModel> data = await repos.caisses.getAllDataChart();
+      List<ChartFinanceModel> data = await repos.finExterieurs.getAllDataChart();
       return Response.ok(jsonEncode(data));
     }); 
 
