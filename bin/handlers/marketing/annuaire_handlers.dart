@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../models/charts/pie_chart_model.dart';
 import '../../models/maketing/annuaire_model.dart';
 import '../../repository/repository.dart';
 
@@ -28,6 +29,12 @@ class AnnuaireHandlers {
         return Response(404);
       }
       return Response.ok(jsonEncode(data.toJson()));
+    });
+
+ 
+    router.get('/chart/', (Request request) async {
+      List<CountPieChartModel> data = await repos.annuaires.getChartPie();
+      return Response.ok(jsonEncode(data));
     });
 
     router.post('/insert-new-annuaire', (Request request) async {

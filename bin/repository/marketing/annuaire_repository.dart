@@ -1,5 +1,6 @@
 import 'package:postgres/postgres.dart';
 
+import '../../models/charts/pie_chart_model.dart';
 import '../../models/maketing/annuaire_model.dart';
 
 class AnnuaireReposiotry {
@@ -18,6 +19,22 @@ class AnnuaireReposiotry {
       data.add(AnnuaireModel.fromSQL(row));
     }
     return data.toList();
+  }
+
+  Future<List<CountPieChartModel>> getChartPie() async {
+    try {
+      var data = <CountPieChartModel>{};
+
+      var querySQL =
+          "SELECT categorie, COUNT(categorie) FROM $tableName GROUP BY \"categorie\";";
+      List<List<dynamic>> results = await executor.query(querySQL);
+      for (var row in results) {
+        data.add(CountPieChartModel.fromSQL(row));
+      }
+      return data.toList();
+    } catch (e) {
+      throw CountPieChartModel;
+    }
   }
 
   
