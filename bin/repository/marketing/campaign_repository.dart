@@ -25,7 +25,7 @@ class CampaignRepository {
       await ctx.execute(
         "INSERT INTO $tableName (id, type_produit, date_debut_et_fin,"
         "cout_campaign, lieu_cible, promotion, objectifs,"
-        "observation,  signature, created_ref, created,"
+        "observation,  signature, is_submit, created,"
         "approbation_dg, motif_dg, signature_dg, approbation_budget, motif_budget, signature_budget,"
         "approbation_fin, motif_fin, signature_fin, approbation_dd, motif_dd, signature_dd,"
         "ligne_budgetaire, ressource)"
@@ -41,7 +41,7 @@ class CampaignRepository {
           '6': data.objectifs,
           '7': data.observation,
           '8': data.signature,
-          '9': data.createdRef,
+          '9': data.isSubmit,
           '10': data.created,
           '11': data.approbationDG,
           '12': data.motifDG,
@@ -66,7 +66,7 @@ class CampaignRepository {
     await executor.query("""UPDATE $tableName
       SET type_produit = @1, date_debut_et_fin = @2, cout_campaign = @3,
       lieu_cible = @4, promotion = @5, objectifs = @6, observation = @7,
-      signature = @8, created_ref = @9, created = @10, 
+      signature = @8, is_submit = @9, created = @10, 
       approbation_dg = @11, motif_dg = @12, signature_dg = @13, approbation_budget = @14,
       motif_budget = @15, signature_budget = @16, approbation_fin = @17, motif_fin = @18,
       signature_fin = @19, approbation_dd = @20, motif_dd = @21, signature_dd = @22,
@@ -80,7 +80,7 @@ class CampaignRepository {
           '6': data.objectifs,
           '7': data.observation,
           '8': data.signature,
-          '9': data.createdRef,
+          '9': data.isSubmit,
           '10': data.created,
           '11': data.approbationDG,
           '12': data.motifDG,
@@ -124,7 +124,7 @@ class CampaignRepository {
       objectifs: data[0][6],
       observation: data[0][7],
       signature: data[0][8],
-      createdRef: data[0][9],
+      isSubmit: data[0][9],
       created: data[0][10],
       approbationDG: data[0][11],
       motifDG: data[0][12],

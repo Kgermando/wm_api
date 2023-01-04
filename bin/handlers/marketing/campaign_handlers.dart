@@ -41,7 +41,7 @@ class CampaignHandlers {
         objectifs: input['objectifs'],
         observation: input['observation'],
         signature: input['signature'],
-        createdRef: DateTime.parse(input['createdRef']),
+        isSubmit: input['isSubmit'], 
         created: DateTime.parse(input['created']),
         approbationDG: input['approbationDG'],
         motifDG: input['motifDG'],
@@ -97,8 +97,8 @@ class CampaignHandlers {
       if (input['signature'] != null) {
         data.signature = input['signature'];
       }
-      if (input['created'] != null) {
-        data.created = DateTime.parse(input['created']);
+      if (input['isSubmit'] != null) {
+        data.isSubmit = input['isSubmit'];
       }
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
