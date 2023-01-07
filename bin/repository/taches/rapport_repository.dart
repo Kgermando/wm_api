@@ -41,7 +41,7 @@ class RapportRepository {
   Future<void> update(RapportModel data) async {
     await executor.query("""UPDATE $tableName
         SET nom = @1, numero_tache = @2, rapport = @3,
-        signature = @4, created = @5, reference = @6, reference = @7
+        signature = @4, created = @5, reference = @6, read_rapport = @7
          WHERE id = @8""", substitutionValues: {
       '1': data.nom,
       '2': data.numeroTache,
