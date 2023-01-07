@@ -23,7 +23,7 @@ class TacheRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, nom, numero_tache,"
-        "agent, jalon, tache, signature_resp, created, read, departement, reference)"
+        "agent, jalon, tache, signature_resp, created, read_responsable, departement, reference, read_agent)"
         "VALUES (nextval('taches_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10)",
         substitutionValues: {
           '1': data.nom,
@@ -33,9 +33,10 @@ class TacheRepository {
           '5': data.tache,
           '6': data.signatureResp,
           '7': data.created,
-          '8': data.read,
+          '8': data.readResponsable,
           '9': data.departement,
-          '10': data.reference
+          '10': data.reference,
+          '11': data.readAgent
         });
     });
   }
@@ -44,7 +45,7 @@ class TacheRepository {
     await executor.query("""UPDATE $tableName
         SET nom = @1, numero_tache = @2, agent = @3,
         jalon = @4, tache = @5, signature_resp = @6, created = @7,
-        read = @8, departement = @9, reference = @10 WHERE id = @11""", substitutionValues: {
+        read_responsable = @8, departement = @9, reference = @10, read_agent = @11 WHERE id = @12""", substitutionValues: {
       '1': data.nom,
       '2': data.numeroTache,
       '3': data.agent,
@@ -52,10 +53,11 @@ class TacheRepository {
       '5': data.tache,
       '6': data.signatureResp,
       '7': data.created,
-      '8': data.read,
+      '8': data.readResponsable,
       '9': data.departement,
       '10': data.reference,
-      '11': data.id
+      '11': data.readAgent,
+      '12': data.id
     });
   }
 
@@ -82,9 +84,10 @@ class TacheRepository {
       tache: data[0][5],
       signatureResp: data[0][6],
       created: data[0][7],
-      read: data[0][8],
+      readResponsable: data[0][8],
       departement: data[0][9],
       reference: data[0][10],
+      readAgent: data[0][11]
     );
   }
 }

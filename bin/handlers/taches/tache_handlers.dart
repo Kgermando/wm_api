@@ -41,9 +41,10 @@ class TacheHandlers {
         tache: input['tache'],
         signatureResp: input['signatureResp'],
         created: DateTime.parse(input['created']),
-        read: input['read'],
+        readResponsable: input['readResponsable'],
         departement: input['departement'],
-        reference: input['reference']
+        reference: input['reference'],
+        readAgent: input['readAgent'],
       );
       try {
         await repos.taches.insertData(data);
@@ -81,14 +82,17 @@ class TacheHandlers {
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
       }
-      if (input['read'] != null) {
-        data.read = input['read'];
+      if (input['readResponsable'] != null) {
+        data.readResponsable = input['readResponsable'];
       }
       if (input['departement'] != null) {
         data.departement = input['departement'];
       }
       if (input['reference'] != null) {
         data.reference = input['reference'];
+      }
+      if (input['readAgent'] != null) {
+        data.readAgent = input['readAgent'];
       }
 
       repos.taches.update(data);
