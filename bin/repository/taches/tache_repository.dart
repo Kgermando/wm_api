@@ -24,7 +24,7 @@ class TacheRepository {
       await ctx.execute(
         "INSERT INTO $tableName (id, nom, numero_tache,"
         "agent, jalon, tache, signature_resp, created, read_responsable, departement, reference, read_agent)"
-        "VALUES (nextval('taches_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10)",
+        "VALUES (nextval('taches_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11)",
         substitutionValues: {
           '1': data.nom,
           '2': data.numeroTache,

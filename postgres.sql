@@ -1206,7 +1206,8 @@ CREATE TABLE "public"."rapports" (
     "rapport" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
-    "reference" integer NOT NULL
+    "reference" integer NOT NULL,
+    "read_rapport" character varying NOT NULL
 ) WITH (oids = false);
 
 
@@ -1538,4 +1539,4 @@ CREATE TABLE "public"."versement_projets" (
 ) WITH (oids = false);
 
 
--- 2023-01-07 07:38:20.836853+00
+-- 2023-01-07 09:12:29.465961+00

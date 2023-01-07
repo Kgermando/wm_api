@@ -8,6 +8,8 @@ class TacheNotifyRepository {
 
   TacheNotifyRepository(this.executor, this.tableName);
 
+  static const tableNameRapport = 'rapports';
+
   // Notife l'agent d'une nouvelle tache
   Future<NotifyModel> getCountTache(String matricule) async {
     try {
@@ -28,7 +30,7 @@ class TacheNotifyRepository {
   Future<NotifyModel> getCountRapport(String matricule) async {
     try {
       var data = <NotifyModel>{};
-      var querySQL = """SELECT COUNT(*) FROM rapports where  
+      var querySQL = """SELECT COUNT(*) FROM $tableNameRapport where  
         "agent"='$matricule' AND "read_rapport" = 'Non Lu';""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
