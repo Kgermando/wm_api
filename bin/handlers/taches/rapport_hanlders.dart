@@ -41,6 +41,7 @@ class RapportHandlers {
         created: DateTime.parse(input['created']),
         reference: input['reference'],
         readRapport: input['readRapport'],
+        signatureResp: input['signatureResp'],
       );
       try {
         await repos.rapports.insertData(data);
@@ -77,6 +78,9 @@ class RapportHandlers {
       }
       if (input['readRapport'] != null) {
         data.readRapport = input['readRapport'];
+      }
+      if (input['signatureResp'] != null) {
+        data.signatureResp = input['signatureResp'];
       }
 
       repos.rapports.update(data);
