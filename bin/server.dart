@@ -89,7 +89,7 @@ import 'handlers/notify/departements/rh_departement.dart';
 import 'handlers/notify/devis/devis_notify_handlers.dart';
 import 'handlers/notify/exploitations/production_notify_handlers.dart';
 import 'handlers/notify/exploitations/projet_notify_handlers.dart';
-import 'handlers/notify/exploitations/tache_notify_handlers.dart';
+import 'handlers/notify/taches/tache_notify_handlers.dart';
 import 'handlers/notify/finances/creance_notify_handlers.dart';
 import 'handlers/notify/finances/dette_notify_handlers.dart'; 
 import 'handlers/notify/logistique/materiel_notify_handlers.dart';

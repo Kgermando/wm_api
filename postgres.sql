@@ -1,8 +1,26 @@
--- Adminer 4.8.1 PostgreSQL 14.4 (Debian 14.4-1.pgdg110+1) dump
+-- Adminer 4.8.1 PostgreSQL 15.1 (Debian 15.1-1.pgdg110+1) dump
+
+DROP TABLE IF EXISTS "abonnement_clients";
+DROP SEQUENCE IF EXISTS abonnement_clients_id_seq;
+CREATE SEQUENCE abonnement_clients_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."abonnement_clients" (
+    "id" integer DEFAULT nextval('abonnement_clients_id_seq') NOT NULL,
+    "duree" timestamp NOT NULL,
+    "type_contrat" character varying NOT NULL,
+    "somme_contrat" character varying NOT NULL,
+    "receptionniste" character varying NOT NULL,
+    "date_signature_contrat" character varying NOT NULL,
+    "signataire_contrat_entreprise" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "abonnement_clients_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
 
 DROP TABLE IF EXISTS "achats";
 DROP SEQUENCE IF EXISTS achats_id_seq;
-CREATE SEQUENCE achats_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE achats_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."achats" (
     "id" integer DEFAULT nextval('achats_id_seq') NOT NULL,
@@ -43,6 +61,21 @@ CREATE TABLE "public"."actionnaire_cotisations" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "actionnaire_transferts";
+DROP SEQUENCE IF EXISTS actionnaire_transferts_id_seq;
+CREATE SEQUENCE actionnaire_transferts_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."actionnaire_transferts" (
+    "id" integer DEFAULT nextval('actionnaire_transferts_id_seq') NOT NULL,
+    "matricule_envoi" character varying NOT NULL,
+    "matricule_recu" character varying NOT NULL,
+    "montant" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "actionnaire_transferts_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "actionnaires";
 DROP SEQUENCE IF EXISTS actionnaires_id_seq;
 CREATE SEQUENCE actionnaires_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
@@ -58,8 +91,8 @@ CREATE TABLE "public"."actionnaires" (
     "sexe" character varying NOT NULL,
     "matricule" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" integer NOT NULL,
     "created" timestamp NOT NULL,
+    "cotisations" double precision NOT NULL,
     CONSTRAINT "actionnaires_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
@@ -80,7 +113,7 @@ CREATE TABLE "public"."agendas" (
 
 DROP TABLE IF EXISTS "agents";
 DROP SEQUENCE IF EXISTS agents_id_seq;
-CREATE SEQUENCE agents_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 6 CACHE 1;
+CREATE SEQUENCE agents_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."agents" (
     "id" integer DEFAULT nextval('agents_id_seq') NOT NULL,
@@ -121,42 +154,12 @@ CREATE SEQUENCE agents_roles_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 C
 
 CREATE TABLE "public"."agents_roles" (
     "id" integer DEFAULT nextval('agents_roles_id_seq') NOT NULL,
-    "reference" timestamp NOT NULL,
+    "reference" integer NOT NULL,
+    "departement" character varying NOT NULL,
     "agent" character varying NOT NULL,
     "role" character varying NOT NULL,
-    CONSTRAINT "agents_roles_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "anguins";
-DROP SEQUENCE IF EXISTS anguins_id_seq;
-CREATE SEQUENCE anguins_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
-
-CREATE TABLE "public"."anguins" (
-    "id" integer DEFAULT nextval('anguins_id_seq') NOT NULL,
-    "nom" character varying NOT NULL,
-    "modele" character varying NOT NULL,
-    "marque" character varying NOT NULL,
-    "numero_chassie" character varying NOT NULL,
-    "couleur" character varying NOT NULL,
-    "genre" character varying NOT NULL,
-    "qty_max_reservoir" character varying NOT NULL,
-    "date_fabrication" timestamp NOT NULL,
-    "nomero_plaque" character varying NOT NULL,
-    "nomero_entreprise" character varying NOT NULL,
-    "kilometrage_initiale" character varying NOT NULL,
-    "provenance" character varying NOT NULL,
-    "type_caburant" character varying NOT NULL,
-    "type_moteur" character varying NOT NULL,
-    "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
-    "approbation_dd" character varying NOT NULL,
-    "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL
+    CONSTRAINT "agents_roles_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
@@ -181,9 +184,47 @@ CREATE TABLE "public"."annuaires" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "approvision_receptions";
+DROP SEQUENCE IF EXISTS approvision_receptions_id_seq;
+CREATE SEQUENCE approvision_receptions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."approvision_receptions" (
+    "id" integer DEFAULT nextval('approvision_receptions_id_seq') NOT NULL,
+    "provision" character varying NOT NULL,
+    "departement" character varying NOT NULL,
+    "quantity" character varying NOT NULL,
+    "unite" character varying NOT NULL,
+    "signature_livraison" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "accuse_reception" character varying NOT NULL,
+    "signature_reception" character varying NOT NULL,
+    "created_reception" timestamp NOT NULL,
+    "livraison_annuler" character varying NOT NULL,
+    "reference" integer NOT NULL,
+    CONSTRAINT "approvision_receptions_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "approvisionnements";
+DROP SEQUENCE IF EXISTS approvisionnements_id_seq;
+CREATE SEQUENCE approvisionnements_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."approvisionnements" (
+    "id" integer DEFAULT nextval('approvisionnements_id_seq') NOT NULL,
+    "provision" character varying NOT NULL,
+    "quantity_total" character varying NOT NULL,
+    "quantity" character varying NOT NULL,
+    "unite" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "fournisseur" character varying NOT NULL,
+    CONSTRAINT "approvisionnements_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "archives";
 DROP SEQUENCE IF EXISTS archives_id_seq;
-CREATE SEQUENCE archives_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE archives_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."archives" (
     "id" integer DEFAULT nextval('archives_id_seq') NOT NULL,
@@ -194,13 +235,15 @@ CREATE TABLE "public"."archives" (
     "fichier" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
+    "reference" integer NOT NULL,
+    "level" character varying NOT NULL,
     CONSTRAINT "archives_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "archives_folders";
 DROP SEQUENCE IF EXISTS archives_folders_id_seq;
-CREATE SEQUENCE archives_folders_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE archives_folders_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."archives_folders" (
     "id" integer DEFAULT nextval('archives_folders_id_seq') NOT NULL,
@@ -212,49 +255,62 @@ CREATE TABLE "public"."archives_folders" (
 ) WITH (oids = false);
 
 
-DROP TABLE IF EXISTS "balance_comptes";
-DROP SEQUENCE IF EXISTS balance_comptes_id_seq;
-CREATE SEQUENCE balance_comptes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+DROP TABLE IF EXISTS "balances";
+DROP SEQUENCE IF EXISTS balances_id_seq;
+CREATE SEQUENCE balances_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
-CREATE TABLE "public"."balance_comptes" (
-    "id" integer DEFAULT nextval('balance_comptes_id_seq') NOT NULL,
-    "title" character varying NOT NULL,
-    "statut" character varying NOT NULL,
+CREATE TABLE "public"."balances" (
+    "id" integer DEFAULT nextval('balances_id_seq') NOT NULL,
+    "numero_operation" character varying NOT NULL,
+    "libele" character varying NOT NULL,
+    "comptes" character varying NOT NULL,
+    "debit" character varying NOT NULL,
+    "credit" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
-    "is_submit" character varying NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
-    "approbation_dd" character varying NOT NULL,
-    "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL,
-    CONSTRAINT "balance_comptes_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "balances_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "banque_names";
+DROP SEQUENCE IF EXISTS banque_names_id_seq;
+CREATE SEQUENCE banque_names_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."banque_names" (
+    "id" integer DEFAULT nextval('banque_names_id_seq') NOT NULL,
+    "nom_complet" character varying NOT NULL,
+    "rccm" character varying NOT NULL,
+    "id_nat" character varying NOT NULL,
+    "addresse" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "banque_names_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "banques";
 DROP SEQUENCE IF EXISTS banques_id_seq;
-CREATE SEQUENCE banques_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE banques_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."banques" (
     "id" integer DEFAULT nextval('banques_id_seq') NOT NULL,
     "nom_complet" character varying NOT NULL,
     "piece_justificative" character varying NOT NULL,
     "libelle" character varying NOT NULL,
-    "montant" character varying NOT NULL,
+    "montant_depot" character varying NOT NULL,
     "departement" character varying NOT NULL,
     "type_operation" character varying NOT NULL,
     "numero_operation" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" integer NOT NULL,
-    "created" timestamp NOT NULL
+    "reference" integer NOT NULL,
+    "banque_name" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "montant_retrait" character varying NOT NULL
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "bilans";
 DROP SEQUENCE IF EXISTS bilans_id_seq;
-CREATE SEQUENCE bilans_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE bilans_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."bilans" (
     "id" integer DEFAULT nextval('bilans_id_seq') NOT NULL,
@@ -262,9 +318,6 @@ CREATE TABLE "public"."bilans" (
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
     "is_submit" character varying NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
     "signature_dd" character varying NOT NULL,
@@ -274,7 +327,7 @@ CREATE TABLE "public"."bilans" (
 
 DROP TABLE IF EXISTS "bon_livraisons";
 DROP SEQUENCE IF EXISTS bon_livraisons_id_seq;
-CREATE SEQUENCE bon_livraisons_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE bon_livraisons_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."bon_livraisons" (
     "id" integer DEFAULT nextval('bon_livraisons_id_seq') NOT NULL,
@@ -297,6 +350,21 @@ CREATE TABLE "public"."bon_livraisons" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "caisse_names";
+DROP SEQUENCE IF EXISTS caisse_names_id_seq;
+CREATE SEQUENCE caisse_names_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."caisse_names" (
+    "id" integer DEFAULT nextval('caisse_names_id_seq') NOT NULL,
+    "nom_complet" character varying NOT NULL,
+    "rccm" character varying NOT NULL,
+    "id_nat" character varying NOT NULL,
+    "addresse" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "caisse_names_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "caisses";
 DROP SEQUENCE IF EXISTS caisses_id_seq;
 CREATE SEQUENCE caisses_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
@@ -306,13 +374,15 @@ CREATE TABLE "public"."caisses" (
     "nom_complet" character varying NOT NULL,
     "piece_justificative" character varying NOT NULL,
     "libelle" character varying NOT NULL,
-    "montant" character varying NOT NULL,
+    "montant_encaissement" character varying NOT NULL,
     "departement" character varying NOT NULL,
     "type_operation" character varying NOT NULL,
     "numero_operation" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" integer NOT NULL,
-    "created" timestamp NOT NULL
+    "reference" integer NOT NULL,
+    "caisse_name" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "montant_decaissement" character varying NOT NULL
 ) WITH (oids = false);
 
 
@@ -330,7 +400,7 @@ CREATE TABLE "public"."campaigns" (
     "objectifs" character varying NOT NULL,
     "observation" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
+    "is_submit" character varying NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dg" character varying NOT NULL,
     "motif_dg" character varying NOT NULL,
@@ -350,33 +420,9 @@ CREATE TABLE "public"."campaigns" (
 ) WITH (oids = false);
 
 
-DROP TABLE IF EXISTS "carburants";
-DROP SEQUENCE IF EXISTS carburants_id_seq;
-CREATE SEQUENCE carburants_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
-
-CREATE TABLE "public"."carburants" (
-    "id" integer DEFAULT nextval('carburants_id_seq') NOT NULL,
-    "operation_entre_sortie" character varying NOT NULL,
-    "type_caburant" character varying NOT NULL,
-    "fournisseur" character varying NOT NULL,
-    "nomero_facture_achat" character varying NOT NULL,
-    "prix_achat_par_litre" character varying NOT NULL,
-    "nom_receptioniste" character varying NOT NULL,
-    "numero_plaque" character varying NOT NULL,
-    "date_heure_sortie_anguin" timestamp NOT NULL,
-    "qty_achat" character varying NOT NULL,
-    "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
-    "created" timestamp NOT NULL,
-    "approbation_dd" character varying NOT NULL,
-    "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL
-) WITH (oids = false);
-
-
 DROP TABLE IF EXISTS "carts";
 DROP SEQUENCE IF EXISTS carts_id_seq;
-CREATE SEQUENCE carts_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
+CREATE SEQUENCE carts_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."carts" (
     "id" integer DEFAULT nextval('carts_id_seq') NOT NULL,
@@ -390,7 +436,8 @@ CREATE TABLE "public"."carts" (
     "qty_remise" character varying NOT NULL,
     "succursale" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "created" timestamp NOT NULL,
+    "created_at" timestamp NOT NULL
 ) WITH (oids = false);
 
 
@@ -409,7 +456,7 @@ CREATE TABLE "public"."compte_actifs" (
 
 DROP TABLE IF EXISTS "compte_bilan_ref";
 DROP SEQUENCE IF EXISTS compte_bilan_ref_id_seq;
-CREATE SEQUENCE compte_bilan_ref_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE compte_bilan_ref_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."compte_bilan_ref" (
     "id" integer DEFAULT nextval('compte_bilan_ref_id_seq') NOT NULL,
@@ -431,21 +478,6 @@ CREATE TABLE "public"."compte_passifs" (
     "comptes" character varying NOT NULL,
     "montant" character varying NOT NULL,
     CONSTRAINT "compte_passifs_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-DROP TABLE IF EXISTS "comptes_balances_ref";
-DROP SEQUENCE IF EXISTS comptes_balances_ref_id_seq;
-CREATE SEQUENCE comptes_balances_ref_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
-
-CREATE TABLE "public"."comptes_balances_ref" (
-    "id" integer DEFAULT nextval('comptes_balances_ref_id_seq') NOT NULL,
-    "reference" timestamp NOT NULL,
-    "comptes" character varying NOT NULL,
-    "debit" character varying NOT NULL,
-    "credit" character varying NOT NULL,
-    "solde" double precision NOT NULL,
-    CONSTRAINT "comptes_balances_ref_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
@@ -483,9 +515,6 @@ CREATE TABLE "public"."comptes_resultat" (
     "signature" character varying NOT NULL,
     "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
     "signature_dd" character varying NOT NULL
@@ -494,7 +523,7 @@ CREATE TABLE "public"."comptes_resultat" (
 
 DROP TABLE IF EXISTS "coupure_billets";
 DROP SEQUENCE IF EXISTS coupure_billets_id_seq;
-CREATE SEQUENCE coupure_billets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE coupure_billets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."coupure_billets" (
     "id" integer DEFAULT nextval('coupure_billets_id_seq') NOT NULL,
@@ -511,7 +540,7 @@ CREATE SEQUENCE creance_dettes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647
 
 CREATE TABLE "public"."creance_dettes" (
     "id" integer DEFAULT nextval('creance_dettes_id_seq') NOT NULL,
-    "reference" timestamp NOT NULL,
+    "reference" integer NOT NULL,
     "nom_complet" character varying NOT NULL,
     "piece_justificative" character varying NOT NULL,
     "libelle" character varying NOT NULL,
@@ -525,7 +554,7 @@ CREATE TABLE "public"."creance_dettes" (
 
 DROP TABLE IF EXISTS "creance_factures";
 DROP SEQUENCE IF EXISTS creance_factures_id_seq;
-CREATE SEQUENCE creance_factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE creance_factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."creance_factures" (
     "id" integer DEFAULT nextval('creance_factures_id_seq') NOT NULL,
@@ -539,7 +568,7 @@ CREATE TABLE "public"."creance_factures" (
 
 DROP TABLE IF EXISTS "creances";
 DROP SEQUENCE IF EXISTS creances_id_seq;
-CREATE SEQUENCE creances_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE creances_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."creances" (
     "id" integer DEFAULT nextval('creances_id_seq') NOT NULL,
@@ -550,7 +579,6 @@ CREATE TABLE "public"."creances" (
     "numero_operation" character varying NOT NULL,
     "statut_paie" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dg" character varying NOT NULL,
     "motif_dg" character varying NOT NULL,
@@ -564,7 +592,7 @@ CREATE TABLE "public"."creances" (
 
 DROP TABLE IF EXISTS "departement_budgets";
 DROP SEQUENCE IF EXISTS departement_budgets_id_seq;
-CREATE SEQUENCE departement_budgets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE departement_budgets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."departement_budgets" (
     "id" integer DEFAULT nextval('departement_budgets_id_seq') NOT NULL,
@@ -588,7 +616,7 @@ CREATE TABLE "public"."departement_budgets" (
 
 DROP TABLE IF EXISTS "dettes";
 DROP SEQUENCE IF EXISTS dettes_id_seq;
-CREATE SEQUENCE dettes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE dettes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."dettes" (
     "id" integer DEFAULT nextval('dettes_id_seq') NOT NULL,
@@ -599,7 +627,6 @@ CREATE TABLE "public"."dettes" (
     "numero_operation" character varying NOT NULL,
     "statut_paie" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dg" character varying NOT NULL,
     "motif_dg" character varying NOT NULL,
@@ -649,13 +676,36 @@ CREATE SEQUENCE devis_list_objets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483
 
 CREATE TABLE "public"."devis_list_objets" (
     "id" integer DEFAULT nextval('devis_list_objets_id_seq') NOT NULL,
-    "reference_date" timestamp NOT NULL,
+    "reference" integer NOT NULL,
     "title" character varying NOT NULL,
     "quantity" character varying NOT NULL,
     "designation" character varying NOT NULL,
     "montant_unitaire" character varying NOT NULL,
     "montant_global" character varying NOT NULL,
     CONSTRAINT "devis_list_objets_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "entreprise_infos";
+DROP SEQUENCE IF EXISTS entreprise_infos_id_seq;
+CREATE SEQUENCE entreprise_infos_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."entreprise_infos" (
+    "id" integer DEFAULT nextval('entreprise_infos_id_seq') NOT NULL,
+    "nom_social" character varying NOT NULL,
+    "nom_gerant" character varying NOT NULL,
+    "email_entreprise" character varying NOT NULL,
+    "email_gerant" character varying NOT NULL,
+    "telephone1" character varying NOT NULL,
+    "telephone2" character varying NOT NULL,
+    "rccm" character varying NOT NULL,
+    "identification_nationale" character varying NOT NULL,
+    "numeros_impot" character varying NOT NULL,
+    "secteur_activite" character varying NOT NULL,
+    "adresse_physique_entreprise" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "entreprise_infos_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
@@ -666,16 +716,15 @@ CREATE SEQUENCE entretiens_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CAC
 CREATE TABLE "public"."entretiens" (
     "id" integer DEFAULT nextval('entretiens_id_seq') NOT NULL,
     "nom" character varying NOT NULL,
-    "modele" character varying NOT NULL,
-    "marque" character varying NOT NULL,
-    "etat_objet" character varying NOT NULL,
+    "type_objet" character varying NOT NULL,
+    "type_maintenance" character varying NOT NULL,
     "duree_travaux" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" integer NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL
+    "signature_dd" character varying NOT NULL,
+    "is_submit" character varying NOT NULL
 ) WITH (oids = false);
 
 
@@ -691,7 +740,6 @@ CREATE TABLE "public"."etat_materiels" (
     "type_objet" character varying NOT NULL,
     "statut" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
@@ -701,7 +749,7 @@ CREATE TABLE "public"."etat_materiels" (
 
 DROP TABLE IF EXISTS "factures";
 DROP SEQUENCE IF EXISTS factures_id_seq;
-CREATE SEQUENCE factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."factures" (
     "id" integer DEFAULT nextval('factures_id_seq') NOT NULL,
@@ -710,6 +758,21 @@ CREATE TABLE "public"."factures" (
     "succursale" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "fin_exterieur_names";
+DROP SEQUENCE IF EXISTS fin_exterieur_names_id_seq;
+CREATE SEQUENCE fin_exterieur_names_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."fin_exterieur_names" (
+    "id" integer DEFAULT nextval('fin_exterieur_names_id_seq') NOT NULL,
+    "nom_complet" character varying NOT NULL,
+    "rccm" character varying NOT NULL,
+    "id_nat" character varying NOT NULL,
+    "addresse" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "fin_exterieur_names_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
@@ -722,12 +785,14 @@ CREATE TABLE "public"."fin_exterieurs" (
     "nom_complet" character varying NOT NULL,
     "piece_justificative" character varying NOT NULL,
     "libelle" character varying NOT NULL,
-    "montant" character varying NOT NULL,
+    "montant_depot" character varying NOT NULL,
     "type_operation" character varying NOT NULL,
     "numero_operation" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" integer NOT NULL,
+    "reference" integer NOT NULL,
+    "finance_exterieur_name" character varying NOT NULL,
     "created" timestamp NOT NULL,
+    "montant_retrait" character varying NOT NULL,
     CONSTRAINT "fin_exterieurs_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
@@ -745,13 +810,14 @@ CREATE TABLE "public"."fournisseurs" (
     "fournisseur" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
+    "unite" character varying NOT NULL,
     CONSTRAINT "fournisseurs_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "gains";
 DROP SEQUENCE IF EXISTS gains_id_seq;
-CREATE SEQUENCE gains_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
+CREATE SEQUENCE gains_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."gains" (
     "id" integer DEFAULT nextval('gains_id_seq') NOT NULL,
@@ -788,7 +854,7 @@ CREATE TABLE "public"."history_livraisons" (
 
 DROP TABLE IF EXISTS "history_ravitaillements";
 DROP SEQUENCE IF EXISTS history_ravitaillements_id_seq;
-CREATE SEQUENCE history_ravitaillements_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE history_ravitaillements_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."history_ravitaillements" (
     "id" integer DEFAULT nextval('history_ravitaillements_id_seq') NOT NULL,
@@ -819,7 +885,6 @@ CREATE TABLE "public"."immobiliers" (
     "superficie" character varying NOT NULL,
     "date_acquisition" timestamp NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dg" character varying NOT NULL,
     "motif_dg" character varying NOT NULL,
@@ -830,48 +895,27 @@ CREATE TABLE "public"."immobiliers" (
 ) WITH (oids = false);
 
 
-DROP TABLE IF EXISTS "journal_livres";
-DROP SEQUENCE IF EXISTS journal_livres_id_seq;
-CREATE SEQUENCE journal_livres_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
-
-CREATE TABLE "public"."journal_livres" (
-    "id" integer DEFAULT nextval('journal_livres_id_seq') NOT NULL,
-    "intitule" character varying NOT NULL,
-    "debut" timestamp NOT NULL,
-    "fin" timestamp NOT NULL,
-    "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL,
-    "approbation_dg" character varying NOT NULL,
-    "motif_dg" character varying NOT NULL,
-    "signature_dg" character varying NOT NULL,
-    "approbation_dd" character varying NOT NULL,
-    "motif_dd" character varying NOT NULL,
-    "signature_dd" character varying NOT NULL,
-    CONSTRAINT "journal_livres_pkey" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
 DROP TABLE IF EXISTS "journals";
 DROP SEQUENCE IF EXISTS journals_id_seq;
-CREATE SEQUENCE journals_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE journals_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."journals" (
     "id" integer DEFAULT nextval('journals_id_seq') NOT NULL,
-    "reference" integer NOT NULL,
     "numero_operation" character varying NOT NULL,
     "libele" character varying NOT NULL,
-    "compte" character varying NOT NULL,
+    "compte_debit" character varying NOT NULL,
     "montant_debit" character varying NOT NULL,
+    "compte_credit" character varying NOT NULL,
     "montant_credit" character varying NOT NULL,
-    "tva" character varying NOT NULL,
-    "type" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "locker" character varying NOT NULL
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "ligne_budgetaires";
 DROP SEQUENCE IF EXISTS ligne_budgetaires_id_seq;
-CREATE SEQUENCE ligne_budgetaires_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE ligne_budgetaires_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."ligne_budgetaires" (
     "id" integer DEFAULT nextval('ligne_budgetaires_id_seq') NOT NULL,
@@ -887,7 +931,11 @@ CREATE TABLE "public"."ligne_budgetaires" (
     "banque" character varying NOT NULL,
     "fin_exterieur" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "created" timestamp NOT NULL,
+    "reference" integer NOT NULL,
+    "caisse_sortie" double precision NOT NULL,
+    "banque_sortie" double precision NOT NULL,
+    "fin_exterieur_sortie" double precision NOT NULL
 ) WITH (oids = false);
 
 
@@ -911,6 +959,37 @@ CREATE TABLE "public"."mails" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "materiels";
+DROP SEQUENCE IF EXISTS materiels_id_seq;
+CREATE SEQUENCE materiels_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."materiels" (
+    "id" integer DEFAULT nextval('materiels_id_seq') NOT NULL,
+    "type_materiel" character varying NOT NULL,
+    "marque" character varying NOT NULL,
+    "modele" character varying NOT NULL,
+    "numero_ref" character varying NOT NULL,
+    "couleur" character varying NOT NULL,
+    "genre" character varying NOT NULL,
+    "qty_max_reservoir" character varying NOT NULL,
+    "date_fabrication" timestamp NOT NULL,
+    "numero_plaque" character varying NOT NULL,
+    "identifiant" character varying NOT NULL,
+    "kilometrage_initiale" character varying NOT NULL,
+    "fournisseur" character varying NOT NULL,
+    "alimentation" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    "approbation_dg" character varying NOT NULL,
+    "motif_dg" character varying NOT NULL,
+    "signature_dg" character varying NOT NULL,
+    "approbation_dd" character varying NOT NULL,
+    "motif_dd" character varying NOT NULL,
+    "signature_dd" character varying NOT NULL,
+    CONSTRAINT "materiels_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "mobiliers";
 DROP SEQUENCE IF EXISTS mobiliers_id_seq;
 CREATE SEQUENCE mobiliers_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
@@ -923,7 +1002,6 @@ CREATE TABLE "public"."mobiliers" (
     "description_mobilier" character varying NOT NULL,
     "nombre" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
@@ -931,9 +1009,23 @@ CREATE TABLE "public"."mobiliers" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "monnaies";
+DROP SEQUENCE IF EXISTS monnaies_id_seq;
+CREATE SEQUENCE monnaies_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."monnaies" (
+    "id" integer DEFAULT nextval('monnaies_id_seq') NOT NULL,
+    "monnaie" character varying NOT NULL,
+    "monnaie_en_lettre" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "monnaies_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "number_factures";
 DROP SEQUENCE IF EXISTS number_factures_id_seq;
-CREATE SEQUENCE number_factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
+CREATE SEQUENCE number_factures_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."number_factures" (
     "id" integer DEFAULT nextval('number_factures_id_seq') NOT NULL,
@@ -946,7 +1038,7 @@ CREATE TABLE "public"."number_factures" (
 
 DROP TABLE IF EXISTS "objets_remplace";
 DROP SEQUENCE IF EXISTS objets_remplace_id_seq;
-CREATE SEQUENCE objets_remplace_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE objets_remplace_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."objets_remplace" (
     "id" integer DEFAULT nextval('objets_remplace_id_seq') NOT NULL,
@@ -961,7 +1053,7 @@ CREATE TABLE "public"."objets_remplace" (
 
 DROP TABLE IF EXISTS "performences";
 DROP SEQUENCE IF EXISTS performences_id_seq;
-CREATE SEQUENCE performences_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 6 CACHE 1;
+CREATE SEQUENCE performences_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."performences" (
     "id" integer DEFAULT nextval('performences_id_seq') NOT NULL,
@@ -977,7 +1069,7 @@ CREATE TABLE "public"."performences" (
 
 DROP TABLE IF EXISTS "performences_note";
 DROP SEQUENCE IF EXISTS performences_note_id_seq;
-CREATE SEQUENCE performences_note_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE performences_note_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."performences_note" (
     "id" integer DEFAULT nextval('performences_note_id_seq') NOT NULL,
@@ -994,7 +1086,7 @@ CREATE TABLE "public"."performences_note" (
 
 DROP TABLE IF EXISTS "presence_personnels";
 DROP SEQUENCE IF EXISTS presence_personnels_id_seq;
-CREATE SEQUENCE presence_personnels_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE presence_personnels_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."presence_personnels" (
     "id" integer DEFAULT nextval('presence_personnels_id_seq') NOT NULL,
@@ -1012,7 +1104,7 @@ CREATE TABLE "public"."presence_personnels" (
 
 DROP TABLE IF EXISTS "presences";
 DROP SEQUENCE IF EXISTS presences_id_seq;
-CREATE SEQUENCE presences_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE presences_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."presences" (
     "id" integer DEFAULT nextval('presences_id_seq') NOT NULL,
@@ -1029,12 +1121,11 @@ CREATE SEQUENCE productions_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CA
 
 CREATE TABLE "public"."productions" (
     "id" integer DEFAULT nextval('productions_id_seq') NOT NULL,
-    "num_production" character varying NOT NULL,
+    "num_production" integer NOT NULL,
     "id_product" character varying NOT NULL,
     "quantity_a_produire" character varying NOT NULL,
     "quantity_bonne" character varying NOT NULL,
     "quantity_mauvaise" character varying NOT NULL,
-    "cout_production" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dg" character varying NOT NULL,
@@ -1043,13 +1134,14 @@ CREATE TABLE "public"."productions" (
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
     "signature_dd" character varying NOT NULL,
+    "status" character varying NOT NULL,
     CONSTRAINT "productions_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "produits_model";
 DROP SEQUENCE IF EXISTS produits_model_id_seq;
-CREATE SEQUENCE produits_model_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 3 CACHE 1;
+CREATE SEQUENCE produits_model_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."produits_model" (
     "id" integer DEFAULT nextval('produits_model_id_seq') NOT NULL,
@@ -1076,20 +1168,15 @@ CREATE TABLE "public"."projets" (
     "nom_projet" character varying NOT NULL,
     "cout_projet" character varying NOT NULL,
     "responsable" character varying NOT NULL,
-    "objectifs" character varying NOT NULL,
-    "description" character varying NOT NULL,
-    "responsabilite" character varying NOT NULL,
-    "communication" character varying NOT NULL,
-    "processus_verification" character varying NOT NULL,
-    "probleme_potient_et_risque" character varying NOT NULL,
-    "date_debut_et_fin" character varying NOT NULL,
-    "budget_detail" character varying NOT NULL,
-    "recette_attendus" character varying NOT NULL,
-    "type_financement" character varying NOT NULL,
     "observation" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
     "created" timestamp NOT NULL,
+    "is_submit" character varying NOT NULL,
+    "type_financement" character varying NOT NULL,
+    "date_debut_et_fin" character varying NOT NULL,
+    "statut" character varying NOT NULL,
+    "expire" timestamp NOT NULL,
+    "recette_attendus" character varying NOT NULL,
     "approbation_dg" character varying NOT NULL,
     "motif_dg" character varying NOT NULL,
     "signature_dg" character varying NOT NULL,
@@ -1103,7 +1190,8 @@ CREATE TABLE "public"."projets" (
     "motif_dd" character varying NOT NULL,
     "signature_dd" character varying NOT NULL,
     "ligne_budgetaire" character varying NOT NULL,
-    "ressource" character varying NOT NULL
+    "ressource" character varying NOT NULL,
+    CONSTRAINT "projets_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
@@ -1113,17 +1201,18 @@ CREATE SEQUENCE rapports_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE
 
 CREATE TABLE "public"."rapports" (
     "id" integer DEFAULT nextval('rapports_id_seq') NOT NULL,
-    "nom_projet" character varying NOT NULL,
+    "nom" character varying NOT NULL,
     "numero_tache" character varying NOT NULL,
     "rapport" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "created" timestamp NOT NULL,
+    "reference" integer NOT NULL
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "refresh_tokens";
 DROP SEQUENCE IF EXISTS refresh_tokens_id_seq;
-CREATE SEQUENCE refresh_tokens_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 33 CACHE 1;
+CREATE SEQUENCE refresh_tokens_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."refresh_tokens" (
     "id" integer DEFAULT nextval('refresh_tokens_id_seq') NOT NULL,
@@ -1144,8 +1233,8 @@ CREATE TABLE "public"."restitutions" (
     "first_name" character varying NOT NULL,
     "last_name" character varying NOT NULL,
     "accuse_reception" character varying NOT NULL,
-    "accuse_reception_firstName" character varying NOT NULL,
-    "accuse_reception_lastName" character varying NOT NULL,
+    "accuse_reception_first_name" character varying NOT NULL,
+    "accuse_reception_last_name" character varying NOT NULL,
     "role" character varying NOT NULL,
     "succursale" character varying NOT NULL,
     "signature" character varying NOT NULL,
@@ -1155,7 +1244,7 @@ CREATE TABLE "public"."restitutions" (
 
 DROP TABLE IF EXISTS "salaires";
 DROP SEQUENCE IF EXISTS salaires_id_seq;
-CREATE SEQUENCE salaires_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 33 CACHE 1;
+CREATE SEQUENCE salaires_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."salaires" (
     "id" integer DEFAULT nextval('salaires_id_seq') NOT NULL,
@@ -1215,9 +1304,25 @@ CREATE TABLE "public"."salaires" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "section_projets";
+DROP SEQUENCE IF EXISTS section_projets_id_seq;
+CREATE SEQUENCE section_projets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."section_projets" (
+    "id" integer DEFAULT nextval('section_projets_id_seq') NOT NULL,
+    "nom_projet" character varying NOT NULL,
+    "reference" integer NOT NULL,
+    "section" character varying NOT NULL,
+    "detail" text NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "section_projets_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "stocks_global";
 DROP SEQUENCE IF EXISTS stocks_global_id_seq;
-CREATE SEQUENCE stocks_global_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE stocks_global_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."stocks_global" (
     "id" integer DEFAULT nextval('stocks_global_id_seq') NOT NULL,
@@ -1237,7 +1342,7 @@ CREATE TABLE "public"."stocks_global" (
 
 DROP TABLE IF EXISTS "succursales";
 DROP SEQUENCE IF EXISTS succursales_id_seq;
-CREATE SEQUENCE succursales_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+CREATE SEQUENCE succursales_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."succursales" (
     "id" integer DEFAULT nextval('succursales_id_seq') NOT NULL,
@@ -1255,20 +1360,38 @@ CREATE TABLE "public"."succursales" (
 ) WITH (oids = false);
 
 
+DROP TABLE IF EXISTS "suivis";
+DROP SEQUENCE IF EXISTS suivis_id_seq;
+CREATE SEQUENCE suivis_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
+
+CREATE TABLE "public"."suivis" (
+    "id" integer DEFAULT nextval('suivis_id_seq') NOT NULL,
+    "reference" integer NOT NULL,
+    "travail_effectue" character varying NOT NULL,
+    "accusee_reception" character varying NOT NULL,
+    "signature" character varying NOT NULL,
+    "created" timestamp NOT NULL,
+    CONSTRAINT "suivis_pkey" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
 DROP TABLE IF EXISTS "taches";
 DROP SEQUENCE IF EXISTS taches_id_seq;
 CREATE SEQUENCE taches_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."taches" (
     "id" integer DEFAULT nextval('taches_id_seq') NOT NULL,
-    "nom_projet" character varying NOT NULL,
+    "nom" character varying NOT NULL,
     "numero_tache" character varying NOT NULL,
     "agent" character varying NOT NULL,
     "jalon" character varying NOT NULL,
     "tache" character varying NOT NULL,
     "signature_resp" character varying NOT NULL,
     "created" timestamp NOT NULL,
-    "read" character varying NOT NULL
+    "read_responsable" character varying NOT NULL,
+    "departement" character varying NOT NULL,
+    "reference" integer NOT NULL,
+    "read_agent" character varying NOT NULL
 ) WITH (oids = false);
 
 
@@ -1279,14 +1402,14 @@ CREATE SEQUENCE trajets_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 
 CREATE TABLE "public"."trajets" (
     "id" integer DEFAULT nextval('trajets_id_seq') NOT NULL,
     "nomero_entreprise" character varying NOT NULL,
-    "nom_utilisateur" character varying NOT NULL,
+    "conducteur" character varying NOT NULL,
     "trajet_de" character varying NOT NULL,
     "trajet_a" character varying NOT NULL,
     "mission" character varying NOT NULL,
     "kilometrage_sorite" character varying NOT NULL,
     "kilometrage_retour" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created_ref" timestamp NOT NULL,
+    "reference" integer NOT NULL,
     "created" timestamp NOT NULL,
     "approbation_dd" character varying NOT NULL,
     "motif_dd" character varying NOT NULL,
@@ -1296,7 +1419,7 @@ CREATE TABLE "public"."trajets" (
 
 DROP TABLE IF EXISTS "trans_rest_agents";
 DROP SEQUENCE IF EXISTS trans_rest_agents_id_seq;
-CREATE SEQUENCE trans_rest_agents_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 2 CACHE 1;
+CREATE SEQUENCE trans_rest_agents_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."trans_rest_agents" (
     "id" integer DEFAULT nextval('trans_rest_agents_id_seq') NOT NULL,
@@ -1305,13 +1428,14 @@ CREATE TABLE "public"."trans_rest_agents" (
     "prenom" character varying NOT NULL,
     "matricule" character varying NOT NULL,
     "montant" character varying NOT NULL,
+    "observation" character varying NOT NULL,
     CONSTRAINT "trans_rest_agents_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
 
 DROP TABLE IF EXISTS "transport_restaurations";
 DROP SEQUENCE IF EXISTS transport_restaurations_id_seq;
-CREATE SEQUENCE transport_restaurations_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 10 CACHE 1;
+CREATE SEQUENCE transport_restaurations_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."transport_restaurations" (
     "id" integer DEFAULT nextval('transport_restaurations_id_seq') NOT NULL,
@@ -1356,7 +1480,7 @@ CREATE TABLE "public"."update_versions" (
 
 DROP TABLE IF EXISTS "users";
 DROP SEQUENCE IF EXISTS users_id_seq;
-CREATE SEQUENCE users_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 8 CACHE 1;
+CREATE SEQUENCE users_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."users" (
     "id" integer DEFAULT nextval('users_id_seq') NOT NULL,
@@ -1379,7 +1503,7 @@ CREATE TABLE "public"."users" (
 
 DROP TABLE IF EXISTS "ventes";
 DROP SEQUENCE IF EXISTS ventes_id_seq;
-CREATE SEQUENCE ventes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 4 CACHE 1;
+CREATE SEQUENCE ventes_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1;
 
 CREATE TABLE "public"."ventes" (
     "id" integer DEFAULT nextval('ventes_id_seq') NOT NULL,
@@ -1392,7 +1516,8 @@ CREATE TABLE "public"."ventes" (
     "qty_remise" character varying NOT NULL,
     "succursale" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "created" timestamp NOT NULL,
+    "created_at" timestamp NOT NULL
 ) WITH (oids = false);
 
 
@@ -1408,8 +1533,9 @@ CREATE TABLE "public"."versement_projets" (
     "montant_en_lettre" character varying NOT NULL,
     "type_versement" character varying NOT NULL,
     "signature" character varying NOT NULL,
-    "created" timestamp NOT NULL
+    "created" timestamp NOT NULL,
+    "reference" integer NOT NULL
 ) WITH (oids = false);
 
 
--- 2022-10-08 05:54:04.377772+00
+-- 2023-01-07 07:38:20.836853+00

@@ -84,7 +84,7 @@ import 'notify/departements/rh/rh_department.dart';
 import 'notify/devis/devis_notify_repository.dart';
 import 'notify/exploitations/production_notify_repository.dart';
 import 'notify/exploitations/projet_notify_repository.dart';
-import 'notify/exploitations/taches_notify_repository.dart';
+import 'notify/taches/taches_notify_repository.dart';
 import 'notify/finances/creance_notify_repository.dart';
 import 'notify/finances/dette_notify_repository.dart';
 import 'notify/logistiques/materiel_notify_repository.dart';
