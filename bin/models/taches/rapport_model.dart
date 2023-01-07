@@ -3,10 +3,11 @@ class RapportModel {
   late String nom;
   late String numeroTache;
   late String rapport;
-  late String signature;
+  late String signature; 
   late DateTime created;
   late int reference;
   late String readRapport; // Notifie au chef d'un nouveau rapport
+  late String signatureResp;
 
    RapportModel(
       {this.id,
@@ -16,7 +17,8 @@ class RapportModel {
       required this.signature,
       required this.created,
       required this.reference,
-      required this.readRapport});
+      required this.readRapport,
+      required this.signatureResp});
 
   factory RapportModel.fromSQL(List<dynamic> row) {
     return RapportModel(
@@ -27,7 +29,8 @@ class RapportModel {
       signature: row[4],
       created: row[5],
       reference: row[6],
-      readRapport: row[7]);
+      readRapport: row[7],
+      signatureResp: row[8]);
   }
 
   factory RapportModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +43,7 @@ class RapportModel {
       created: DateTime.parse(json['created']),
       reference: json['reference'],
       readRapport: json['readRapport'],
+      signatureResp: json['signatureResp']
     );
   }
 
@@ -53,6 +57,7 @@ class RapportModel {
       'created': created.toIso8601String(),
       'reference': reference,
       'readRapport': readRapport,
+      'signatureResp': signatureResp
     };
   }
 }

@@ -24,16 +24,17 @@ class RapportRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
           "INSERT INTO $tableName (id, nom, numero_tache,"
-          "rapport, signature, created, reference, read_rapport)"
-          "VALUES (nextval('rapports_id_seq'), @1, @2, @3, @4, @5, @6, @7)",
+          "rapport, signature, created, reference, read_rapport, signature_resp)"
+          "VALUES (nextval('rapports_id_seq'), @1, @2, @3, @4, @5, @6, @7, @8)",
           substitutionValues: {
-            '1': data.nom,
+           '1': data.nom,
             '2': data.numeroTache,
             '3': data.rapport,
             '4': data.signature,
             '5': data.created,
             '6': data.reference,
-            '7': data.readRapport
+            '7': data.readRapport,
+            '8': data.signatureResp
           });
     });
   }
@@ -41,8 +42,8 @@ class RapportRepository {
   Future<void> update(RapportModel data) async {
     await executor.query("""UPDATE $tableName
         SET nom = @1, numero_tache = @2, rapport = @3,
-        signature = @4, created = @5, reference = @6, read_rapport = @7
-         WHERE id = @8""", substitutionValues: {
+        signature = @4, created = @5, reference = @6, read_rapport = @7, 
+        signature_resp = @8 WHERE id = @9""", substitutionValues: {
       '1': data.nom,
       '2': data.numeroTache,
       '3': data.rapport,
@@ -50,7 +51,8 @@ class RapportRepository {
       '5': data.created,
       '6': data.reference,
       '7': data.readRapport,
-      '8': data.id
+      '8': data.signatureResp,
+      '9': data.id
     });
   }
 
@@ -76,7 +78,8 @@ class RapportRepository {
       signature: data[0][4],
       created: data[0][5],
       reference: data[0][6],
-      readRapport: data[0][7]
+      readRapport: data[0][7],
+      signatureResp: data[0][8]
     );
   }
 }

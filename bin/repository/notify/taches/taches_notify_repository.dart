@@ -31,7 +31,7 @@ class TacheNotifyRepository {
     try {
       var data = <NotifyModel>{};
       var querySQL = """SELECT COUNT(*) FROM $tableNameRapport where  
-        "agent"='$matricule' AND "read_rapport" = 'Non Lu';""";
+        "signature_resp"='$matricule' AND "read_rapport" = 'Non Lu';""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {
         data.add(NotifyModel.fromSQL(row));
