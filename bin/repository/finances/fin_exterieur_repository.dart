@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/charts/chart_finance.dart';
+import '../../models/charts/charts_multi.dart';
 import '../../models/finances/fin_exterieur_model.dart';
 
 class FinExteRepository {
