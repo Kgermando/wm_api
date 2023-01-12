@@ -15,6 +15,7 @@ class EntrepriseInfoModel {
   late DateTime created;
   late DateTime dateFinContrat;
   late String typeContrat;
+  late String typeEntreprise;
 
  EntrepriseInfoModel(
       {this.id,
@@ -32,7 +33,8 @@ class EntrepriseInfoModel {
       required this.signature,
       required this.created,
       required this.dateFinContrat,
-      required this.typeContrat
+      required this.typeContrat,
+      required this.typeEntreprise
     }
   );
   factory EntrepriseInfoModel.fromSQL(List<dynamic> row) {
@@ -52,7 +54,8 @@ class EntrepriseInfoModel {
       signature: row[12],
       created: row[13],
       dateFinContrat: row[14],
-      typeContrat: row[15]
+      typeContrat: row[15],
+      typeEntreprise: row[16]
     );
   }
 factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
@@ -72,7 +75,8 @@ factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
       signature: json['signature'],
       created: DateTime.parse(json['created']),
       dateFinContrat: DateTime.parse(json['dateFinContrat']),
-      typeContrat: json['typeContrat']
+      typeContrat: json['typeContrat'],
+      typeEntreprise: json['typeEntreprise']
     );
   }
 
@@ -93,7 +97,8 @@ factory EntrepriseInfoModel.fromJson(Map<String, dynamic> json) {
       'signature': signature,
       'created': created.toIso8601String(),
       'dateFinContrat': dateFinContrat.toIso8601String(),
-      'typeContrat': typeContrat
+      'typeContrat': typeContrat,
+      'typeEntreprise': typeEntreprise
     };
   }
 }

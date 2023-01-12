@@ -48,7 +48,8 @@ class EntrepriseInfoHandlers {
         signature: input['signature'],
         created: DateTime.parse(input['created']),
         dateFinContrat: DateTime.parse(input['dateFinContrat']),
-        typeContrat: input['typeContrat']
+        typeContrat: input['typeContrat'],
+        typeEntreprise: input['typeEntreprise'],
       );
       try {
         await repos.entrepriseRepository.insertData(data);
@@ -109,6 +110,9 @@ class EntrepriseInfoHandlers {
       }
       if (input['typeContrat'] != null) {
         data.typeContrat = input['typeContrat'];
+      }
+      if (input['typeEntreprise'] != null) {
+        data.typeEntreprise = input['typeEntreprise'];
       }
 
       repos.entrepriseRepository.update(data);

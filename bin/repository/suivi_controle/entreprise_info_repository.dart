@@ -23,12 +23,12 @@ class EntrepriseRepository {
   Future<void> insertData(EntrepriseInfoModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, nom_social, nom_gerant,"
+        "INSERT INTO $tableName (id, nom_social, nom_gerant,"
           "email_entreprise, email_gerant, telephone1, telephone2, rccm,"
           "identification_nationale, numeros_impot, secteur_activite,"
-          "adresse_physique_entreprise, signature, created, date_fin_contrat, type_contrat)"
+          "adresse_physique_entreprise, signature, created, date_fin_contrat, type_contrat, type_entreprise)"
           "VALUES (nextval('entreprise_infos_id_seq'), @1, @2, @3, @4, @5, @6,"
-          "@7, @8, @9, @10, @11, @12, @13, @14, @15)",
+          "@7, @8, @9, @10, @11, @12, @13, @14, @15, @16)",
           substitutionValues: {
             '1': data.nomSocial,
             '2': data.nomGerant,
@@ -44,8 +44,10 @@ class EntrepriseRepository {
             '12': data.signature,
             '13': data.created,
             '14': data.dateFinContrat,
-            '15': data.typeContrat  
-          });
+            '15': data.typeContrat,
+            '16': data.typeEntreprise
+          }
+        );
     });
   }
 
@@ -55,7 +57,7 @@ class EntrepriseRepository {
     email_gerant = @4, telephone1 = @5, telephone2 = @6, rccm = @7,
     identification_nationale = @8, numeros_impot = @9, secteur_activite = @10, 
     adresse_physique_entreprise = @11, signature = @12, created = @13, 
-    date_fin_contrat = @14, type_contrat = @15 WHERE id = @16""",
+    date_fin_contrat = @14, type_contrat = @15 type_entreprise = @16 WHERE id = @17""",
         substitutionValues: {
           '1': data.nomSocial,
           '2': data.nomGerant,
@@ -72,7 +74,8 @@ class EntrepriseRepository {
           '13': data.created,
           '14': data.dateFinContrat,
           '15': data.typeContrat,
-          '16': data.id 
+          '16': data.typeEntreprise,
+          '17': data.id 
         });
   }
 
@@ -106,7 +109,8 @@ class EntrepriseRepository {
       signature: data[0][12],
       created: data[0][13],
       dateFinContrat: data[0][14],
-      typeContrat: data[0][15]
+      typeContrat: data[0][15],
+      typeEntreprise: data[0][16]
     );
   } 
 }
