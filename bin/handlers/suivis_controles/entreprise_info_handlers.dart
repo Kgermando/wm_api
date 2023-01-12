@@ -46,7 +46,9 @@ class EntrepriseInfoHandlers {
         secteurActivite: input['secteurActivite'],
         adressePhysiqueEntreprise: input['adressePhysiqueEntreprise'],
         signature: input['signature'],
-        created: DateTime.parse(input['created']) 
+        created: DateTime.parse(input['created']),
+        dateFinContrat: DateTime.parse(input['dateFinContrat']),
+        typeContrat: input['typeContrat']
       );
       try {
         await repos.entrepriseRepository.insertData(data);
@@ -101,6 +103,12 @@ class EntrepriseInfoHandlers {
       }
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['dateFinContrat'] != null) {
+        data.dateFinContrat = DateTime.parse(input['dateFinContrat']);
+      }
+      if (input['typeContrat'] != null) {
+        data.typeContrat = input['typeContrat'];
       }
 
       repos.entrepriseRepository.update(data);

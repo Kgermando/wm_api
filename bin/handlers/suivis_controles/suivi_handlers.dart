@@ -35,7 +35,7 @@ class SuiviHandlers {
       var input = jsonDecode(await request.readAsString());
 
       SuiviModel data = SuiviModel(
-        reference: input['reference'],
+        nomSocial: input['nomSocial'],
         travailEffectue: input['travailEffectue'],
         accuseeReception: input['accuseeReception'],
         signature: input['signature'], 
@@ -56,8 +56,8 @@ class SuiviHandlers {
       SuiviModel? data =
           await repos.suiviRepository.getFromId(editH.id!); 
 
-      if (input['reference'] != null) {
-        data.reference = input['reference'];
+      if (input['nomSocial'] != null) {
+        data.nomSocial = input['nomSocial'];
       }
       if (input['travailEffectue'] != null) {
         data.travailEffectue = input['travailEffectue'];

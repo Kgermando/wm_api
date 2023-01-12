@@ -1,6 +1,6 @@
 class SuiviModel {
   late int? id;
-  late int reference;
+  late String nomSocial; // Nom de l'entreprise
   late String travailEffectue;
   late String accuseeReception;
   late String signature;
@@ -9,7 +9,7 @@ class SuiviModel {
 
   SuiviModel(
      {this.id,
-      required this.reference,
+      required this.nomSocial,
       required this.travailEffectue,
       required this.accuseeReception,
       required this.signature,
@@ -19,7 +19,7 @@ class SuiviModel {
   factory SuiviModel.fromSQL(List<dynamic> row) {
     return SuiviModel(
      id: row[0],
-      reference: row[1],
+      nomSocial: row[1],
       travailEffectue: row[2],
       accuseeReception: row[3],
       signature: row[4],
@@ -30,7 +30,7 @@ class SuiviModel {
    factory SuiviModel.fromJson(Map<String, dynamic> json) {
     return SuiviModel(
      id: json['id'],
-      reference: json['reference'],
+      nomSocial: json['nomSocial'],
       travailEffectue: json['travailEffectue'],
       accuseeReception: json['accuseeReception'],
       signature: json['signature'],
@@ -40,7 +40,7 @@ class SuiviModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'reference': reference,
+      'nomSocial': nomSocial,
       'travailEffectue': travailEffectue,
       'accuseeReception': accuseeReception,
       'signature': signature,

@@ -22,18 +22,18 @@ class AbonnementRepository {
   Future<void> insertData(AbonnementClientModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, duree, type_contrat,"
-          "somme_contrat, receptionniste, date_signature_contrat,"
-          "signataire_contrat_entreprise, signature, created)"
+          "INSERT INTO $tableName (id, reference, date_fin_contrat, type_contrat,"
+          "montant, date_debut_et_fin_contrat,"
+          "signataire_contrat, signature, created)"
           "VALUES (nextval('abonnement_clients_id_seq'), @1, @2, @3, @4, @5, @6,"
           "@7, @8)",
           substitutionValues: {
-            '1': data.duree,
-            '2': data.typeContrat,
-            '3': data.sommeContrat,
-            '4': data.receptionniste,
-            '5': data.dateSignatureContrat,
-            '6': data.signataireContratEntreprise,
+            '1': data.reference,
+            '2': data.dateFinContrat,
+            '3': data.typeContrat,
+            '4': data.montant,
+            '5': data.dateDebutEtFinContrat,
+            '6': data.signataireContrat,
             '7': data.signature,
             '8': data.created 
           });
@@ -42,18 +42,17 @@ class AbonnementRepository {
 
   Future<void> update(AbonnementClientModel data) async {
     await executor.query("""UPDATE $tableName
-          SET duree = @1, type_contrat = @2, somme_contrat = @3,
-          receptionniste = @4, date_signature_contrat = @5, 
-          signataire_contrat_entreprise = @6, 
-          signature = @7,
+          SET reference = @1, date_fin_contrat = @2, type_contrat = @3,
+          montant = @4, date_debut_et_fin_contrat = @5, 
+          signataire_contrat = @6, signature = @7,
           created = @8 WHERE id = @9""",
         substitutionValues: {
-          '1': data.duree,
-          '2': data.typeContrat,
-          '3': data.sommeContrat,
-          '4': data.receptionniste,
-          '5': data.dateSignatureContrat,
-          '6': data.signataireContratEntreprise,
+          '1': data.reference,
+          '2': data.dateFinContrat,
+          '3': data.typeContrat,
+          '4': data.montant,
+          '5': data.dateDebutEtFinContrat,
+          '6': data.signataireContrat,
           '7': data.signature,
           '8': data.created,
           '9': data.id
@@ -76,12 +75,12 @@ class AbonnementRepository {
         await executor.query("SELECT * FROM  $tableName WHERE \"id\" = '$id'");
     return AbonnementClientModel(
       id: data[0][0],
-      duree: data[0][1],
-      typeContrat: data[0][2],
-      sommeContrat: data[0][3],
-      receptionniste: data[0][4],
-      dateSignatureContrat: data[0][5],
-      signataireContratEntreprise: data[0][6],
+      reference: data[0][1],
+      dateFinContrat: data[0][2],
+      typeContrat: data[0][3],
+      montant: data[0][4],
+      dateDebutEtFinContrat: data[0][5],
+      signataireContrat: data[0][6],
       signature: data[0][7],
       created: data[0][8] 
     );

@@ -26,9 +26,9 @@ class EntrepriseRepository {
           "INSERT INTO $tableName (id, nom_social, nom_gerant,"
           "email_entreprise, email_gerant, telephone1, telephone2, rccm,"
           "identification_nationale, numeros_impot, secteur_activite,"
-          "adresse_physique_entreprise, signature, created)"
+          "adresse_physique_entreprise, signature, created, date_fin_contrat, type_contrat)"
           "VALUES (nextval('entreprise_infos_id_seq'), @1, @2, @3, @4, @5, @6,"
-          "@7, @8, @9, @10, @11, @12, @13)",
+          "@7, @8, @9, @10, @11, @12, @13, @14, @15)",
           substitutionValues: {
             '1': data.nomSocial,
             '2': data.nomGerant,
@@ -42,7 +42,9 @@ class EntrepriseRepository {
             '10': data.secteurActivite,
             '11': data.adressePhysiqueEntreprise,
             '12': data.signature,
-            '13': data.created  
+            '13': data.created,
+            '14': data.dateFinContrat,
+            '15': data.typeContrat  
           });
     });
   }
@@ -52,8 +54,8 @@ class EntrepriseRepository {
     SET nom_social = @1, nom_gerant = @2, email_entreprise = @3,
     email_gerant = @4, telephone1 = @5, telephone2 = @6, rccm = @7,
     identification_nationale = @8, numeros_impot = @9, secteur_activite = @10, 
-    adresse_physique_entreprise = @11,
-    signature = @12, created = @13 WHERE id = @14""",
+    adresse_physique_entreprise = @11, signature = @12, created = @13, 
+    date_fin_contrat = @14, type_contrat = @15 WHERE id = @16""",
         substitutionValues: {
           '1': data.nomSocial,
           '2': data.nomGerant,
@@ -68,7 +70,9 @@ class EntrepriseRepository {
           '11': data.adressePhysiqueEntreprise,
           '12': data.signature,
           '13': data.created,
-          '14': data.id 
+          '14': data.dateFinContrat,
+          '15': data.typeContrat,
+          '16': data.id 
         });
   }
 
@@ -100,7 +104,9 @@ class EntrepriseRepository {
       secteurActivite: data[0][10],
       adressePhysiqueEntreprise: data[0][11],
       signature: data[0][12],
-      created: data[0][13]
+      created: data[0][13],
+      dateFinContrat: data[0][14],
+      typeContrat: data[0][15]
     );
   } 
 }

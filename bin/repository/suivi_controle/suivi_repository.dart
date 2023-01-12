@@ -23,11 +23,11 @@ class SuiviRepository {
   Future<void> insertData(SuiviModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, reference, travail_effectue,"
+          "INSERT INTO $tableName (id, nom_social, travail_effectue,"
           "accusee_reception, signature, created)"
           "VALUES (nextval('suivis_id_seq'), @1, @2, @3, @4, @5)",
           substitutionValues: {
-            '1': data.reference,
+            '1': data.nomSocial,
             '2': data.travailEffectue,
             '3': data.accuseeReception,
             '4': data.signature,
@@ -38,10 +38,10 @@ class SuiviRepository {
 
   Future<void> update(SuiviModel data) async {
    await executor.query("""UPDATE $tableName
-    SET reference = @1, travail_effectue = @2, accusee_reception = @3,
+    SET nom_social = @1, travail_effectue = @2, accusee_reception = @3,
     signature = @4, created = @5 WHERE id = @6""",
         substitutionValues: {
-          '1': data.reference,
+          '1': data.nomSocial,
           '2': data.travailEffectue,
           '3': data.accuseeReception,
           '4': data.signature,
@@ -66,7 +66,7 @@ class SuiviRepository {
         await executor.query("SELECT * FROM  $tableName WHERE \"id\" = '$id'");
     return SuiviModel(
       id: data[0][0],
-      reference: data[0][1],
+      nomSocial: data[0][1],
       travailEffectue: data[0][2],
       accuseeReception: data[0][3],
       signature: data[0][4],

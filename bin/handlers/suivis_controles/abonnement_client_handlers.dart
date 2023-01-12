@@ -34,12 +34,12 @@ class AbonnementClientHandlers {
       var input = jsonDecode(await request.readAsString());
 
       AbonnementClientModel data = AbonnementClientModel(
-        duree: DateTime.parse(input['duree']),
+        reference: input['reference'],
+        dateFinContrat: DateTime.parse(input['dateFinContrat']),
         typeContrat: input['typeContrat'],
-        sommeContrat: input['sommeContrat'],
-        receptionniste: input['receptionniste'],
-        dateSignatureContrat: input['dateSignatureContrat'],
-        signataireContratEntreprise: input['signataireContratEntreprise'],
+        montant: input['montant'],
+        dateDebutEtFinContrat: input['dateDebutEtFinContrat'],
+        signataireContrat: input['signataireContrat'], 
         signature: input['signature'], 
         created: DateTime.parse(input['created'])
       );
@@ -57,25 +57,24 @@ class AbonnementClientHandlers {
       final editH = AbonnementClientModel.fromJson(input);
       AbonnementClientModel? data =
           await repos.abonnementRepository.getFromId(editH.id!); 
-
-      if (input['nom'] != null) {
-        data.duree = DateTime.parse(input['duree']);
+      if (input['reference'] != null) {
+        data.reference = input['reference'];
+      }
+      if (input['dateFinContrat'] != null) {
+        data.dateFinContrat = DateTime.parse(input['dateFinContrat']);
       }
       if (input['typeContrat'] != null) {
         data.typeContrat = input['typeContrat'];
       }
-      if (input['sommeContrat'] != null) {
-        data.sommeContrat = input['sommeContrat'];
+      if (input['montant'] != null) {
+        data.montant = input['montant'];
       }
-      if (input['receptionniste'] != null) {
-        data.receptionniste = input['receptionniste'];
+      if (input['dateDebutEtFinContrat'] != null) {
+        data.dateDebutEtFinContrat = input['dateDebutEtFinContrat'];
       }
-      if (input['dateSignatureContrat'] != null) {
-        data.dateSignatureContrat = input['dateSignatureContrat'];
-      }
-      if (input['signataireContratEntreprise'] != null) {
-        data.signataireContratEntreprise = input['signataireContratEntreprise'];
-      }
+      if (input['signataireContrat'] != null) {
+        data.signataireContrat = input['signataireContrat'];
+      } 
       if (input['signature'] != null) {
         data.signature = input['signature'];
       }
