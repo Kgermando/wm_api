@@ -6,12 +6,12 @@ CREATE SEQUENCE abonnement_clients_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 214748
 
 CREATE TABLE "public"."abonnement_clients" (
     "id" integer DEFAULT nextval('abonnement_clients_id_seq') NOT NULL,
-    "duree" timestamp NOT NULL,
+    "reference" integer NOT NULL,
+    "date_fin_contrat" timestamp NOT NULL,
     "type_contrat" character varying NOT NULL,
-    "somme_contrat" character varying NOT NULL,
-    "receptionniste" character varying NOT NULL,
-    "date_signature_contrat" character varying NOT NULL,
-    "signataire_contrat_entreprise" character varying NOT NULL,
+    "montant" character varying NOT NULL,
+    "date_debut_et_fin_contrat" character varying NOT NULL,
+    "signataire_contrat" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
     CONSTRAINT "abonnement_clients_pkey" PRIMARY KEY ("id")
@@ -705,6 +705,8 @@ CREATE TABLE "public"."entreprise_infos" (
     "adresse_physique_entreprise" character varying NOT NULL,
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
+    "date_fin_contrat" timestamp NOT NULL,
+    "type_contrat" character varying NOT NULL,
     CONSTRAINT "entreprise_infos_pkey" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
@@ -1207,7 +1209,8 @@ CREATE TABLE "public"."rapports" (
     "signature" character varying NOT NULL,
     "created" timestamp NOT NULL,
     "reference" integer NOT NULL,
-    "read_rapport" character varying NOT NULL
+    "read_rapport" character varying NOT NULL,
+    "signature_resp" character varying NOT NULL
 ) WITH (oids = false);
 
 
@@ -1367,7 +1370,7 @@ CREATE SEQUENCE suivis_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1
 
 CREATE TABLE "public"."suivis" (
     "id" integer DEFAULT nextval('suivis_id_seq') NOT NULL,
-    "reference" integer NOT NULL,
+    "nom_social" character varying NOT NULL,
     "travail_effectue" character varying NOT NULL,
     "accusee_reception" character varying NOT NULL,
     "signature" character varying NOT NULL,
@@ -1539,4 +1542,4 @@ CREATE TABLE "public"."versement_projets" (
 ) WITH (oids = false);
 
 
--- 2023-01-07 09:12:29.465961+00
+-- 2023-01-12 05:42:00.149605+00
