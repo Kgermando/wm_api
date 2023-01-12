@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/charts/charts_multi.dart';
-import '../../models/charts/courbe_chart_model.dart';
+import '../../models/charts/charts_multi.dart'; 
 import '../../models/finances/banque_model.dart';
 import '../../repository/repository.dart';
 

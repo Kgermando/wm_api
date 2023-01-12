@@ -1,7 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/charts/charts_multi.dart';
-import '../../models/charts/courbe_chart_model.dart';
+import '../../models/charts/charts_multi.dart'; 
 import '../../models/finances/banque_model.dart';
 
 class BanqueRepository {
