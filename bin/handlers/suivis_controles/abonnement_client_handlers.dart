@@ -41,7 +41,8 @@ class AbonnementClientHandlers {
         dateDebutEtFinContrat: input['dateDebutEtFinContrat'],
         signataireContrat: input['signataireContrat'], 
         signature: input['signature'], 
-        created: DateTime.parse(input['created'])
+        created: DateTime.parse(input['created']),
+        nomSocial: input['nomSocial'], 
       );
       try {
         await repos.abonnementRepository.insertData(data);
@@ -80,7 +81,10 @@ class AbonnementClientHandlers {
       }
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
-      } 
+      }
+      if (input['nomSocial'] != null) {
+        data.nomSocial = input['nomSocial'];
+      }
       repos.abonnementRepository.update(data);
       return Response.ok(jsonEncode(data.toJson()));
     });

@@ -24,9 +24,9 @@ class AbonnementRepository {
       await ctx.execute(
           "INSERT INTO $tableName (id, reference, date_fin_contrat, type_contrat,"
           "montant, date_debut_et_fin_contrat,"
-          "signataire_contrat, signature, created)"
+          "signataire_contrat, signature, created, nom_social)"
           "VALUES (nextval('abonnement_clients_id_seq'), @1, @2, @3, @4, @5, @6,"
-          "@7, @8)",
+          "@7, @8, @9)",
           substitutionValues: {
             '1': data.reference,
             '2': data.dateFinContrat,
@@ -35,7 +35,8 @@ class AbonnementRepository {
             '5': data.dateDebutEtFinContrat,
             '6': data.signataireContrat,
             '7': data.signature,
-            '8': data.created 
+            '8': data.created,
+            '9': data.nomSocial
           });
     });
   }
@@ -45,7 +46,7 @@ class AbonnementRepository {
           SET reference = @1, date_fin_contrat = @2, type_contrat = @3,
           montant = @4, date_debut_et_fin_contrat = @5, 
           signataire_contrat = @6, signature = @7,
-          created = @8 WHERE id = @9""",
+          created = @8, nom_social = @9 WHERE id = @10""",
         substitutionValues: {
           '1': data.reference,
           '2': data.dateFinContrat,
@@ -55,7 +56,8 @@ class AbonnementRepository {
           '6': data.signataireContrat,
           '7': data.signature,
           '8': data.created,
-          '9': data.id
+          '9': data.nomSocial,
+          '10': data.id
         });
   }
 
@@ -82,7 +84,8 @@ class AbonnementRepository {
       dateDebutEtFinContrat: data[0][5],
       signataireContrat: data[0][6],
       signature: data[0][7],
-      created: data[0][8] 
+      created: data[0][8],
+      nomSocial: data[0][9] 
     );
   }
 }
