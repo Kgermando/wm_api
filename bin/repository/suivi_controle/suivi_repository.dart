@@ -24,14 +24,15 @@ class SuiviRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
           "INSERT INTO $tableName (id, nom_social, travail_effectue,"
-          "accusee_reception, signature, created)"
-          "VALUES (nextval('suivis_id_seq'), @1, @2, @3, @4, @5)",
+          "accusee_reception, signature, created, created_day)"
+          "VALUES (nextval('suivis_id_seq'), @1, @2, @3, @4, @5, @6)",
           substitutionValues: {
             '1': data.nomSocial,
             '2': data.travailEffectue,
             '3': data.accuseeReception,
             '4': data.signature,
-            '5': data.created
+            '5': data.created,
+            '6': data.createdDay
           });
     });
   }
@@ -39,14 +40,15 @@ class SuiviRepository {
   Future<void> update(SuiviModel data) async {
    await executor.query("""UPDATE $tableName
     SET nom_social = @1, travail_effectue = @2, accusee_reception = @3,
-    signature = @4, created = @5 WHERE id = @6""",
+    signature = @4, created = @5, created_day = @6 WHERE id = @7""",
         substitutionValues: {
           '1': data.nomSocial,
           '2': data.travailEffectue,
           '3': data.accuseeReception,
           '4': data.signature,
           '5': data.created,
-          '6': data.id
+          '6': data.createdDay,
+          '7': data.id
         });
   }
 
@@ -70,7 +72,8 @@ class SuiviRepository {
       travailEffectue: data[0][2],
       accuseeReception: data[0][3],
       signature: data[0][4],
-      created: data[0][5]
+      created: data[0][5],
+      createdDay: data[0][6]
     );
   } 
 }

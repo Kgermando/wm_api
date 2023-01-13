@@ -39,7 +39,8 @@ class SuiviHandlers {
         travailEffectue: input['travailEffectue'],
         accuseeReception: input['accuseeReception'],
         signature: input['signature'], 
-        created: DateTime.parse(input['created']) 
+        created: DateTime.parse(input['created']),
+        createdDay: DateTime.parse(input['createdDay']) 
       );
       try {
         await repos.suiviRepository.insertData(data);
@@ -70,6 +71,9 @@ class SuiviHandlers {
       } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['createdDay'] != null) {
+        data.createdDay = DateTime.parse(input['createdDay']);
       } 
 
       repos.suiviRepository.update(data);
