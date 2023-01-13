@@ -43,7 +43,7 @@ class AbonnementClientHandlers {
         signature: input['signature'], 
         created: DateTime.parse(input['created']),
         nomSocial: input['nomSocial'],
-        scanContrat: input['scanContrat'],
+        scanContrat: input['scanContrat']
       );
       try {
         await repos.abonnementRepository.insertData(data);
