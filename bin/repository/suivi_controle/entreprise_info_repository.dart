@@ -57,7 +57,7 @@ class EntrepriseRepository {
     email_gerant = @4, telephone1 = @5, telephone2 = @6, rccm = @7,
     identification_nationale = @8, numeros_impot = @9, secteur_activite = @10, 
     adresse_physique_entreprise = @11, signature = @12, created = @13, 
-    date_fin_contrat = @14, type_contrat = @15 type_entreprise = @16 WHERE id = @17""",
+    date_fin_contrat = @14, type_contrat = @15, type_entreprise = @16 WHERE id = @17""",
         substitutionValues: {
           '1': data.nomSocial,
           '2': data.nomGerant,
