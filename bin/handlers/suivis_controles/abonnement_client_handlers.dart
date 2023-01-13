@@ -42,7 +42,8 @@ class AbonnementClientHandlers {
         signataireContrat: input['signataireContrat'], 
         signature: input['signature'], 
         created: DateTime.parse(input['created']),
-        nomSocial: input['nomSocial'], 
+        nomSocial: input['nomSocial'],
+        scanContrat: input['scanContrat'],
       );
       try {
         await repos.abonnementRepository.insertData(data);
@@ -84,6 +85,9 @@ class AbonnementClientHandlers {
       }
       if (input['nomSocial'] != null) {
         data.nomSocial = input['nomSocial'];
+      }
+      if (input['scanContrat'] != null) {
+        data.scanContrat = input['scanContrat'];
       }
       repos.abonnementRepository.update(data);
       return Response.ok(jsonEncode(data.toJson()));
