@@ -25,7 +25,10 @@ class VenteRepository {
   Future<List<VenteChartModel>> getAllDataChart() async {
     var data = <VenteChartModel>{};
     var querySQL =
-        "SELECT 'id_product_cart', COUNT(*) AS count, SUM(\"price_total_cart\"::FLOAT * 1) FROM $tableName GROUP BY \"id_product_cart\" ORDER BY count DESC LIMIT 10;";
+        "SELECT 'id_product_cart', COUNT(id_product_cart) FROM $tableName GROUP BY \"id_product_cart\" ORDER BY COUNT DESC LIMIT 10;";
+    // var querySQL =
+    //     "SELECT 'id_product_cart', COUNT(*) AS count, SUM(\"price_total_cart\"::FLOAT * 1) FROM $tableName GROUP BY \"id_product_cart\" ORDER BY count DESC LIMIT 10;";
+
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(VenteChartModel.fromSQL(row));
