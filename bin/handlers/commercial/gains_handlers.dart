@@ -20,6 +20,11 @@ class GainsHandlers {
       return Response.ok(jsonEncode(data));
     });
 
+    router.get('/gain-chart-day/', (Request request) async {
+      List<CourbeGainModel> data = await repos.gains.getAllDataChartDay();
+      return Response.ok(jsonEncode(data));
+    });
+
     router.get('/gain-chart-month/', (Request request) async {
       List<CourbeGainModel> data = await repos.gains.getAllDataChartMounth();
       return Response.ok(jsonEncode(data));

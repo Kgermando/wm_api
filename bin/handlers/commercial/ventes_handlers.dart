@@ -37,6 +37,11 @@ class VenteHandlers {
       return Response.ok(jsonEncode(data));
     });
 
+    router.get('/vente-chart-day/', (Request request) async {
+      List<CourbeVenteModel> data = await repos.ventes.getAllDataChartDay();
+      return Response.ok(jsonEncode(data));
+    });
+
     router.get('/vente-chart-month/', (Request request) async {
       List<CourbeVenteModel> data = await repos.ventes.getAllDataChartMounth();
       return Response.ok(jsonEncode(data));

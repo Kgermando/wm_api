@@ -21,6 +21,19 @@ class GainRepository {
     return data.toList();
   }
  
+  Future<List<CourbeGainModel>> getAllDataChartDay() async {
+    var data = <CourbeGainModel>{};
+
+    var querySQL =
+        "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 day' :: INTERVAL  GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
+
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(CourbeGainModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+
   Future<List<CourbeGainModel>> getAllDataChartMounth() async {
     var data = <CourbeGainModel>{};
 
