@@ -1,32 +1,28 @@
 class VenteChartModel {
   final String idProductCart;
-  final int count;
-  final double sum;
+  final int count; 
   
 
-  VenteChartModel({required this.idProductCart, required this.count, required this.sum});
+  VenteChartModel({required this.idProductCart, required this.count});
 
   factory VenteChartModel.fromSQL(List<dynamic> row) {
     return VenteChartModel(
       idProductCart: row[0],
-      count: row[1],
-      sum: row[2]
+      count: row[1]
     );
   }
 
   factory VenteChartModel.fromJson(Map<String, dynamic> json) {
     return VenteChartModel(
         idProductCart: json['idProductCart'],
-        count: json['count'],
-        sum: json['sum'],
+        count: json['count'] 
       );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'idProductCart': idProductCart,
-      'count': count,
-      'sum': sum
+      'count': count 
     };
   }
 }
