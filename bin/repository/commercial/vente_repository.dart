@@ -37,7 +37,7 @@ class VenteRepository {
     var data = <CourbeVenteModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(HOUR FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName AND DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 DAY'  GROUP BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ASC ;";
+        "SELECT EXTRACT(HOUR FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 DAY'  GROUP BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ASC ;";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
