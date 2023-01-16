@@ -25,7 +25,7 @@ class GainRepository {
     var data = <CourbeGainModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 day' :: INTERVAL  GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
+        "SELECT EXTRACT(HOUR FROM \"created\" ::TIMESTAMP), SUM(\"sum\"::FLOAT) FROM $tableName AND DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 DAY'  GROUP BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ASC ;";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
