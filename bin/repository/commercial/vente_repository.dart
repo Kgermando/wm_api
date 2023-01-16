@@ -50,7 +50,10 @@ class VenteRepository {
     var data = <CourbeVenteModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+        "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
+
+    // var querySQL =
+    //     "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
