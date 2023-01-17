@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/number_facture.dart';
+import '../../models/commercial/number_facture.dart';
 
 class NumberFactureRepository {
   final PostgreSQLConnection executor;

@@ -1,8 +1,8 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/courbe_vente_gain_model.dart';
-import '../../models/comm_maketing/vente_cart_model.dart';
-import '../../models/comm_maketing/vente_chart_model.dart';
+import '../../models/commercial/courbe_vente_gain_model.dart';
+import '../../models/commercial/vente_cart_model.dart';
+import '../../models/commercial/vente_chart_model.dart';
 
 class VenteRepository {
   final PostgreSQLConnection executor;

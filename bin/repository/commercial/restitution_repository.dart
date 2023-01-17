@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/restitution_model.dart';
+import '../../models/commercial/restitution_model.dart';
 
 class RestitutionRepository {
   final PostgreSQLConnection executor;

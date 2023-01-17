@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/history_ravitaillement_model.dart';
+import '../../models/commercial/history_ravitaillement_model.dart';
 
 class HistoryRavitaillementRepository {
   final PostgreSQLConnection executor;

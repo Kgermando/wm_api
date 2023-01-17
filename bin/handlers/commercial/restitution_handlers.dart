@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/comm_maketing/restitution_model.dart';
+import '../../models/commercial/restitution_model.dart';
 import '../../repository/repository.dart';
 
 class RestitutionHandlers {

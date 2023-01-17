@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/bon_livraison.dart';
+import '../../models/commercial/bon_livraison.dart';
 
 class BonLivraisonRepository {
   final PostgreSQLConnection executor;

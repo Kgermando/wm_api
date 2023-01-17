@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/stocks_global_model.dart';
+import '../../models/commercial/stocks_global_model.dart';
 
 class StockGlobalRepository {
   final PostgreSQLConnection executor;

@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/succursale_model.dart';
+import '../../models/commercial/succursale_model.dart';
 
 class SuccursaleRepository {
   final PostgreSQLConnection executor;

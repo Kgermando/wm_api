@@ -1,7 +1,7 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/courbe_vente_gain_model.dart';
-import '../../models/comm_maketing/gain_model.dart';
+import '../../models/commercial/courbe_vente_gain_model.dart';
+import '../../models/commercial/gain_model.dart';
 
 class GainRepository {
   final PostgreSQLConnection executor;

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-import '../../models/comm_maketing/courbe_vente_gain_model.dart';
-import '../../models/comm_maketing/gain_model.dart';
+import '../../models/commercial/courbe_vente_gain_model.dart';
+import '../../models/commercial/gain_model.dart';
 import '../../repository/repository.dart';
 
 class GainsHandlers {

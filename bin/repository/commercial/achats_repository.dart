@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/achat_model.dart';
+import '../../models/commercial/achat_model.dart';
 
 class AchatsRepository {
   final PostgreSQLConnection executor;

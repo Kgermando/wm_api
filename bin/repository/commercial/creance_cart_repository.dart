@@ -1,6 +1,6 @@
 import 'package:postgres/postgres.dart';
 
-import '../../models/comm_maketing/creance_cart_model.dart';
+import '../../models/commercial/creance_cart_model.dart';
 
 class CreanceFactureRepository {
   final PostgreSQLConnection executor;
