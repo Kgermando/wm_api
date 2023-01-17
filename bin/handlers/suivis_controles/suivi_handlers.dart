@@ -40,7 +40,9 @@ class SuiviHandlers {
         accuseeReception: input['accuseeReception'],
         signature: input['signature'], 
         created: DateTime.parse(input['created']),
-        createdDay: DateTime.parse(input['createdDay']) 
+        createdDay: DateTime.parse(input['createdDay']),
+        background: input['background'], 
+        eventName: input['eventName']
       );
       try {
         await repos.suiviRepository.insertData(data);
@@ -74,7 +76,13 @@ class SuiviHandlers {
       }
       if (input['createdDay'] != null) {
         data.createdDay = DateTime.parse(input['createdDay']);
-      } 
+      }
+      if (input['background'] != null) {
+        data.background = input['background'];
+      }
+      if (input['eventName'] != null) {
+        data.eventName = input['eventName'];
+      }
 
       repos.suiviRepository.update(data);
       return Response.ok(jsonEncode(data.toJson()));
