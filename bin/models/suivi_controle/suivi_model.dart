@@ -6,7 +6,7 @@ class SuiviModel {
   late String signature;
   late DateTime created;
   late DateTime createdDay; // Date du SfCalendar
-  late int background; // Effectuer, Interrompu, Non Effectuer
+  late String background; // Effectuer, Interrompu, Non Effectuer
   late String eventName; // Effectuer, Interrompu, Non Effectuer
 
   SuiviModel(
