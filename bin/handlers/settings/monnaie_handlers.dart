@@ -37,7 +37,8 @@ class MonnaieHandlers {
         monnaie: input['monnaie'],
         monnaieEnlettre: input['monnaieEnlettre'],
         signature: input['signature'],
-        created: DateTime.parse(input['created']) 
+        created: DateTime.parse(input['created']),
+        isActive: input['isActive']
       );
       try {
         await repos.monnaies.insertData(data);
@@ -64,6 +65,9 @@ class MonnaieHandlers {
       } 
       if (input['created'] != null) {
         data.created = DateTime.parse(input['created']);
+      }
+      if (input['isActive'] != null) {
+        data.isActive = input['isActive'];
       } 
 
       repos.monnaies.update(data);

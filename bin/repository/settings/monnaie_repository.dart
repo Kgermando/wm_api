@@ -23,13 +23,14 @@ class MonnaieRepository {
     await executor.transaction((ctx) async {
       await ctx.execute(
         "INSERT INTO $tableName (id, monnaie, monnaie_en_lettre,"
-        "signature, created)"
-        "VALUES (nextval('monnaies_id_seq'), @1, @2, @3, @4)",
+        "signature, created, is_active)"
+        "VALUES (nextval('monnaies_id_seq'), @1, @2, @3, @4, @5)",
         substitutionValues: {
           '1': data.monnaie,
           '2': data.monnaieEnlettre,
           '3': data.signature,
-          '4': data.created
+          '4': data.created,
+          '5': data.isActive
         }
       );
     });
@@ -38,12 +39,13 @@ class MonnaieRepository {
   Future<void> update(MonnaieModel data) async {
     await executor.query("""UPDATE $tableName
         SET monnaie = @1, monnaie_en_lettre = @2, signature = @3,
-        created = @4 WHERE id = @5""", substitutionValues: {
+        created = @4, is_active = @5 WHERE id = @6""", substitutionValues: {
       '1': data.monnaie,
       '2': data.monnaieEnlettre,
       '3': data.signature,
-      '4': data.created, 
-      '5': data.id
+      '4': data.created,
+      '5': data.isActive, 
+      '6': data.id
     });
   }
 
@@ -66,7 +68,8 @@ class MonnaieRepository {
       monnaie: data[0][1],
       monnaieEnlettre: data[0][2],
       signature: data[0][3],
-      created: data[0][4]
+      created: data[0][4],
+      isActive: data[0][5]
     );
   }
 }
