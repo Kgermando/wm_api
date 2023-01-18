@@ -292,7 +292,7 @@ class Repository {
     mailsNotifyCount = MailsNotifyRepository(executor, 'mails');
 
     // Settings
-    MonnaieRepository(executor, 'monnaies');
+    monnaies = MonnaieRepository(executor, 'monnaies');
 
     // AUTH
     refreshTokens = RefreshTokensRepository(executor, 'refresh_tokens');
