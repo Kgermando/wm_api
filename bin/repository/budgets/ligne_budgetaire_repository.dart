@@ -1,6 +1,7 @@
 import 'package:postgres/postgres.dart';
 
 import '../../models/budgets/ligne_budgetaire_model.dart';
+import '../../models/charts/courbe_budget_model.dart';
 
 class LigneBudgtaireRepository {
   final PostgreSQLConnection executor;
@@ -19,22 +20,39 @@ class LigneBudgtaireRepository {
     return data.toList();
   }
 
-  // Future<List<BalanceSumModel>> getAllSumData() async {
-  //   var data = <BalanceSumModel>{};
-  //   var querySQL =
-  //     """SELECT "nom_ligne_budgetaire",
-  //       SUM(cout_total::FLOAT),
-  //       SUM(caisse::FLOAT),
-  //       SUM(banque::FLOAT),
-  //       SUM(fin_exterieur::FLOAT)
-  //       FROM $tableName where 
-  //       NOW() <= "periode_fin" GROUP BY "nom_ligne_budgetaire";""";
-  //   List<List<dynamic>> results = await executor.query(querySQL);
-  //   for (var row in results) {
-  //     data.add(BalanceSumModel.fromSQL(row));
-  //   }
-  //   return data.toList();
-  // }
+  Future<List<CourbeBudgetModel>> getAllDataChartBanqueYear() async {
+    var data = <CourbeBudgetModel>{};
+    var querySQL =
+        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"banque_sortie\") FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(CourbeBudgetModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+
+  Future<List<CourbeBudgetModel>> getAllDataChartCaisseYear() async {
+    var data = <CourbeBudgetModel>{};
+    var querySQL =
+        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"caisse_sortie\") FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(CourbeBudgetModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+
+  Future<List<CourbeBudgetModel>> getAllDataChartFinExterieurYear() async {
+    var data = <CourbeBudgetModel>{};
+    var querySQL =
+        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"fin_exterieur_sortie\") FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+    List<List<dynamic>> results = await executor.query(querySQL);
+    for (var row in results) {
+      data.add(CourbeBudgetModel.fromSQL(row));
+    }
+    return data.toList();
+  }
+  
 
   Future<void> insertData(LigneBudgetaireModel data) async {
     await executor.transaction((ctx) async {

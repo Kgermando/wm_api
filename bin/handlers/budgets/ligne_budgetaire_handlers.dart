@@ -4,6 +4,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 import '../../models/budgets/ligne_budgetaire_model.dart';
+import '../../models/charts/courbe_budget_model.dart';
 import '../../repository/repository.dart';
 
 class LigneBudgetaireHanlers {
@@ -20,6 +21,22 @@ class LigneBudgetaireHanlers {
       return Response.ok(jsonEncode(data));
     });
 
+    router.get('/banque-chart/', (Request request) async {
+      List<CourbeBudgetModel> data =
+          await repos.ligneBudgetaires.getAllDataChartBanqueYear();
+      return Response.ok(jsonEncode(data));
+    });
+    router.get('/caisse-chart/', (Request request) async {
+      List<CourbeBudgetModel> data =
+          await repos.ligneBudgetaires.getAllDataChartCaisseYear();
+      return Response.ok(jsonEncode(data));
+    });
+    router.get('/fin-exterieur-chart/', (Request request) async {
+      List<CourbeBudgetModel> data =
+          await repos.ligneBudgetaires.getAllDataChartFinExterieurYear();
+      return Response.ok(jsonEncode(data));
+    });
+ 
     router.get('/<id>', (Request request, String id) async {
       late LigneBudgetaireModel data;
       try {
