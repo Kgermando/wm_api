@@ -34,7 +34,7 @@ class DevisListObjetRepository {
             '6': data.montantGlobal
           });
     });
-  }
+  } 
 
   Future<void> update(DevisListObjetsModel data) async {
     await executor.query("""UPDATE $tableName

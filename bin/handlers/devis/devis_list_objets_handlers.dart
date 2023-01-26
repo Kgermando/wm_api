@@ -56,12 +56,12 @@ class DevisListObjetsHandlers {
       DevisListObjetsModel? data =
           await repos.devisListObjets.getFromId(editH.id!); 
           
-      if (input['referenceDate'] != null) {
+      if (input['reference'] != null) {
         data.reference = input['reference'];  // A ne pas modifier ficher reference
       }
-      // if (input['title'] != null) {   // A ne pas modifier ficher reference
-      //   data.title = input['title'];
-      // }
+      if (input['title'] != null) {   // A ne pas modifier ficher reference
+        data.title = input['title'];
+      }
       if (input['quantity'] != null) {
         data.quantity = input['quantity'];
       }
@@ -87,7 +87,7 @@ class DevisListObjetsHandlers {
 
     router.all(
       '/<ignored|.*>',
-      (Request request) => Response.notFound('La Page devis n\'est pas trouvé'),
+      (Request request) => Response.notFound('La Page devis objet n\'est pas trouvé'),
     );
 
     return router;
