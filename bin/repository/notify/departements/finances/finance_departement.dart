@@ -9,7 +9,7 @@ class FinanceDepartementRepository {
 
   static String tableNameFinanceCreance = 'creances';
   static String tableNameFinanceDette = 'dettes';
-  static String tableNameCommMarketingCampaign = 'campaigns';
+  static String tableNameMarketingCampaign = 'campaigns';
   static String tableNameRhTransRest = 'transport_restaurations';
   static String tableNameRhSalaire = 'salaires';
   static String tableNameDevis = 'devis';
@@ -43,14 +43,15 @@ class FinanceDepartementRepository {
             "approbation_fin" = '-' AND 
             "observation" = 'false') 
         + 
-          (SELECT COUNT(*) FROM $tableNameDevis where 
+          (SELECT COUNT(*) FROM $tableNameDevis where
+            "is_submit" = 'true' AND
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
             "approbation_fin" = '-' AND 
             "observation" = 'false')
         + 
-          (SELECT COUNT(*) FROM $tableNameCommMarketingCampaign where 
+          (SELECT COUNT(*) FROM $tableNameMarketingCampaign where 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
@@ -58,6 +59,7 @@ class FinanceDepartementRepository {
             "observation" = 'false')
         + 
           (SELECT COUNT(*) FROM $tableNameExploitation where 
+          "is_submit" = 'true' AND
           "approbation_dd" = 'Approved' AND 
           "approbation_dg" = 'Approved' AND 
           "approbation_budget" = 'Approved' AND 
@@ -80,13 +82,15 @@ class FinanceDepartementRepository {
       var querySQL = """SELECT SUM  
       (
           (SELECT COUNT(*) FROM $tableNameRhTransRest where 
+            "is_submit" = 'true' AND
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
             "approbation_fin" = 'Approved' AND 
-            "observation" = 'false' AND "is_submit" = 'true')
+            "observation" = 'false')
         +
           (SELECT COUNT(*) FROM $tableNameExploitation where 
+            "is_submit" = 'true' AND
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
@@ -102,13 +106,14 @@ class FinanceDepartementRepository {
             "observation" = 'false') 
         + 
           (SELECT COUNT(*) FROM $tableNameDevis where 
+            "is_submit" = 'true' AND 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
-            "approbation_fin" = 'Approved' AND 
+            "approbation_fin" = 'Approved' AND  
             "observation" = 'false') 
         + 
-          (SELECT COUNT(*) FROM $tableNameCommMarketingCampaign where 
+          (SELECT COUNT(*) FROM $tableNameMarketingCampaign where 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = 'Approved' AND 
