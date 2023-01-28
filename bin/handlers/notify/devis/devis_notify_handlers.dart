@@ -35,7 +35,7 @@ class DevisNotifyHandlers {
     });
     
     router.get('/get-count-obs/', (Request request) async {
-      NotifyModel data = await repos.campaignNotifyCount.getCountObs();
+      NotifyModel data = await repos.devisNotifyCount.getCountObs();
       return Response.ok(jsonEncode(data));
     });
 

@@ -35,7 +35,7 @@ class TransRestNotifyHandlers {
     });
 
     router.get('/get-count-obs/', (Request request) async {
-      NotifyModel data = await repos.campaignNotifyCount.getCountObs();
+      NotifyModel data = await repos.transportRestNotifyCount.getCountObs();
       return Response.ok(jsonEncode(data));
     });
 

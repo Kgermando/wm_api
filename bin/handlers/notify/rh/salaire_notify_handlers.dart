@@ -30,7 +30,7 @@ class SalaireNotifyHandlers {
     }); 
 
     router.get('/get-count-obs/', (Request request) async {
-      NotifyModel data = await repos.campaignNotifyCount.getCountObs();
+      NotifyModel data = await repos.salaireNotifyCount.getCountObs(); 
       return Response.ok(jsonEncode(data));
     });
 
