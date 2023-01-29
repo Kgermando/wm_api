@@ -24,10 +24,11 @@ class BudgetDepartementRepository {
             "is_submit" = 'true')
         +
           (SELECT COUNT(*) FROM $tableNameRhTransRest where 
+            "is_submit" = 'true' AND 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = '-' AND 
-            "observation" = 'false' AND "is_submit" = 'true')
+            "observation" = 'false')
         +
           (SELECT COUNT(*) FROM $tableNameRhSalaire where 
             EXTRACT(MONTH FROM "created_at" ::TIMESTAMP) = EXTRACT(MONTH FROM NOW() ::TIMESTAMP) AND
@@ -37,12 +38,14 @@ class BudgetDepartementRepository {
             "observation" = 'false')
         +
           (SELECT COUNT(*) FROM $tableNameExploitation where 
+            "is_submit" = 'true' AND 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = '-' AND 
             "observation" = 'false')
         +
           (SELECT COUNT(*) FROM $tableNameDevis where 
+            "is_submit" = 'true' AND 
             "approbation_dd" = 'Approved' AND 
             "approbation_dg" = 'Approved' AND 
             "approbation_budget" = '-' AND 

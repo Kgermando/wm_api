@@ -8,7 +8,7 @@ class LogistiqueDepartementRepository {
   LogistiqueDepartementRepository(this.executor);
 
   static String tableNameLogistiqueMateriels = 'materiels'; 
-  static String tableNameLogistiqueImmobiliers = 'immobiliers'; 
+  static String tableNameLogistiqueImmobiliers = 'immobiliers';
   static String tableNameLogistiqueEntretiens = 'entretiens';
   static String tableNameLogistiqueEtatMateriels = 'etat_materiels';
   static String tableNameLogistiqueMobiliers = 'mobiliers';
@@ -32,7 +32,7 @@ class LogistiqueDepartementRepository {
         +
           (SELECT COUNT(*) FROM $tableNameLogistiqueTrajets where "approbation_dd" = '-')
         +
-          (SELECT COUNT(*) FROM $tableNameLogistiqueDevis where "approbation_dd" = '-')
+          (SELECT COUNT(*) FROM $tableNameLogistiqueDevis where "is_submit" = 'true' AND "approbation_dd" = '-')
       );""";
       List<List<dynamic>> results = await executor.query(querySQL);
       for (var row in results) {

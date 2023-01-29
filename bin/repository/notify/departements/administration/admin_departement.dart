@@ -171,6 +171,7 @@ class AdminDepartementRepository {
         "approbation_dg" = '-') 
         + 
         (SELECT COUNT(*) FROM $tableNameDevis where 
+        "is_submit" = 'true' AND
         "approbation_dd" = 'Approved' AND
         "approbation_dg" = '-' AND 
         "observation" = 'false')
