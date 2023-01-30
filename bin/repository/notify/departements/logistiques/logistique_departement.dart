@@ -22,7 +22,7 @@ class LogistiqueDepartementRepository {
       (
         (SELECT COUNT(*) FROM $tableNameLogistiqueMateriels where "approbation_dd" = '-')
         +
-          (SELECT COUNT(*) FROM $tableNameLogistiqueEntretiens where "approbation_dd" = '-')
+          (SELECT COUNT(*) FROM $tableNameLogistiqueEntretiens where "is_submit" = 'true' AND "approbation_dd" = '-')
         +
           (SELECT COUNT(*) FROM $tableNameLogistiqueEtatMateriels where "approbation_dd" = '-')
         +
