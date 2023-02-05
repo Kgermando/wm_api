@@ -34,6 +34,7 @@ class VenteRepository {
     return data.toList();
   }
 
+  
   Future<List<CourbeVenteModel>> getAllDataChartDay() async {
     var data = <CourbeVenteModel>{};
 
@@ -46,13 +47,22 @@ class VenteRepository {
     }
     return data.toList();
   }
+ 
 
   Future<List<CourbeVenteModel>> getAllDataChartMounth() async {
     var data = <CourbeVenteModel>{};
 
+    // var querySQL = """
+    //     SELECT EXTRACT(HOUR FROM "created" ::TIMESTAMP), 
+    //     SUM("price_total_cart"::FLOAT) FROM $tableName WHERE 
+    //     SELECT date_part('year', (SELECT current_timestamp));
+    //     DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 DAY'  
+    //     GROUP BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ASC ;
+    //   """;
+    
     var querySQL =
         "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
-
+  
     // var querySQL =
     //     "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
 
