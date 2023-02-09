@@ -37,7 +37,10 @@ class GainRepository {
   Future<List<CourbeGainModel>> getAllDataChartMounth() async {
     var data = <CourbeGainModel>{};
     var querySQL =
-        "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 mons' GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
+        """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), SUM(sum::FLOAT) 
+          FROM $tableName WHERE DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 mons' 
+          GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC ;
+        """;
     // var querySQL =
     //     "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
 
@@ -51,11 +54,14 @@ class GainRepository {
   Future<List<CourbeGainModel>> getAllDataChartYear() async {
     var data = <CourbeGainModel>{};
 
-    var querySQL =
-        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 years'  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
-    
     // var querySQL =
-    //   "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+    //     """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), SUM(sum::FLOAT) 
+    //       FROM $tableName WHERE DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 years' 
+    //       GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC ;
+    //     """;
+    
+    var querySQL =
+      "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
     
 
     // var querySQL =

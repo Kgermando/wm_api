@@ -51,29 +51,28 @@ class UserRepository {
   Future<void> insertData(UserModel data) async {
     await executor.transaction((ctx) async {
       await ctx.execute(
-          "INSERT INTO $tableName (id, photo, nom, prenom, email, telephone,"
-          "role, matricule, departement, services_affectation, fonction_occupe,"
-          "is_online, created_at, password_hash, succursale)"
-          "VALUES (nextval('users_id_seq'), @1, @2, @3, @4, @5, @6, @7,"
-            "@8, @9, @10, @11, @12, @13, @14)",
-          substitutionValues: {
-            '1': data.photo,
-            '2': data.nom,
-            '3': data.prenom,
-            '4': data.email,
-            '5': data.telephone,
-            '6': data.role,
-            '7': data.matricule,
-            '8': data.departement,
-            '9': data.servicesAffectation,
-            '10': data.fonctionOccupe,
-            '11': data.isOnline,
-            '12': data.createdAt,
-            '13': data.passwordHash,
-            '14': data.succursale
-          });
-    });  
-
+        "INSERT INTO $tableName (id, photo, nom, prenom, email, telephone,"
+        "role, matricule, departement, services_affectation, fonction_occupe,"
+        "is_online, created_at, password_hash, succursale)"
+        "VALUES (nextval('users_id_seq'), @1, @2, @3, @4, @5, @6, @7,"
+          "@8, @9, @10, @11, @12, @13, @14)",
+        substitutionValues: {
+          '1': data.photo,
+          '2': data.nom,
+          '3': data.prenom,
+          '4': data.email,
+          '5': data.telephone,
+          '6': data.role,
+          '7': data.matricule,
+          '8': data.departement,
+          '9': data.servicesAffectation,
+          '10': data.fonctionOccupe,
+          '11': data.isOnline,
+          '12': data.createdAt,
+          '13': data.passwordHash,
+          '14': data.succursale
+        });
+    });
   } 
  
   Future<void> update(UserModel data) async {
