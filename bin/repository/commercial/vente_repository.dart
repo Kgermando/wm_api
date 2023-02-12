@@ -58,17 +58,16 @@ class VenteRepository {
   Future<List<CourbeVenteModel>> getAllDataChartMounth() async {
     var data = <CourbeVenteModel>{};
 
-    // Filtre est egal à l'année et le mois actuel
+    // Filtre est égal à l'année et le mois actuel
     var querySQL =
-      """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), 
-          SUM(price_total_cart::FLOAT) 
-        FROM $tableName 
+      """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP),
+        SUM(price_total_cart::FLOAT) 
+        FROM $tableName WHERE
         EXTRACT(MONTH FROM "created" ::TIMESTAMP) = EXTRACT(MONTH FROM CURRENT_DATE ::TIMESTAMP) AND
         EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
         GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) 
         ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC;
       """;
-
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(CourbeVenteModel.fromSQL(row));
@@ -81,7 +80,7 @@ class VenteRepository {
     // Filtre est egal à l'année actuel
     var querySQL = """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), 
         SUM(price_total_cart::FLOAT) 
-      FROM $tableName 
+      FROM $tableName WHERE
       EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
       GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) 
       ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC;

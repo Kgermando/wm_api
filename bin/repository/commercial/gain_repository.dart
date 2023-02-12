@@ -45,7 +45,7 @@ class GainRepository {
     var querySQL = 
        """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), 
           SUM(sum::FLOAT) 
-        FROM $tableName 
+        FROM $tableName WHERE
         EXTRACT(MONTH FROM "created" ::TIMESTAMP) = EXTRACT(MONTH FROM CURRENT_DATE ::TIMESTAMP) AND
         EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
         GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) 
@@ -63,7 +63,7 @@ class GainRepository {
         // Filtre est egal à l'année actuel
     var querySQL = """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), 
         SUM(sum::FLOAT)
-      FROM $tableName 
+      FROM $tableName WHERE
       EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
       GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) 
       ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC;
