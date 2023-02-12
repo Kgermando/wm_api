@@ -25,7 +25,13 @@ class GainRepository {
     var data = <CourbeGainModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(HOUR FROM \"created\" ::TIMESTAMP), SUM(\"sum\"::FLOAT) FROM $tableName WHERE DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 DAY'  GROUP BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ASC ;";
+        """SELECT EXTRACT(HOUR FROM "created" ::TIMESTAMP), 
+        SUM("sum"::FLOAT) 
+        FROM $tableName 
+        WHERE DATE("created") >= CURRENT_DATE AND 
+        DATE("created") < CURRENT_DATE + INTERVAL '1 DAY'  
+        GROUP BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) 
+        ORDER BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ASC ;""";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
@@ -36,14 +42,15 @@ class GainRepository {
 
   Future<List<CourbeGainModel>> getAllDataChartMounth() async {
     var data = <CourbeGainModel>{};
-    var querySQL =
-        """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), SUM(sum::FLOAT) 
-          FROM $tableName WHERE DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 mons' 
-          GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC ;
-        """;
-    // var querySQL =
-    //     "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
-
+    var querySQL = 
+       """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), 
+          SUM(sum::FLOAT) 
+        FROM $tableName 
+        EXTRACT(MONTH FROM "created" ::TIMESTAMP) = EXTRACT(MONTH FROM CURRENT_DATE ::TIMESTAMP) AND
+        EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
+        GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) 
+        ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC;
+      """; 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(CourbeGainModel.fromSQL(row));
@@ -53,20 +60,14 @@ class GainRepository {
 
   Future<List<CourbeGainModel>> getAllDataChartYear() async {
     var data = <CourbeGainModel>{};
-
-    // var querySQL =
-    //     """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), SUM(sum::FLOAT) 
-    //       FROM $tableName WHERE DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 years' 
-    //       GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC ;
-    //     """;
-    
-    var querySQL =
-      "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
-    
-
-    // var querySQL =
-    //     "SELECT EXTRACT(YEAR FROM \"created\" ::TIMESTAMP), SUM(sum::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ASC ;";
-    
+        // Filtre est egal à l'année actuel
+    var querySQL = """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), 
+        SUM(sum::FLOAT)
+      FROM $tableName 
+      EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
+      GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) 
+      ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC;
+    """;
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(CourbeGainModel.fromSQL(row));

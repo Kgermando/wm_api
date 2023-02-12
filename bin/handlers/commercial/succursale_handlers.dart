@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../models/commercial/courbe_vente_gain_model.dart';
 import '../../models/commercial/succursale_model.dart';
+import '../../models/commercial/vente_chart_model.dart';
 import '../../repository/repository.dart';
 
 class SuccursaleHandlers {
@@ -18,6 +20,42 @@ class SuccursaleHandlers {
       List<SuccursaleModel> data = await repos.succursales.getAllData();
       return Response.ok(jsonEncode(data));
     });
+
+    router.get('/vente-chart/', (Request request, String name) async {
+      List<VenteChartModel> data = await repos.succursales.getAllDataChart(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/vente-chart-day/', (Request request, String name) async {
+      List<CourbeVenteModel> data = await repos.succursales.getVenteChartDay(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/vente-chart-month/', (Request request, String name) async {
+      List<CourbeVenteModel> data = await repos.succursales.getVenteChartMounth(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/vente-chart-year/', (Request request, String name) async {
+      List<CourbeVenteModel> data = await repos.succursales.getVenteChartYear(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/gain-chart-day/', (Request request, String name) async {
+      List<CourbeGainModel> data = await repos.succursales.getGainChartDay(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/gain-chart-month/', (Request request, String name) async {
+      List<CourbeGainModel> data = await repos.succursales.getGainChartMounth(name);
+      return Response.ok(jsonEncode(data));
+    });
+
+    router.get('/gain-chart-year/', (Request request, String name) async {
+      List<CourbeGainModel> data = await repos.succursales.getGainChartYear(name);
+      return Response.ok(jsonEncode(data));
+    });
+
 
     router.get('/<id>', (Request request, String id) async {
       late SuccursaleModel data;

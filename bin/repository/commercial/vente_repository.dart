@@ -24,7 +24,10 @@ class VenteRepository {
   Future<List<VenteChartModel>> getAllDataChart() async {
     var data = <VenteChartModel>{};
     var querySQL =
-        "SELECT \"id_product_cart\", COUNT(*) FROM $tableName GROUP BY \"id_product_cart\" ORDER BY COUNT DESC LIMIT 10;";
+      """SELECT "id_product_cart", COUNT(*) 
+      FROM $tableName 
+      GROUP BY "id_product_cart" 
+      ORDER BY COUNT DESC LIMIT 10;""";
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
@@ -37,8 +40,14 @@ class VenteRepository {
     var data = <CourbeVenteModel>{};
 
     var querySQL =
-        "SELECT EXTRACT(HOUR FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE DATE(\"created\") >= CURRENT_DATE AND DATE(\"created\") < CURRENT_DATE + INTERVAL '1 DAY'  GROUP BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM \"created\" ::TIMESTAMP) ASC ;";
-
+      """SELECT EXTRACT(HOUR FROM "created" ::TIMESTAMP), 
+          SUM("price_total_cart"::FLOAT) 
+          FROM $tableName 
+          WHERE DATE("created") >= CURRENT_DATE AND 
+          DATE("created") < CURRENT_DATE + INTERVAL '1 DAY' 
+          GROUP BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) 
+          ORDER BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ASC;
+      """;
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(CourbeVenteModel.fromSQL(row));
@@ -49,24 +58,16 @@ class VenteRepository {
   Future<List<CourbeVenteModel>> getAllDataChartMounth() async {
     var data = <CourbeVenteModel>{};
 
-    // var querySQL = """
-    //     SELECT EXTRACT(HOUR FROM "created" ::TIMESTAMP),
-    //     SUM("price_total_cart"::FLOAT) FROM $tableName WHERE
-    //     SELECT date_part('year', (SELECT current_timestamp));
-    //     DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 DAY'
-    //     GROUP BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(HOUR FROM "created" ::TIMESTAMP) ASC ;
-    //   """;
+    // Filtre est egal à l'année et le mois actuel
     var querySQL =
-    """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), SUM(price_total_cart::FLOAT) 
-      FROM $tableName WHERE DATE("created") >= CURRENT_DATE AND DATE("created") < CURRENT_DATE + INTERVAL '1 mons' 
-      GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC ;
-    """;
-
-    // var querySQL =
-    //     "SELECT EXTRACT(DAY FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL GROUP BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(DAY FROM \"created\" ::TIMESTAMP) ASC ;";
-
-    // var querySQL =
-    //     "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 mons' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
+      """SELECT EXTRACT(DAY FROM "created" ::TIMESTAMP), 
+          SUM(price_total_cart::FLOAT) 
+        FROM $tableName 
+        EXTRACT(MONTH FROM "created" ::TIMESTAMP) = EXTRACT(MONTH FROM CURRENT_DATE ::TIMESTAMP) AND
+        EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
+        GROUP BY EXTRACT(DAY FROM "created" ::TIMESTAMP) 
+        ORDER BY EXTRACT(DAY FROM "created" ::TIMESTAMP) ASC;
+      """;
 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
@@ -77,13 +78,14 @@ class VenteRepository {
 
   Future<List<CourbeVenteModel>> getAllDataChartYear() async {
     var data = <CourbeVenteModel>{};
-
-    var querySQL =
-        "SELECT EXTRACT(MONTH FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(MONTH FROM \"created\" ::TIMESTAMP) ASC ;";
-
-    // var querySQL =
-    //     "SELECT EXTRACT(YEAR FROM \"created\" ::TIMESTAMP), SUM(\"price_total_cart\"::FLOAT) FROM $tableName WHERE \"created\" >= NOW() - '1 years' :: INTERVAL  GROUP BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ORDER BY EXTRACT(YEAR FROM \"created\" ::TIMESTAMP) ASC ;";
-
+    // Filtre est egal à l'année actuel
+    var querySQL = """SELECT EXTRACT(MONTH FROM "created" ::TIMESTAMP), 
+        SUM(price_total_cart::FLOAT) 
+      FROM $tableName 
+      EXTRACT(YEAR FROM "created" ::TIMESTAMP) = EXTRACT(YEAR FROM CURRENT_DATE ::TIMESTAMP)
+      GROUP BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) 
+      ORDER BY EXTRACT(MONTH FROM "created" ::TIMESTAMP) ASC;
+    """; 
     List<List<dynamic>> results = await executor.query(querySQL);
     for (var row in results) {
       data.add(CourbeVenteModel.fromSQL(row));
