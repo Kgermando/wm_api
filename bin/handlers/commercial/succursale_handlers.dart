@@ -21,37 +21,37 @@ class SuccursaleHandlers {
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/vente-chart/', (Request request, String name) async {
+    router.get('/vente-chart/<name>', (Request request, String name) async {
       List<VenteChartModel> data = await repos.succursales.getAllDataChart(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/vente-chart-day/', (Request request, String name) async {
+    router.get('/vente-chart-day/<name>', (Request request, String name) async {
       List<CourbeVenteModel> data = await repos.succursales.getVenteChartDay(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/vente-chart-month/', (Request request, String name) async {
+    router.get('/vente-chart-month/<name>', (Request request, String name) async {
       List<CourbeVenteModel> data = await repos.succursales.getVenteChartMounth(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/vente-chart-year/', (Request request, String name) async {
+    router.get('/vente-chart-year/<name>', (Request request, String name) async {
       List<CourbeVenteModel> data = await repos.succursales.getVenteChartYear(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/gain-chart-day/', (Request request, String name) async {
+    router.get('/gain-chart-day/<name>', (Request request, String name) async {
       List<CourbeGainModel> data = await repos.succursales.getGainChartDay(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/gain-chart-month/', (Request request, String name) async {
+    router.get('/gain-chart-month/<name>', (Request request, String name) async {
       List<CourbeGainModel> data = await repos.succursales.getGainChartMounth(name);
       return Response.ok(jsonEncode(data));
     });
 
-    router.get('/gain-chart-year/', (Request request, String name) async {
+    router.get('/gain-chart-year/<name>', (Request request, String name) async {
       List<CourbeGainModel> data = await repos.succursales.getGainChartYear(name);
       return Response.ok(jsonEncode(data));
     });
